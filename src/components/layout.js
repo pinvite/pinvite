@@ -2,9 +2,24 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
-
-import Header from './header'
+import styled from 'styled-components'
 import './layout.css'
+
+const Wrapper = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+`
+
+const Container = styled.div`
+  max-width: 480px;
+  width: 90%;
+  max-height: 640px;
+  height: 96%;
+`
 
 const Layout = ({ children }) => (
   <StaticQuery
@@ -28,17 +43,11 @@ const Layout = ({ children }) => (
         >
           <html lang="en" />
         </Helmet>
-        <Header siteTitle={data.site.siteMetadata.title} />
-        <div
-          style={{
-            margin: '0 auto',
-            maxWidth: 960,
-            padding: '0px 1.0875rem 1.45rem',
-            paddingTop: 0,
-          }}
-        >
-          {children}
-        </div>
+        <Wrapper>
+          <Container>
+            {children}
+          </Container>
+        </Wrapper>
       </>
     )}
   />

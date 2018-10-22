@@ -1,14 +1,14 @@
 import React from 'react'
 import { Link } from 'gatsby'
+import {ButtonTwitter} from '../components/Atoms/Button'
 
 import Layout from '../components/layout'
 
 const IndexPage = () => (
   <Layout>
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <Link to="/page-2/">Go to page 2</Link>
+    <h1>勉強会に来てくれる人を募集しよう</h1>
+    <ButtonTwitter>Twitter</ButtonTwitter>
+    {/* <Link to="/page-2/">Go to page 2</Link> */}
   </Layout>
 )
 
