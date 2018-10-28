@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'gatsby'
 import styled from 'styled-components'
 
 import Layout from '../components/layout'
@@ -11,6 +10,7 @@ import Switch from '@material-ui/core/Switch';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import {AuthStatusProvider, AuthStatusConsumer} from '../container/Login'
 
 const TextFieldsWrapper = styled.div``
 
@@ -37,7 +37,15 @@ class InvitePage extends React.Component {
   render() {
     return (
       <Layout>
-        <Header2>募集内容</Header2>
+        <Header2 center>募集内容</Header2>
+        <AuthStatusConsumer>
+          {({result}) => (
+            <>
+              {console.log(result)}
+              {result && <img src={result.user.photoURL} />}
+            </>
+          )}
+        </AuthStatusConsumer>
         <Switch
           checked={this.state.checked}
           onChange={this.handleChange('checked')}

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
 import styled from 'styled-components'
+import {AuthStatusProvider} from '../container/Login'
 import './layout.css'
 
 const Wrapper = styled.div`
@@ -45,7 +46,9 @@ const Layout = ({ children }) => (
         </Helmet>
         <Wrapper>
           <Container>
-            {children}
+            <AuthStatusProvider>
+              {children}
+            </AuthStatusProvider>
           </Container>
         </Wrapper>
       </>
