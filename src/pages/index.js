@@ -2,8 +2,8 @@ import React from 'react'
 import {ButtonTwitter} from '../components/Atoms/Button'
 import {Header1} from '../components/style-typography'
 import Layout from '../components/layout'
-import {AuthStatusProvider, AuthStatusConsumer} from '../container/Login'
-import Redirect from '../container/Redirect'
+import {AuthStatusConsumer} from '../context/AuthStatusContext'
+import Redirect from '../utils/Redirect'
 
 class IndexPage extends React.Component {
 

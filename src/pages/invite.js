@@ -4,19 +4,18 @@ import styled from 'styled-components'
 import Layout from '../components/layout'
 import {Header2} from '../components/style-typography'
 import InviteCard from '../components/Molecules/InviteCard'
-// import Input from '../components/Atoms/Input'
-// import {ButtonMain} from '../components/Atoms/Button'
 import Switch from '@material-ui/core/Switch';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import {AuthStatusProvider, AuthStatusConsumer} from '../container/Login'
+import {AuthStatusConsumer} from '../context/AuthStatusContext'
+import {RequestConsumer} from '../context/RequestContext'
 
 const TextFieldsWrapper = styled.div``
 
 class InvitePage extends React.Component {
   state = {
-    checked: false,
+    previewChecked: false,
     title: '',
     description: '',
     amount: '',
@@ -41,19 +40,18 @@ class InvitePage extends React.Component {
         <AuthStatusConsumer>
           {({result}) => (
             <>
-              {console.log(result)}
               {result && <img src={result.user.photoURL} />}
             </>
           )}
         </AuthStatusConsumer>
         <Switch
-          checked={this.state.checked}
-          onChange={this.handleChange('checked')}
+          checked={this.state.previewChecked}
+          onChange={this.handleChange('previewChecked')}
           value="checked"
           color="primary"
         />
         {
-          this.state.checked
+          this.state.previewChecked
           ? <InviteCard
             title={this.state.title}
             description={this.state.description}
@@ -102,10 +100,21 @@ class InvitePage extends React.Component {
             />
           </TextFieldsWrapper> 
         }
-        
-        <Button variant="contained" color="primary">
-          募集する
-        </Button>
+
+        <RequestConsumer>
+          {({postRequest, requestData}) => (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => postRequest(
+                'https://demo9911358.mockable.io/create-invite',
+                this.state,
+                'inviteRequest'
+              )}>
+              募集する 
+            </Button>
+          )}
+        </RequestConsumer>
       </Layout>
     );
   }
