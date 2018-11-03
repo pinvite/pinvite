@@ -14,13 +14,9 @@ export class AuthStatusProvider extends React.Component {
   }
 
   handleLogin = () => {
-    console.log("click login")
     firebase.auth().signInWithPopup(providerTwitter).then(result => {
-      console.log(result)
       if (result.credential) {
         this.setState({result: result});
-        console.log(this.state)
-        console.log(isequal(result, localStorage.result))
         if(!isequal(result, localStorage.result)) {
           localStorage.setItem('result', JSON.stringify(result))
         }

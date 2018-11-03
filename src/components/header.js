@@ -1,33 +1,25 @@
 import React from 'react'
 import { Link } from 'gatsby'
+import styled from 'styled-components'
+import {font, Header2} from './style-typography'
+import palette from './style-palette'
+
+const HeaderContainer = styled.div`
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+  padding: 8px 0;
+  ${font}
+  color: ${palette.textColor};
+`
+
+const Logo = styled.p``
+
 
 const Header = ({ siteTitle }) => (
-  <div
-    style={{
-      background: 'rebeccapurple',
-      marginBottom: '1.45rem',
-    }}
-  >
-    <div
-      style={{
-        margin: '0 auto',
-        maxWidth: 960,
-        padding: '1.45rem 1.0875rem',
-      }}
-    >
-      <h1 style={{ margin: 0 }}>
-        <Link
-          to="/"
-          style={{
-            color: 'white',
-            textDecoration: 'none',
-          }}
-        >
-          {siteTitle}
-        </Link>
-      </h1>
-    </div>
-  </div>
+  <HeaderContainer>
+    <Logo>Pinvite</Logo>
+  </HeaderContainer>
 )
 
 export default Header

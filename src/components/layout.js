@@ -5,6 +5,7 @@ import { StaticQuery, graphql } from 'gatsby'
 import styled from 'styled-components'
 import {AuthStatusProvider} from '../context/AuthStatusContext'
 import {RequestProvider} from '../context/RequestContext'
+import Header from './header'
 import './layout.css'
 
 const Wrapper = styled.div`
@@ -42,11 +43,15 @@ const Layout = ({ children }) => (
             { name: 'description', content: 'Sample' },
             { name: 'keywords', content: 'sample, something' },
           ]}
+          link={[
+            { href:"https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700", rel:"stylesheet" }
+          ]}
         >
           <html lang="en" />
         </Helmet>
         <Wrapper>
           <Container>
+            <Header />
             <AuthStatusProvider>
               <RequestProvider>
                 {children}
