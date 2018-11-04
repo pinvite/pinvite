@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
 import styled from 'styled-components'
-import {AuthStatusProvider} from '../context/AuthStatusContext'
-import {RequestProvider} from '../context/RequestContext'
 import Header from './header'
 import './layout.css'
 
@@ -25,7 +23,8 @@ const Container = styled.div`
   position: relative;
 `
 
-const Layout = ({ children }) => (
+const Layout = ({ children }) => {
+  return (
   <StaticQuery
     query={graphql`
       query SiteTitleQuery {
@@ -53,17 +52,13 @@ const Layout = ({ children }) => (
         <Wrapper>
           <Container>
             <Header />
-            <AuthStatusProvider>
-              <RequestProvider>
-                {children}
-              </RequestProvider>
-            </AuthStatusProvider>
+            {children}
           </Container>
         </Wrapper>
       </>
     )}
   />
-)
+)}
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
