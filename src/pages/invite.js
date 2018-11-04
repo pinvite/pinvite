@@ -11,6 +11,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import {AuthStatusConsumer} from '../context/AuthStatusContext'
 import {RequestConsumer} from '../context/RequestContext'
 import TwitterIcon from '../components/Atoms/TwitterIcon'
+import Redirect from '../utils/Redirect'
 
 const TextFieldsWrapper = styled.div``
 
@@ -23,6 +24,10 @@ class InvitePage extends React.Component {
     time: '',
     currency: 'JPY'
   };
+
+  componentDidMount(){
+    console.log(this.props)
+  }
 
   handleChange = name => event => {
     this.setState({ [name]: event.target.checked });
@@ -37,6 +42,14 @@ class InvitePage extends React.Component {
   render() {
     return (
       <Layout>
+
+        <AuthStatusConsumer>
+          {({result}) => (
+            <>
+              {!result && <Redirect to={'/'} />}
+            </>
+          )}
+        </AuthStatusConsumer>
         <Header2 center>募集内容</Header2>
         <AuthStatusConsumer>
           {({result}) => (
