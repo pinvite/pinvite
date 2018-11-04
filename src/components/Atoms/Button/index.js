@@ -16,11 +16,12 @@ export const ButtonMain = styled.button`
 
 export const ButtonTwitter = styled.button`
   background: ${palette.blueTwitter};
+  border: unset;
   border-radius: 4px;
   color: #fff;
   font-size: 16px;
   font-weight: bold;
+  margin-top: 16px;
   padding: 10px 24px;
-  border: unset;
   text-shadow: 0 2px 5px ${darken(0.1, palette.blueTwitter)};
 `

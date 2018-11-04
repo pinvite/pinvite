@@ -4,6 +4,7 @@ import {Header1} from '../components/style-typography'
 import Layout from '../components/layout'
 import {AuthStatusConsumer} from '../context/AuthStatusContext'
 import Redirect from '../utils/Redirect'
+import {LayoutBLockCenter} from './styled'
 
 class IndexPage extends React.Component {
 
@@ -17,7 +18,9 @@ class IndexPage extends React.Component {
               {
                 result
                 ? (<Redirect to={'/invite/'} />)
-                : (<ButtonTwitter onClick={handleLogin}>Twitterでログイン</ButtonTwitter>)
+                : (<LayoutBLockCenter>
+                  <ButtonTwitter onClick={handleLogin}>Twitterでログイン</ButtonTwitter>
+                </LayoutBLockCenter>)
               }
             </>
           )}

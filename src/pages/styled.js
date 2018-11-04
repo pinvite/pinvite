@@ -12,4 +12,9 @@ export const LayoutBottom = styled.div`
   bottom: 0;
 `
 
+export const LayoutBLockCenter = styled.div`
+  display: flex;
+  justify-content: center;
+`
+
 export const TextFieldsWrapper = styled.div``
