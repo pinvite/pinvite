@@ -21,6 +21,7 @@ export const Header2 = styled.h2`
   ${font};
   color: ${palette.textColor};
   line-height: 28px;
+  margin-bottom: 16px;
 `
 
 export const Header3 = styled.h3`
@@ -42,6 +43,11 @@ export const Header4 = styled.h4`
 export const Body1 = styled.p`
   text-align: center;
   ${font};
+`
+
+export const Caption = styled.p`
+  ${font};
+  font-weight: bold;
 `
 
 export const Copyright = styled.p`

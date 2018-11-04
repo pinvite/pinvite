@@ -2,18 +2,33 @@ import React from 'react'
 import styled from 'styled-components'
 
 import Layout from '../components/layout'
-import {Header2} from '../components/style-typography'
+import {Header2, Caption} from '../components/style-typography'
 import InviteCard from '../components/Molecules/InviteCard'
 import Switch from '@material-ui/core/Switch';
 import Button from '@material-ui/core/Button';
+import Icon from '@material-ui/core/Icon';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import {AuthStatusConsumer} from '../context/AuthStatusContext'
 import {RequestConsumer} from '../context/RequestContext'
 import TwitterIcon from '../components/Atoms/TwitterIcon'
 import Redirect from '../utils/Redirect'
+import {LayoutColumn2, LayoutBottom, TextFieldsWrapper} from './styled'
 
-const TextFieldsWrapper = styled.div``
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
+  leftIcon: {
+    marginRight: theme.spacing.unit,
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit,
+  },
+  iconSmall: {
+    fontSize: 20,
+  },
+});
 
 class InvitePage extends React.Component {
   state = {
@@ -42,7 +57,6 @@ class InvitePage extends React.Component {
   render() {
     return (
       <Layout>
-
         <AuthStatusConsumer>
           {({result}) => (
             <>
@@ -51,19 +65,24 @@ class InvitePage extends React.Component {
           )}
         </AuthStatusConsumer>
         <Header2 center>募集内容</Header2>
-        <AuthStatusConsumer>
-          {({result}) => (
-            <>
-              {result && <TwitterIcon src={result.user.photoURL} />}
-            </>
-          )}
-        </AuthStatusConsumer>
-        <Switch
-          checked={this.state.previewChecked}
-          onChange={this.handleChange('previewChecked')}
-          value="checked"
-          color="primary"
-        />
+        <LayoutColumn2>
+          <AuthStatusConsumer>
+            {({result}) => (
+              <>
+                {result && <TwitterIcon src={result.user.photoURL} />}
+              </>
+            )}
+          </AuthStatusConsumer>
+          <LayoutColumn2>
+            <Caption>Preview</Caption>
+            <Switch
+              checked={this.state.previewChecked}
+              onChange={this.handleChange('previewChecked')}
+              value="checked"
+              color="primary"
+            />
+          </LayoutColumn2>
+        </LayoutColumn2>
         {
           this.state.previewChecked
           ? <InviteCard
@@ -79,6 +98,7 @@ class InvitePage extends React.Component {
               value={this.state.title}
               onChange={this.handleChangeTextField('title')}
               margin="normal"
+              variant="outlined"
             />
             <TextField
               fullWidth
@@ -88,20 +108,7 @@ class InvitePage extends React.Component {
               onChange={this.handleChangeTextField('description')}
               multiline
               margin="normal"
-            />
-            <TextField
-              fullWidth
-              id="amount"
-              label="勉強会のギャラ"
-              value={this.state.amount}
-              onChange={this.handleChangeTextField('amount')}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment variant="filled" position="start">
-                    ¥
-                  </InputAdornment>
-                ),
-              }}
+              variant="outlined"
             />
             <TextField
               fullWidth
@@ -111,24 +118,43 @@ class InvitePage extends React.Component {
               onChange={this.handleChangeTextField('time')}
               multiline
               margin="normal"
+              variant="outlined"
+            />
+            <TextField
+              id="amount"
+              label="勉強会のギャラ"
+              value={this.state.amount}
+              onChange={this.handleChangeTextField('amount')}
+              variant="outlined"
+              margin="normal"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment variant="filled">
+                    ¥
+                  </InputAdornment>
+                ),
+              }}
             />
           </TextFieldsWrapper> 
         }
-
-        <RequestConsumer>
-          {({postRequest, requestData}) => (
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => postRequest(
-                'https://demo9911358.mockable.io/create-invite',
-                this.state,
-                'inviteRequest'
-              )}>
-              募集する 
-            </Button>
-          )}
-        </RequestConsumer>
+        <LayoutBottom>
+          <RequestConsumer>
+            {({postRequest, requestData}) => (
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                size="large"
+                onClick={() => postRequest(
+                  'https://demo9911358.mockable.io/create-invite',
+                  this.state,
+                  'inviteRequest'
+                )}>
+                募集する 
+              </Button>
+            )}
+          </RequestConsumer>
+        </LayoutBottom>
       </Layout>
     );
   }

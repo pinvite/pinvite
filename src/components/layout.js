@@ -22,6 +22,7 @@ const Container = styled.div`
   width: 90%;
   max-height: 640px;
   height: 96%;
+  position: relative;
 `
 
 const Layout = ({ children }) => (
