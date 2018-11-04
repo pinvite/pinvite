@@ -15,21 +15,6 @@ import TwitterIcon from '../components/Atoms/TwitterIcon'
 import Redirect from '../utils/Redirect'
 import {LayoutColumn2, LayoutBottom, TextFieldsWrapper} from './styled'
 
-const styles = theme => ({
-  button: {
-    margin: theme.spacing.unit,
-  },
-  leftIcon: {
-    marginRight: theme.spacing.unit,
-  },
-  rightIcon: {
-    marginLeft: theme.spacing.unit,
-  },
-  iconSmall: {
-    fontSize: 20,
-  },
-});
-
 class InvitePage extends React.Component {
   state = {
     previewChecked: false,
