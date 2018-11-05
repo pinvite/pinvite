@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {Header2} from '../components/style-typography'
+import Layout from '../components/layout'
 
 class InviteSentPage extends Component {
   componentDidMount() {
@@ -7,9 +8,11 @@ class InviteSentPage extends Component {
   }
   render () {
     return (
-      <Header2>
-        募集を投稿しました
-      </Header2>
+      <Layout>
+        <Header2 center>
+          募集を投稿しました
+        </Header2>
+      </Layout>
     )
   }
 }

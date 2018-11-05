@@ -22,6 +22,7 @@ export const Header2 = styled.h2`
   color: ${palette.textColor};
   line-height: 28px;
   margin-bottom: 16px;
+  text-align: ${props => props.center ? 'center' : 'left'};
 `
 
 export const Header3 = styled.h3`
@@ -30,6 +31,7 @@ export const Header3 = styled.h3`
   ${font};
   color: ${palette.textColor};
   line-height: 28px;
+  text-align: ${props => props.center ? 'center' : 'left'};
 `
 
 export const Header4 = styled.h4`

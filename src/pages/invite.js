@@ -1,6 +1,4 @@
 import React from 'react'
-import styled from 'styled-components'
-
 import Layout from '../components/layout'
 import {Header2, Caption} from '../components/style-typography'
 import InviteCard from '../components/Molecules/InviteCard'
@@ -27,6 +25,10 @@ class InvitePage extends React.Component {
 
   componentDidMount(){
     console.log(this.props)
+  }
+
+  componentWillReceiveProps(next) {
+    console.log(next)
   }
 
   handleChange = name => event => {
