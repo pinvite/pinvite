@@ -4,15 +4,12 @@ import {Header2, Caption} from '../components/style-typography'
 import InviteCard from '../components/Molecules/InviteCard'
 import Switch from '@material-ui/core/Switch';
 import Button from '@material-ui/core/Button';
-import Icon from '@material-ui/core/Icon';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import {AuthStatusConsumer} from '../context/AuthStatusContext'
-import {RequestConsumer} from '../context/RequestContext'
 import TwitterIcon from '../components/Atoms/TwitterIcon'
-import Redirect from '../utils/Redirect'
 import {LayoutColumn2, LayoutBottom, TextFieldsWrapper} from './styled'
 import {withAuthStatusContext, withRequestContext} from '../context/HOC'
+import { navigateTo } from 'gatsby-link';
 
 class InvitePage extends React.Component {
   state = {
@@ -26,10 +23,7 @@ class InvitePage extends React.Component {
 
   componentDidMount(){
     console.log(this.props)
-  }
-
-  componentWillReceiveProps(next) {
-    console.log(next)
+    if (!this.props.context.result) navigateTo('/')
   }
 
   handleChange = name => event => {
@@ -43,24 +37,13 @@ class InvitePage extends React.Component {
   };
 
   render() {
+    const context = this.props.context
+    const requestContext = this.props.requestContext
     return (
       <Layout>
-        <AuthStatusConsumer>
-          {({result}) => (
-            <>
-              {!result && <Redirect to={'/'} />}
-            </>
-          )}
-        </AuthStatusConsumer>
         <Header2 center>募集内容</Header2>
         <LayoutColumn2>
-          <AuthStatusConsumer>
-            {({result}) => (
-              <>
-                {result && <TwitterIcon src={result.user.photoURL} />}
-              </>
-            )}
-          </AuthStatusConsumer>
+          {context.result && <TwitterIcon src={context.result.user.photoURL} />}
           <LayoutColumn2>
             <Caption>Preview</Caption>
             <Switch
@@ -126,22 +109,18 @@ class InvitePage extends React.Component {
           </TextFieldsWrapper> 
         }
         <LayoutBottom>
-          <RequestConsumer>
-            {({postRequest, requestData}) => (
-              <Button
-                fullWidth
-                variant="contained"
-                color="primary"
-                size="large"
-                onClick={() => postRequest(
-                  'https://demo9911358.mockable.io/create-invite',
-                  this.state,
-                  'inviteRequest'
-                )}>
-                募集する 
-              </Button>
-            )}
-          </RequestConsumer>
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={() => requestContext.postRequest(
+              'https://demo9911358.mockable.io/create-invite',
+              this.state,
+              'inviteRequest'
+            )}>
+            募集する 
+          </Button>
         </LayoutBottom>
       </Layout>
     );
