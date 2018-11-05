@@ -12,6 +12,7 @@ import {RequestConsumer} from '../context/RequestContext'
 import TwitterIcon from '../components/Atoms/TwitterIcon'
 import Redirect from '../utils/Redirect'
 import {LayoutColumn2, LayoutBottom, TextFieldsWrapper} from './styled'
+import {withAuthStatusContext, withRequestContext} from '../context/HOC'
 
 class InvitePage extends React.Component {
   state = {
@@ -147,4 +148,4 @@ class InvitePage extends React.Component {
   }
 }
 
-export default InvitePage
+export default withRequestContext(withAuthStatusContext(InvitePage))

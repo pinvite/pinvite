@@ -6,15 +6,7 @@ export const wrapPageElement = ({ element, props }) => {
   return (
     <AuthStatusProvider>
       <RequestProvider>
-        <AuthStatusConsumer>
-        {(context) => (
-          React.Children.map(element, (child, index) => {
-            return React.cloneElement(child, {
-              context: context.result
-            });
-          })
-        )}
-        </AuthStatusConsumer>
+        {element}
       </RequestProvider>
     </AuthStatusProvider>
   )
