@@ -45,7 +45,7 @@ class InvitePage extends React.Component {
         <LayoutColumn2>
           {context.result && <TwitterIcon src={context.result.user.photoURL} />}
           <LayoutColumn2>
-            <Caption>Preview</Caption>
+            <Caption>プレビュー</Caption>
             <Switch
               checked={this.state.previewChecked}
               onChange={this.handleChange('previewChecked')}
