@@ -1,10 +1,15 @@
 import React from 'react'
+import ReactDOM from 'react-dom';
 import Layout from '../components/layout'
 import {Header2, Caption} from '../components/style-typography'
 import InviteCard from '../components/Molecules/InviteCard'
 import Switch from '@material-ui/core/Switch';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import TwitterIcon from '../components/Atoms/TwitterIcon'
 import {LayoutColumn2, LayoutBottom, TextFieldsWrapper} from './styled'
@@ -22,7 +27,7 @@ class InvitePage extends React.Component {
   };
 
   componentDidMount(){
-    console.log(this.props)
+    this.forceUpdate();
     if (!this.props.context.result) navigateTo('/')
   }
 
@@ -39,6 +44,7 @@ class InvitePage extends React.Component {
   render() {
     const context = this.props.context
     const requestContext = this.props.requestContext
+    const validationErrorTitle = this.state.title.length > 70
     return (
       <Layout>
         <Header2 center>募集内容</Header2>
@@ -62,15 +68,26 @@ class InvitePage extends React.Component {
             amount={this.state.amount}
             time={this.state.time} />
           : <TextFieldsWrapper>
-            <TextField
+            <FormControl
               fullWidth
-              id="title"
-              label="勉強会のタイトル"
-              value={this.state.title}
-              onChange={this.handleChangeTextField('title')}
               margin="normal"
-              variant="outlined"
-            />
+              aria-describedby="error-title"
+              error={validationErrorTitle}
+              variant="outlined">
+              <InputLabel
+                ref={ref => {
+                  this.labelRef = ReactDOM.findDOMNode(ref);
+                }}
+                htmlFor="title"
+                >勉強会のタイトル</InputLabel>
+              <OutlinedInput
+                id="title"
+                value={this.state.title}
+                onChange={this.handleChangeTextField('title')}
+                labelWidth={this.labelRef ? this.labelRef.offsetWidth : 0}
+                />
+              <FormHelperText id="error-title">70文字以内で入力してください。</FormHelperText>
+            </FormControl>
             <TextField
               fullWidth
               id="description"
