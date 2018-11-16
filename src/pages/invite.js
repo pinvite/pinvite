@@ -89,6 +89,21 @@ class InvitePage extends React.Component {
               <FormHelperText id="error-title">70文字以内で入力してください。</FormHelperText>
             </FormControl>
             <TextField
+              id="amount"
+              label="勉強会のギャラ"
+              value={this.state.amount}
+              onChange={this.handleChangeTextField('amount')}
+              variant="outlined"
+              margin="normal"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment variant="filled">
+                    ¥
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <TextField
               fullWidth
               id="description"
               label="勉強会の内容"
@@ -107,21 +122,6 @@ class InvitePage extends React.Component {
               multiline
               margin="normal"
               variant="outlined"
-            />
-            <TextField
-              id="amount"
-              label="勉強会のギャラ"
-              value={this.state.amount}
-              onChange={this.handleChangeTextField('amount')}
-              variant="outlined"
-              margin="normal"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment variant="filled">
-                    ¥
-                  </InputAdornment>
-                ),
-              }}
             />
           </TextFieldsWrapper> 
         }
