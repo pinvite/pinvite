@@ -3,6 +3,22 @@ import * as admin from 'firebase-admin'
 import * as Twit from 'twit'
 import * as express from 'express'
 
+interface Auth {
+  uid: string
+// token: DecodedIdToken //not used for now
+}
+
+// https://firebase.google.com/docs/reference/functions/functions.https#.onCall
+interface RequestWithAuth extends express.Request {
+  auth: Auth
+  instanceIdToken: string
+  rawRequest: Object
+}
+
+interface User {
+  twitter_user: string
+}
+
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
 admin.initializeApp()
@@ -21,8 +37,60 @@ userApp.get('/users/:userId/', (request, response) => {
   response.redirect("/users/" + request.params.userId + "/invites" )
 })
 
-userApp.post('/users/:userId/invites', (request, response) => {
-  response.send("hello POST /users/:userId/invites")
+userApp.post('/users/:userId/invites', (request: RequestWithAuth, response) => {
+  if (!request.auth || !request.auth.uid) {
+    response.status(403)
+    response.send("User needs to sign in")  
+  } else if(request.params.userId != request.auth.uid) {
+    response.status(403)
+    response.send("The signed-in user is not allowed to POST a resource to the given path")  
+  } else { //request.params.userId == request.auth.uid)
+
+    // Firstly, get userDoc to see the twitter user for the signed-in user = request.params.userId
+    firestore
+      .collection('users').doc(request.params.userId).get()
+      .then(userDoc => {
+
+        // Add an empty document to get the ID, before inserting the full data
+        firestore
+          .collection('users').doc(request.params.userId)
+          .collection('invites').add({}) 
+          .then(inviteDoc => {
+
+            inviteDoc.id
+            const url = "https://pinvite.fun/users/" + request.params.userId + "/invites/" + inviteDoc.id
+            const inviteData = {
+              ogp: {
+                'twitter:card'    : "summary_large_image",
+                'twitter:site'    : "@orgpinvite",
+                'twitter:creator' : userDoc.data().twitter_user,
+                'og:url'          : url,
+                'og:title'        : request.body.title,
+                'og:description'  : request.body.description,
+                'og:image'        : request.body.image_url
+              }
+            }
+
+            firestore
+              .collection('users').doc(request.params.userId)
+              .collection('invites').doc(inviteDoc.id).set(inviteData)
+              .then(doc => {
+                response.send("successfully prepared for tweet but not tweeted yet")  
+              }).catch(err => {
+                response.status(500)
+                response.send("Server error: failed to tweet")      
+              })
+  
+          }).catch(err => {
+            response.status(500)
+            response.send("Server error: failed to tweet")      
+          })
+
+      }).catch(err => {
+        response.status(500)
+        response.send("Server error: failed to tweet")      
+      })
+  }
 })
 
 userApp.get('/users/:userId/invites', (request, response) => {
