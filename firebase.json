@@ -18,6 +18,10 @@
     ],
     "rewrites": [
       {
+        "source": "/users/**",
+        "function": "userApp"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }

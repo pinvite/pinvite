@@ -1,9 +1,11 @@
 # Project dependencies
 .cache
 .vscode
+.firebase
 node_modules
 yarn-error.log
 
 # Build directory
 /public
 .DS_Store
+firebase-adminsdk-secrets.json
