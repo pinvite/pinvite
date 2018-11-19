@@ -41,6 +41,24 @@ class InvitePage extends React.Component {
     });
   };
 
+  postUrl() {
+    return ('users/' + this.props.context.result.user.uid + '/invites'); 
+  }
+
+  imageUrl() {
+    return ('https://dummy.dom'); 
+  }
+
+  createPostBody() {
+    return ({
+      amount:        this.state.amount,
+      currency:      this.state.currency,
+      description:   this.state.description,
+      image_url:     this.imageUrl(),
+      title:         this.state.title
+    });
+  }
+
   render() {
     const context = this.props.context
     const requestContext = this.props.requestContext
@@ -132,8 +150,8 @@ class InvitePage extends React.Component {
             color="primary"
             size="large"
             onClick={() => requestContext.postRequest(
-              'https://demo9911358.mockable.io/create-invite',
-              this.state,
+              this.postUrl(),
+              this.createPostBody(),
               'inviteRequest'
             )}>
             募集する 
