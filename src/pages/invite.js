@@ -15,16 +15,20 @@ import TwitterIcon from '../components/Atoms/TwitterIcon'
 import {LayoutColumn2, LayoutBottom, TextFieldsWrapper} from '../components/styled'
 import {withAuthStatusContext, withRequestContext} from '../context/HOC'
 import { navigateTo } from 'gatsby-link';
+import cloudinary from '../utils/cloudinary';
 
 class InvitePage extends React.Component {
-  state = {
-    previewChecked: false,
-    title: '',
-    description: '',
-    amount: '',
-    time: '',
-    currency: 'JPY'
-  };
+  constructor(props){
+    super(props);
+    this.state = {
+      previewChecked: false,
+      title: '',
+      description: '',
+      amount: '',
+      time: '',
+      currency: 'JPY'
+    };
+  }
 
   componentDidMount(){
     this.forceUpdate();
@@ -46,7 +50,25 @@ class InvitePage extends React.Component {
   }
 
   imageUrl() {
-    return ('https://dummy.dom'); 
+    return (cloudinary.url(
+      "pinvite-background1.png",
+      {
+        transformation: [
+          {
+            width: 1200,
+            height: 400,
+            y: 30,
+            gravity: "north",
+            overlay: {
+              font_family: "NotoSansJP-Black.otf",
+              font_size: 70, 
+              text_align: "center",
+              text: encodeURI("魚の捌き方を教えてくれる人bosyu.me!!")
+            },
+            crop: "fit"
+          },
+      ]
+    }));
   }
 
   createPostBody() {
@@ -84,7 +106,8 @@ class InvitePage extends React.Component {
             title={this.state.title}
             description={this.state.description}
             amount={this.state.amount}
-            time={this.state.time} />
+            time={this.state.time}
+            imageUrl={this.imageUrl()} />
           : <TextFieldsWrapper>
             <FormControl
               fullWidth

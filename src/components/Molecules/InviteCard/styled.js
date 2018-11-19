@@ -20,5 +20,8 @@ export const SecondaryTitle = styled.div`
   font-size: 18px;
   color: #fff;
   text-align: center;
+`
 
+export const TweetImage = styled.img`
+  max-width: 100%;
 `
