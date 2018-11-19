@@ -63,7 +63,7 @@ class InvitePage extends React.Component {
               font_family: "NotoSansJP-Black.otf",
               font_size: 70, 
               text_align: "center",
-              text: "%E9%AD%9A%E3%81%AE%E6%8D%8C%E3%81%8D%E6%96%B9%E3%82%92%E6%95%99%E3%81%88%E3%81%A6%E3%81%8F%E3%82%8C%E3%82%8B%E4%BA%BAbosyu.me%21%21"
+              text: encodeURI("魚の捌き方を教えてくれる人bosyu.me!!")
             },
             crop: "fit"
           },
