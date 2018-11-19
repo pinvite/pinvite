@@ -2,6 +2,7 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin'
 import * as Twit from 'twit'
 import * as express from 'express'
+import { resolve } from 'url';
 
 interface Auth {
   uid: string
@@ -98,7 +99,34 @@ userApp.get('/users/:userId/invites', (request, response) => {
 })
 
 userApp.get('/users/:userId/invites/:invitationId', (request, response) => {
-  response.send("hello world /users/:userId/invites/:invitationId")
+  firestore
+    .collection('users').doc(request.params.userId)
+    .collection('invites').doc(request.params.invitationId).get().then(invitationDoc => {
+      //This should actually be rendered by React SSR
+      const html =
+        '<!DOCTYPE html>' +
+        '<html>' +
+        '  <head>' +
+        '    <meta charset="UTF-8">' +
+        '    <meta name="twitter:card" content="' + invitationDoc.data()['twitter:card'] + '" />' +
+        '    <meta name="twitter:site" content="' + invitationDoc.data()['twitter:site'] + '" />' +
+        '    <meta name="twitter:creator" content="' + invitationDoc.data()['twitter:creator'] + '" />' +
+        '    <meta property="og:url" content="' + invitationDoc.data()['og:url'] + '" />' +
+        '    <meta property="og:title" content="' + invitationDoc.data()['og:title'] + '" />' +
+        '    <meta property="og:description" content="' + invitationDoc.data()['og:description'] + '" />' +
+        '    <meta property="og:image" content="' + invitationDoc.data()['og:image'] + '" />' +
+        '    <title>title</title>' +
+        '  </head>' +
+        '  <body>' +
+        '        HEEELLLOOOOO WHAAAAATTT THE FFFFFFFFFFFF!!!!!!!  ' + 
+        '  </body>' +
+        '</html>'
+
+        response.send(html)
+    }).catch(err => {
+      response.status(404)
+      response.send("No such invitation")      
+    })
 })
 
 // export const helloWorld = functions.https.onRequest((request, response) => {
