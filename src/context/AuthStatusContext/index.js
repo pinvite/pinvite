@@ -8,7 +8,7 @@ export class AuthStatusProvider extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      result: JSON.parse(localStorage.getItem('result')) || null
+      result: (typeof window !== 'undefined' && JSON.parse(localStorage.getItem('result'))) || null
     };
     this.handleLogin = this.handleLogin.bind(this)
   }
@@ -17,7 +17,7 @@ export class AuthStatusProvider extends React.Component {
     firebase.auth().signInWithPopup(providerTwitter).then(result => {
       if (result.credential) {
         this.setState({result: result});
-        if(!isequal(result, localStorage.result)) {
+        if(typeof window !== 'undefined' && !isequal(result, localStorage.result)) {
           localStorage.setItem('result', JSON.stringify(result))
         }
       }
