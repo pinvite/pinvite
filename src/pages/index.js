@@ -3,7 +3,7 @@ import {ButtonTwitter} from '../components/Atoms/Button'
 import {Header1} from '../components/style-typography'
 import Layout from '../components/layout'
 import {withAuthStatusContext} from '../context/HOC'
-import {LayoutBLockCenter} from './styled'
+import {LayoutBLockCenter} from '../components/styled'
 import { navigateTo } from 'gatsby-link';
 
 class IndexPage extends React.Component {

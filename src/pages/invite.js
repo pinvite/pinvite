@@ -12,7 +12,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import TwitterIcon from '../components/Atoms/TwitterIcon'
-import {LayoutColumn2, LayoutBottom, TextFieldsWrapper} from './styled'
+import {LayoutColumn2, LayoutBottom, TextFieldsWrapper} from '../components/styled'
 import {withAuthStatusContext, withRequestContext} from '../context/HOC'
 import { navigateTo } from 'gatsby-link';
 
