@@ -12,13 +12,18 @@ We are hosting the website at Firebase, as it provides Firebase Authentication w
 
 Will add CI for auto deploy later.
 
+### Cloud Functions for Firebase
+
+We are using [Cloud Functions for Firebase](https://firebase.google.com/docs/functions/?gclid=Cj0KCQiA28nfBRCDARIsANc5BFBlnGQ6qGJD6xHfpJSOWLwKeqFxLdmBRgbiuUW7eJFVJROwHxBItp8aAlLjEALw_wcB) for the server-side (serverless) processing.
+
 ## Twitter application
 
 Needed to provide Twitter login capabilities for users.
 
 https://developer.twitter.com/en/apps
 
-Ask the project admin to get the access. Use https://twitter.com/orgpinvite
+Ask the project admin to get the access to the Twitter Developer console.
+Use https://twitter.com/orgpinvite.
 
 ## Figma
 
@@ -31,3 +36,22 @@ Project documentation [here](https://paper.dropbox.com/doc/pinvite--AOY9I7GCHKeb
 ## Slack
 
 benkyoukaitalk.slack.com
+
+## Development
+
+After git cloning this repository:
+
+```
+> gatsby develop
+```
+
+This brings up web UI without the backend.
+
+If you want to locally test the web UI with the backend on Cloud Functions for Firebase, you should do the following
+
+```
+> gatsby build
+> firebase serve
+```
+
+The first command `gatsby build` will produce output to the `public` directory, then `firebase serve` brings up the local firebase hosting and firebase functions.
