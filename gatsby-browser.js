@@ -6,7 +6,7 @@ export const wrapPageElement = ({ element, props }) => {
   return (
     <AuthStatusProvider>
       <RequestProvider>
-        {element}
+        <div {...props}>{element}</div>
       </RequestProvider>
     </AuthStatusProvider>
   )
