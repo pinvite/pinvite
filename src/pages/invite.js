@@ -26,7 +26,8 @@ class InvitePage extends React.Component {
       description: '',
       amount: '',
       time: '',
-      currency: 'JPY'
+      timeUnit: '時間',
+      currency: '円'
     };
   }
 
@@ -49,24 +50,55 @@ class InvitePage extends React.Component {
     return ('users/' + this.props.context.result.user.uid + '/invites'); 
   }
 
-  imageUrl() {
+  imageUrl(title, description) {
+    //https://cloudinary.com/documentation/image_transformations#adding_text_captions
     return (cloudinary.url(
       "pinvite-background1.png",
       {
         transformation: [
           {
-            width: 1200,
-            height: 400,
-            y: 30,
-            gravity: "north",
+            width: 1000,
+            height: 500,
+            x: 100,
+            y: 50,
+            gravity: "north_west",
             overlay: {
               font_family: "NotoSansJP-Black.otf",
-              font_size: 70, 
-              text_align: "center",
-              text: encodeURI("魚の捌き方を教えてくれる人bosyu.me!!")
+              font_size: 60, 
+              font_antialias: "best",
+              text_align: "left",
+              text: encodeURI(this.state.title)
             },
             crop: "fit"
           },
+          {
+            width: 1000,
+            height: 100,
+            x: 100,
+            y: 600,
+            overlay: {
+              font_family: "NotoSansJP-Black.otf",
+              font_size: 60, 
+              text_align: "start",
+              text: encodeURI('勉強会のギャラ: ' + this.state.amount + this.state.currency)
+            },
+            gravity: "north_west",
+            crop: "fit"
+          },
+          {
+            width: 1000,
+            height: 94,
+            x: 100,
+            y: 700,
+            overlay: {
+              font_family: "NotoSansJP-Black.otf",
+              font_size: 60, 
+              text_align: "left",
+              text: encodeURI('勉強会の時間: ' + this.state.time + ' ' + this.state.timeUnit)
+            },
+            gravity: "north_west",
+            crop: "fit"
+          }
       ]
     }));
   }
@@ -103,10 +135,7 @@ class InvitePage extends React.Component {
         {
           this.state.previewChecked
           ? <InviteCard
-            title={this.state.title}
             description={this.state.description}
-            amount={this.state.amount}
-            time={this.state.time}
             imageUrl={this.imageUrl()} />
           : <TextFieldsWrapper>
             <FormControl

@@ -5,21 +5,9 @@ export const Container = styled.div`
   padding: 24px;
 `
 
-export const Title = styled.div`
-  font-size: 24px;
-  color: #fff;
-  text-align: center;
-`
-
 export const Description = styled.div`
   font-size: 14px;
   color: #fff;
-`
-
-export const SecondaryTitle = styled.div`
-  font-size: 18px;
-  color: #fff;
-  text-align: center;
 `
 
 export const TweetImage = styled.img`

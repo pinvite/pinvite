@@ -1,11 +1,9 @@
 import React from 'react'
-import {Container, Title, Description, SecondaryTitle, TweetImage} from './styled.js'
+import {Container, Description, TweetImage} from './styled.js'
 
-const InviteCard = ({title, description, amount, time, imageUrl}) => { 
+const InviteCard = ({description, imageUrl}) => { 
   return (
     <Container>
-      <Title>{title}</Title>
-      <SecondaryTitle>{time} {amount}円~</SecondaryTitle>
       <TweetImage src={imageUrl}></TweetImage>
       <Description>{description}</Description>
     </Container>
