@@ -105,8 +105,6 @@ class InvitePage extends React.Component {
 
   createPostBody() {
     return ({
-      amount:        this.state.amount,
-      currency:      this.state.currency,
       description:   this.state.description,
       image_url:     this.imageUrl(),
       title:         this.state.title
