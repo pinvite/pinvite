@@ -14,5 +14,9 @@ firebase.initializeApp({
 export const providerGoogle = new firebase.auth.GoogleAuthProvider();
 export const providerFacebook = new firebase.auth.FacebookAuthProvider();
 export const providerTwitter = new firebase.auth.TwitterAuthProvider();
-export const db = firebase.firestore(); //firestroeを使う場合
+export const firestore = firebase.firestore(); //firestroeを使う場合
+// Disable deprecated features
+firestore.settings({
+  timestampsInSnapshots: true
+});
 export default firebase;

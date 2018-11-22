@@ -1,5 +1,5 @@
 import React from 'react'
-import firebase, { providerTwitter } from '../../utils/firebase';
+import firebase, { firestore, providerTwitter } from '../../utils/firebase';
 import isequal from 'lodash.isequal'
 
 const AuthStatusContext = React.createContext();
@@ -19,6 +19,26 @@ export class AuthStatusProvider extends React.Component {
         user.getIdToken().then(idToken => {
           this.setState({idToken: idToken});
         }).catch(error => {
+          this.setState({error: error})
+        });
+
+        firestore.collection('users').doc(user.uid).get().then(userDoc => {
+          if(!userDoc.exists 
+            || !userDoc.data().twitter
+            || !userDoc.data().twitter.twitter
+            || !userDoc.data().twitter.access_token
+            || !userDoc.data().twitter.secret            
+          ) {
+            firestore.collection('users').doc(user.uid).set({
+              twitter: {
+                user_id: this.state.result.additionalUserInfo.profile.screen_name,
+                access_token: this.state.result.credential.accessToken,
+                secret: this.state.result.credential.secret,
+              }
+            });
+          }
+        }).catch(error => {
+          //This could be due to `Missing or insufficient permissions` from Firestore rules.
           this.setState({error: error})
         });
       } else {
