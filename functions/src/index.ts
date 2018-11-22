@@ -4,22 +4,6 @@ import * as Twit from 'twit'
 import * as express from 'express'
 import { resolve } from 'url';
 
-interface Auth {
-  uid: string
-// token: DecodedIdToken //not used for now
-}
-
-// https://firebase.google.com/docs/reference/functions/functions.https#.onCall
-interface RequestWithAuth extends express.Request {
-  auth: Auth
-  instanceIdToken: string
-  rawRequest: Object
-}
-
-interface User {
-  twitter_user: string
-}
-
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
 admin.initializeApp()
@@ -38,15 +22,45 @@ userApp.get('/users/:userId/', (request, response) => {
   response.redirect("/users/" + request.params.userId + "/invites" )
 })
 
-userApp.post('/users/:userId/invites', (request: RequestWithAuth, response) => {
-  if (!request.auth || !request.auth.uid) {
-    response.status(403)
-    response.send("User needs to sign in")  
-  } else if(request.params.userId != request.auth.uid) {
-    response.status(403)
-    response.send("The signed-in user is not allowed to POST a resource to the given path")  
-  } else { //request.params.userId == request.auth.uid)
+userApp.post('/users/:userId/invites', (request, response) => {
+  console.log('Check if request is authorized with Firebase ID token');
 
+  if ((!request.headers.authorization || !request.headers.authorization.startsWith('Bearer ')) &&
+      !(request.cookies && request.cookies.__session)) {
+    console.error('No Firebase ID token was passed as a Bearer token in the Authorization header.',
+        'Make sure you authorize your request by providing the following HTTP header:',
+        'Authorization: Bearer <Firebase ID Token>',
+        'or by passing a "__session" cookie.');
+    response.status(403).send('Unauthorized: user needs to login');
+    return;
+  }
+
+  let idToken;
+  if (request.headers.authorization && request.headers.authorization.startsWith('Bearer ')) {
+    console.log('Found "Authorization" header');
+    // Read the ID Token from the Authorization header.
+    idToken = request.headers.authorization.split('Bearer ')[1];
+  } else if(request.cookies) {
+    console.log('Found "__session" cookie');
+    // Read the ID Token from cookie.
+    idToken = request.cookies.__session;
+  } else {
+    // No cookie
+    response.status(403).send('Unauthorized: user needs to login');
+    return;
+  }
+
+  admin.auth().verifyIdToken(idToken).then((decodedIdToken) => {
+    console.log('ID Token correctly decoded', decodedIdToken);
+    const twitterUser = decodedIdToken;
+    console.log(twitterUser)
+
+    if(request.params.userId != decodedIdToken.uid) {
+      response.status(403)
+      response.send("Unauthorized: the logged-in user is not allowed to POST a resource to the given path")  
+      return;
+    } 
+   
     // Firstly, get userDoc to see the twitter user for the signed-in user = request.params.userId
     firestore
       .collection('users').doc(request.params.userId).get()
@@ -64,7 +78,7 @@ userApp.post('/users/:userId/invites', (request: RequestWithAuth, response) => {
               ogp: {
                 'twitter:card'    : "summary_large_image",
                 'twitter:site'    : "@orgpinvite",
-                'twitter:creator' : userDoc.data().twitter_user,
+                'twitter:creator' : twitterUser.uid,
                 'og:url'          : url,
                 'og:title'        : request.body.title,
                 'og:description'  : request.body.description,
@@ -91,7 +105,11 @@ userApp.post('/users/:userId/invites', (request: RequestWithAuth, response) => {
         response.status(500)
         response.send("Server error: failed to tweet")      
       })
-  }
+
+    }).catch((error) => {
+    console.error('Error while verifying Firebase ID token:', error);
+    response.status(403).send('Unauthorized: user cannot be verified');
+  });
 })
 
 userApp.get('/users/:userId/invites', (request, response) => {
