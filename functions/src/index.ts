@@ -78,7 +78,7 @@ userApp.post('/users/:userId/invites', (request, response) => {
               ogp: {
                 'twitter:card'    : "summary_large_image",
                 'twitter:site'    : "@orgpinvite",
-                'twitter:creator' : twitterUser.uid,
+                'twitter:creator' : userDoc.data().twitter.user_id,
                 'og:url'          : url,
                 'og:title'        : request.body.title,
                 'og:description'  : request.body.description,
@@ -112,10 +112,12 @@ userApp.post('/users/:userId/invites', (request, response) => {
   });
 })
 
+//This probably doesn't need to be on the function side, nor SSR 
 userApp.get('/users/:userId/invites', (request, response) => {
   response.send("hello GET /users/:userId/invites")
 })
 
+//This needs to be SSR
 userApp.get('/users/:userId/invites/:invitationId', (request, response) => {
   firestore
     .collection('users').doc(request.params.userId)
@@ -126,17 +128,17 @@ userApp.get('/users/:userId/invites/:invitationId', (request, response) => {
         '<html>' +
         '  <head>' +
         '    <meta charset="UTF-8">' +
-        '    <meta name="twitter:card" content="' + invitationDoc.data()['twitter:card'] + '" />' +
-        '    <meta name="twitter:site" content="' + invitationDoc.data()['twitter:site'] + '" />' +
-        '    <meta name="twitter:creator" content="' + invitationDoc.data()['twitter:creator'] + '" />' +
-        '    <meta property="og:url" content="' + invitationDoc.data()['og:url'] + '" />' +
-        '    <meta property="og:title" content="' + invitationDoc.data()['og:title'] + '" />' +
-        '    <meta property="og:description" content="' + invitationDoc.data()['og:description'] + '" />' +
-        '    <meta property="og:image" content="' + invitationDoc.data()['og:image'] + '" />' +
+        '    <meta name="twitter:card" content="' + invitationDoc.data().ogp['twitter:card'] + '" />' +
+        '    <meta name="twitter:site" content="' + invitationDoc.data().ogp['twitter:site'] + '" />' +
+        '    <meta name="twitter:creator" content="' + invitationDoc.data().ogp['twitter:creator'] + '" />' +
+        '    <meta property="og:url" content="' + invitationDoc.data().ogp['og:url'] + '" />' +
+        '    <meta property="og:title" content="' + invitationDoc.data().ogp['og:title'] + '" />' +
+        '    <meta property="og:description" content="' + invitationDoc.data().ogp['og:description'] + '" />' +
+        '    <meta property="og:image" content="' + invitationDoc.data().ogp['og:image'] + '" />' +
         '    <title>title</title>' +
         '  </head>' +
         '  <body>' +
-        '        HEEELLLOOOOO WHAAAAATTT THE FFFFFFFFFFFF!!!!!!!  ' + 
+        '    <img src="' + invitationDoc.data().ogp['og:image']   + '"> ' +
         '  </body>' +
         '</html>'
 
