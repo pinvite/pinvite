@@ -10,11 +10,12 @@ export class RequestProvider extends React.Component {
     this.getRequest = this.getRequest.bind(this)
   }
 
-  postRequest = (url, data, property) => {
+  postRequest = (url, data, refreshToken, property) => {
     fetch(url, {
       method: "POST",
       headers: {
           "Content-Type": "application/json; charset=utf-8",
+          "Authorization": "Bearer " + refreshToken
       },
       body: JSON.stringify(data), // 本文のデータ型は "Cont
     }).then(response => response.json())
