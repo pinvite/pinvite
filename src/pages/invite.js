@@ -47,7 +47,7 @@ class InvitePage extends React.Component {
   };
 
   postUrl() {
-    return ('users/' + this.props.context.result.user.uid + '/invites'); 
+    return ('/users/' + this.props.context.result.user.uid + '/invites'); 
   }
 
   imageUrl(title, description) {
@@ -202,6 +202,7 @@ class InvitePage extends React.Component {
             onClick={() => requestContext.postRequest(
               this.postUrl(),
               this.createPostBody(),
+              this.props.context.idToken,
               'inviteRequest'
             )}>
             募集する 

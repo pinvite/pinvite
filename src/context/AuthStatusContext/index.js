@@ -13,6 +13,20 @@ export class AuthStatusProvider extends React.Component {
     this.handleLogin = this.handleLogin.bind(this)
   }
 
+  componentDidMount(){
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        user.getIdToken().then(idToken => {
+          this.setState({idToken: idToken});
+        }).catch(error => {
+          this.setState({error: error})
+        });
+      } else {
+        this.setState({error: "login failed - no user found"})
+      }
+    });
+  }
+
   handleLogin = () => {
     firebase.auth().signInWithPopup(providerTwitter).then(result => {
       if (result.credential) {
@@ -27,11 +41,11 @@ export class AuthStatusProvider extends React.Component {
   }
 
   render(){
-    console.log(this.state)
     return(
       <AuthStatusContext.Provider
         value={{
           result: this.state.result,
+          idToken: this.state.idToken,
           handleLogin: () => this.handleLogin()
         }}>
         {this.props.children}
