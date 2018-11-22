@@ -6,7 +6,7 @@ const AuthStatusContext = React.createContext();
 
 export class AuthStatusProvider extends React.Component {
   constructor(props){
-   super(props);
+    super(props);
     this.state = {
       result: (typeof window !== 'undefined' && JSON.parse(localStorage.getItem('result'))) || null
     };
