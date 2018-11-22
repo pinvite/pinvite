@@ -1,8 +1,11 @@
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /dummycollection/{documnet} {
-      allow read: if true;
-      allow write: if false;
+    match /users/{uid} {
+      allow read, write: if request.auth.uid == uid;
+
+      match /invites/{documnet=**} {
+        allow read, write: if true;
+      }
     }
   }
 }
