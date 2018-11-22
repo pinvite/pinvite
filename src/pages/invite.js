@@ -22,10 +22,10 @@ class InvitePage extends React.Component {
     super(props);
     this.state = {
       previewChecked: false,
-      title: 'MySQLで実現するYourSQL、ココで長めのタイトルにするために余計な文字をたくさん入れてみたいと思います！あとちょっとで70文字！！',
-      description: 'MySQLのライバルとして目下注目を集めているYourSQL。このデータベースについて弊社で勉強会を開いてくれる講師をWanted!!とか適当な冗談言おうとしたらマジであるみたいじゃんYouSQL!!wwwhttps://www.vldb.org/pvldb/vol9/p924-jo.pdf',
-      amount: '10000',
-      time: '2',
+      title: '',
+      description: '',
+      amount: '',
+      time: '',
       timeUnit: '時間',
       currency: '円'
     };
