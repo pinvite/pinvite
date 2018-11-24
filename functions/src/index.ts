@@ -162,32 +162,5 @@ userApp.get('/users/:userId/invites/:invitationId', (request, response) => {
       response.send("No such invitation")      
     })
 })
-<<<<<<< Updated upstream
-
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//   console.log('firebase function called with request:')
-//   console.log(request)
-
-//   const twit = Twit({
-//     consumer_key:        twitterApiKey,
-//     consumer_secret:     twitterApiSecret,
-//     access_token:        request.body.access_token,
-//     access_token_secret: request.body.access_token_secret
-//   })
-
-//   console.log('twit initialized as:')
-//   console.log(twit)
-
-//   twit.post('statuses/update', { status: 'hello world!' }, function(err, data, twitResponse) {
-//     console.log('status update done data:')
-//     console.log(data)
-//     console.log('status update done error:')
-//     console.log(err)
-//   })
-  
-//   response.send("Hello from Firebase!");
-// })
-=======
->>>>>>> Stashed changes
 
 exports.userApp = functions.https.onRequest(userApp)
