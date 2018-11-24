@@ -1,14 +1,15 @@
-import * as functions from 'firebase-functions';
+import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import * as Twit from 'twit'
 import * as express from 'express'
-import { resolve } from 'url';
+import { resolve } from 'url'
+import * as fs from 'fs'
 
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
 admin.initializeApp()
 const firestore = admin.firestore();
-firestore.settings({timestampsInSnapshots: true});
+firestore.settings({timestampsInSnapshots: true})
 
 // Firebase environment configuration for Firebase Cloud Functions
 // https://firebase.google.com/docs/functions/config-env
@@ -78,7 +79,7 @@ userApp.post('/users/:userId/invites', (request, response) => {
               ogp: {
                 'twitter:card'    : "summary_large_image",
                 'twitter:site'    : "@orgpinvite",
-                'twitter:creator' : userDoc.data().twitter.user_id,
+                'twitter:creator' : "@" + userDoc.data().twitter.user_id,
                 'og:url'          : url,
                 'og:title'        : request.body.title,
                 'og:description'  : request.body.description,
@@ -118,7 +119,7 @@ userApp.get('/users/:userId/invites', (request, response) => {
 })
 
 //This needs to be SSR
-userApp.get('/users/:userId/invites/:invitationId', (request, response) => {
+userApp.get('/users/:userId/invites2/:invitationId', (request, response) => {
   firestore
     .collection('users').doc(request.params.userId)
     .collection('invites').doc(request.params.invitationId).get().then(invitationDoc => {
@@ -147,6 +148,12 @@ userApp.get('/users/:userId/invites/:invitationId', (request, response) => {
       response.status(404)
       response.send("No such invitation")      
     })
+})
+
+const index = fs.readFileSync(__dirname + '/users/index.html', 'utf8')
+
+userApp.get('/users/:userId/invites/:invitationId', (request, response) => {
+  response.send(index)
 })
 
 // export const helloWorld = functions.https.onRequest((request, response) => {
