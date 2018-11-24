@@ -1,14 +1,15 @@
-import * as functions from 'firebase-functions';
+import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import * as Twit from 'twit'
 import * as express from 'express'
-import { resolve } from 'url';
+import { resolve } from 'url'
+import * as fs from 'fs'
 
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
 admin.initializeApp()
 const firestore = admin.firestore();
-firestore.settings({timestampsInSnapshots: true});
+firestore.settings({timestampsInSnapshots: true})
 
 // Firebase environment configuration for Firebase Cloud Functions
 // https://firebase.google.com/docs/functions/config-env
@@ -78,7 +79,7 @@ userApp.post('/users/:userId/invites', (request, response) => {
               ogp: {
                 'twitter:card'    : "summary_large_image",
                 'twitter:site'    : "@orgpinvite",
-                'twitter:creator' : userDoc.data().twitter.user_id,
+                'twitter:creator' : "@" + userDoc.data().twitter.user_id,
                 'og:url'          : url,
                 'og:title'        : request.body.title,
                 'og:description'  : request.body.description,
@@ -118,36 +119,36 @@ userApp.get('/users/:userId/invites', (request, response) => {
 })
 
 //This needs to be SSR
+const usersHtml = fs.readFileSync(__dirname + '/users/index.html', 'utf8')
 userApp.get('/users/:userId/invites/:invitationId', (request, response) => {
+  console.log(request.params.userId)
+  console.log(request.params.invitationId)
   firestore
     .collection('users').doc(request.params.userId)
     .collection('invites').doc(request.params.invitationId).get().then(invitationDoc => {
-      //This should actually be rendered by React SSR
-      const html =
-        '<!DOCTYPE html>' +
-        '<html>' +
-        '  <head>' +
-        '    <meta charset="UTF-8">' +
-        '    <meta name="twitter:card" content="' + invitationDoc.data().ogp['twitter:card'] + '" />' +
-        '    <meta name="twitter:site" content="' + invitationDoc.data().ogp['twitter:site'] + '" />' +
-        '    <meta name="twitter:creator" content="' + invitationDoc.data().ogp['twitter:creator'] + '" />' +
-        '    <meta property="og:url" content="' + invitationDoc.data().ogp['og:url'] + '" />' +
-        '    <meta property="og:title" content="' + invitationDoc.data().ogp['og:title'] + '" />' +
-        '    <meta property="og:description" content="' + invitationDoc.data().ogp['og:description'] + '" />' +
-        '    <meta property="og:image" content="' + invitationDoc.data().ogp['og:image'] + '" />' +
-        '    <title>title</title>' +
-        '  </head>' +
-        '  <body>' +
-        '    <img src="' + invitationDoc.data().ogp['og:image']   + '"> ' +
-        '  </body>' +
-        '</html>'
-
+      if(!invitationDoc.exists){
+        console.log('No such invitationNo such invitationNo such invitationNo such invitation')
+        response.status(404)
+        response.send("No such invitation")    
+      } else {
+        const html = usersHtml
+          .replace('*|twitter:card|*',    invitationDoc.data().ogp['twitter:card'])
+          .replace('*|twitter:site|*',    invitationDoc.data().ogp['twitter:site']) 
+          .replace('*|twitter:creator|*', invitationDoc.data().ogp['twitter:creator'])
+          .replace('*|og:url|*',          invitationDoc.data().ogp['og:url'])
+          .replace('*|og:title|*',        invitationDoc.data().ogp['og:title'])
+          .replace('*|og:description|*',  invitationDoc.data().ogp['og:description'])
+          .replace('*|og:image|*',        invitationDoc.data().ogp['og:image'])         
+          .replace('*|title|*',           invitationDoc.data().ogp['og:title'])
+        
         response.send(html)
+      }
     }).catch(err => {
+      console.log(err)
       response.status(404)
-      response.send("No such invitation")      
+      response.send("No such invitation")    
     })
-})
+  })
 
 // export const helloWorld = functions.https.onRequest((request, response) => {
 //   console.log('firebase function called with request:')
