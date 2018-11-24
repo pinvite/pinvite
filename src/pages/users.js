@@ -24,8 +24,13 @@ let Invites = ({children}) =>
 let Invite = ({inviteId, children}) =>
  <div>
    invite: {inviteId}
-   {/* These *|something|* values should be replaced by server-side (serverless) Firebase Functions */}
-   <Helmet
+   {children}
+ </div>
+
+const Users = () => (
+  <Layout>
+    {/* These *|something|* values should be replaced by server-side (serverless) Firebase Functions*/}
+    <Helmet
       meta={[
         { name: 'twitter:card',    content: '*|twitter:card|*' },
         { name: 'twitter:site',    content: '*|twitter:site|*' },
@@ -33,22 +38,17 @@ let Invite = ({inviteId, children}) =>
         { name: 'og:url',          content: '*|og:url|*' },
         { name: 'og:title',        content: '*|og:title|*' },
         { name: 'og:description',  content: '*|og:description|*' },
-        { name: 'og:url',          content: '*|og:url|*' },
+        { name: 'og:image',        content: '*|og:image|*' },
         { name: 'title',           content: '*|title|*' }
       ]}
     />
-   {children}
- </div>
-
-const Users = () => (
-  <Layout>
-    {
-      // (https://www.gatsbyjs.org/docs/authentication-tutorial/#creating-client-only-routes)
-      // Note that in gatsby, client-only routing requires @reach/router and either of the below:
-      //   - gatsby-node.js to implement `onCreatePage`
-      //   - gatsby-plugin-create-client-paths 
-    }
     <Router>
+      {
+        // (https://www.gatsbyjs.org/docs/authentication-tutorial/#creating-client-only-routes)
+        // Note that in gatsby, client-only routing requires @reach/router and either of the below:
+        //   - gatsby-node.js to implement `onCreatePage`
+        //   - gatsby-plugin-create-client-paths 
+      }
       <Home path="users">
         <User path=":userId">
           <Invites path="invites">
