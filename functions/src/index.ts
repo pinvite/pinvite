@@ -91,7 +91,21 @@ userApp.post('/users/:userId/invites', (request, response) => {
               .collection('users').doc(request.params.userId)
               .collection('invites').doc(inviteDoc.id).set(inviteData)
               .then(doc => {
-                response.send("successfully prepared for tweet but not tweeted yet")  
+                const twit = Twit({
+                  consumer_key:        twitterApiKey,
+                  consumer_secret:     twitterApiSecret,
+                  access_token:        userDoc.data().twitter.access_token,
+                  access_token_secret: userDoc.data().twitter.secret,
+                })
+
+                twit.post('statuses/update', { status: "#pinvite " + url }, function(err, data, twitResponse) {
+                  console.log('status update done data:')
+                  console.log(data)
+                  console.log('status update done error:')
+                  console.log(err)
+                })
+
+                response.send("successfully tweeted")  
               }).catch(err => {
                 response.status(500)
                 response.send("Server error: failed to tweet")      
@@ -149,29 +163,5 @@ userApp.get('/users/:userId/invites/:invitationId', (request, response) => {
       response.send("No such invitation")    
     })
   })
-
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//   console.log('firebase function called with request:')
-//   console.log(request)
-
-//   const twit = Twit({
-//     consumer_key:        twitterApiKey,
-//     consumer_secret:     twitterApiSecret,
-//     access_token:        request.body.access_token,
-//     access_token_secret: request.body.access_token_secret
-//   })
-
-//   console.log('twit initialized as:')
-//   console.log(twit)
-
-//   twit.post('statuses/update', { status: 'hello world!' }, function(err, data, twitResponse) {
-//     console.log('status update done data:')
-//     console.log(data)
-//     console.log('status update done error:')
-//     console.log(err)
-//   })
-  
-//   response.send("Hello from Firebase!");
-// })
 
 exports.userApp = functions.https.onRequest(userApp)
