@@ -53,12 +53,12 @@ class InvitePage extends React.Component {
   imageUrl(title, description) {
     //https://cloudinary.com/documentation/image_transformations#adding_text_captions
     return (cloudinary.url(
-      "pinvite-background1.png",
+      "pinvite-background2.png",
       {
         transformation: [
           {
             width: 1000,
-            height: 500,
+            height: 400,
             x: 100,
             y: 50,
             gravity: "north_west",
@@ -75,7 +75,7 @@ class InvitePage extends React.Component {
             width: 1000,
             height: 100,
             x: 100,
-            y: 600,
+            y: 400,
             overlay: {
               font_family: "NotoSansJP-Black.otf",
               font_size: 60, 
@@ -89,7 +89,7 @@ class InvitePage extends React.Component {
             width: 1000,
             height: 94,
             x: 100,
-            y: 700,
+            y: 500,
             overlay: {
               font_family: "NotoSansJP-Black.otf",
               font_size: 60, 
