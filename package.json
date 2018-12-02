@@ -34,11 +34,22 @@
     "build": "gatsby build && npm run copyUsersPage",
     "develop": "gatsby develop",
     "format": "prettier --write '**/*.js'",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "tslint 'src/**/*.{ts,tsx}' -p tsconfig.json",
+    "tsc": "tsc"
   },
   "devDependencies": {
+    "@types/core-js": "^2.5.0",
+    "@types/node": "^10.12.11",
+    "@types/react": "^16.7.11",
+    "@types/react-dom": "^16.0.11",
+    "@types/react-helmet": "^5.0.7",
+    "@types/react-router-dom": "^4.3.1",
+    "@types/styled-components": "^4.1.2",
     "copyfiles": "^2.1.0",
-    "prettier": "^1.14.2"
+    "prettier": "^1.14.2",
+    "tslint": "^5.11.0",
+    "typescript": "^3.2.1"
   },
   "repository": {
     "type": "git",

@@ -105,7 +105,7 @@ userApp.post('/users/:userId/invites', (request, response) => {
                   console.log(err)
                 })
 
-                response.send("successfully tweeted")  
+                response.redirect(301, url)  
               }).catch(err => {
                 response.status(500)
                 response.send("Server error: failed to tweet")      
