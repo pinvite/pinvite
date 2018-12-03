@@ -1,0 +1,60 @@
+enum MaterialDesignColors {
+  Yellow0    = '#fffde7',
+  Yellow100  = '#fff9c4',
+  Yellow200  = '#fff59d',
+  Yellow300  = '#fff176',
+  Yellow400  = '#ffee58',
+  Yellow500  = '#ffeb3b',
+  Yellow600  = '#fdd835',
+  Yellow700  = '#fbc02d',
+  Yellow800  = '#f9a825',
+  Yellow900  = '#f57f17',
+  YellowA100 = '#ffff8d',
+  YellowA200 = '#ffff00',
+  YellowA400 = '#ffea00',
+  YellowA700 = '#ffd600',
+
+  Amber50   = '#fff8e1',
+  Amber100  = '#ffecb3',
+  Amber200  = '#ffe082',
+  Amber300  = '#ffd54f',
+  Amber400  = '#ffca28',
+  Amber500  = '#ffc107',
+  Amber600  = '#ffb300',
+  Amber700  = '#ffa000',
+  Amber800  = '#ff8f00',
+  Amber900  = '#ff6f00',
+  AmberA100 = '#ffe57f',
+  AmberA200 = '#ffd740',
+  AmberA400 = '#ffc400',
+  AmberA700 = '#ffab00',
+
+  Orange50   = '#fff3e0',
+  Orange100  = '#ffe0b2',
+  Orange200  = '#ffcc80',
+  Orange300  = '#ffb74d',
+  Orange400  = '#ffa726',
+  Orange500  = '#ff9800',
+  Orange600  = '#fb8c00',
+  Orange700  = '#f57c00',
+  Orange800  = '#ef6c00',
+  Orange900  = '#e65100',
+  OrangeA100 = '#ffd180',
+  OrangeA200 = '#ffab40',
+  OrangeA400 = '#ff9100',
+  OrangeA700 = '#ff6d00',
+
+  White = '#ffffff',
+  Black = '#000000',
+}
+
+enum ColorScheme {
+  Primary      = MaterialDesignColors.Orange700,
+  PrimaryLight = MaterialDesignColors.Orange700,
+  PrimaryDark  = MaterialDesignColors.Orange900,
+
+  Secondary      = MaterialDesignColors.YellowA700,
+  SecondaryLight = MaterialDesignColors.YellowA400,
+}
+
+export default ColorScheme
