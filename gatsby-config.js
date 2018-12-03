@@ -22,5 +22,6 @@ module.exports = {
       resolve: `gatsby-plugin-create-client-paths`,
       options: { prefixes: [`/users/*`] },
     },
+    `gatsby-plugin-typescript`,
   ],
 }
