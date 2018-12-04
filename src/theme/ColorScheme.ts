@@ -10,6 +10,13 @@ enum ColorScheme {
   Secondary      = MaterialDesignColors.Yellow400,
   SecondaryLight = MaterialDesignColors.Yellow200,
   SecondaryDark  = MaterialDesignColors.Yellow500,
+
+  Surface      = MaterialDesignColors.White,
+  SurfaceLight = MaterialDesignColors.Grey50,
+  SurfaceDark  = MaterialDesignColors.Grey50,
+
+  White = MaterialDesignColors.White,
+  Black = MaterialDesignColors.Black
 }
 
 export default ColorScheme
