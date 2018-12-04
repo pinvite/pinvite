@@ -2,7 +2,7 @@ enum Typeface {
   NotoSansJP = 'Noto Sans JP',
 }
 
-enum FontStyle {
+enum FontWeight {
   Light   = 'normal',
   Regular = 'normal',
   Normal  = 'normal',
@@ -41,7 +41,7 @@ enum LetterSpacing {
 interface IMaterialDesignType {
   readonly fontFamily: Typeface,
   readonly fontSize: FontSize,
-  readonly fontStyle: FontStyle,
+  readonly fontWeight: FontWeight,
   readonly letterSpacing: LetterSpacing,
 }
 
@@ -61,83 +61,85 @@ interface IMaterialDesignTypeSet {
   readonly OVERLINE: IMaterialDesignType,
 }
 
-const MaterialDesignTypeSet = {
+const Typography = {
   H1: {
     fontFamily: Typeface.NotoSansJP,
     fontSize: FontSize.Size96sp,
-    fontStyle: FontStyle.Normal,
+    fontWeight: FontWeight.Normal,
     letterSpacing: LetterSpacing.SpacingMinus1_5,
   },
   H2: {
     fontFamily: Typeface.NotoSansJP,
     fontSize: FontSize.Size60sp,
-    fontStyle: FontStyle.Normal,
+    fontWeight: FontWeight.Normal,
     letterSpacing: LetterSpacing.SpacingMinus0_5,
   },
   H3: {
     fontFamily: Typeface.NotoSansJP,
     fontSize: FontSize.Size48sp,
-    fontStyle: FontStyle.Normal,
+    fontWeight: FontWeight.Normal,
     letterSpacing: LetterSpacing.Spacing0,
   },
   H4: {
     fontFamily: Typeface.NotoSansJP,
     fontSize: FontSize.Size34sp,
-    fontStyle: FontStyle.Normal,
+    fontWeight: FontWeight.Normal,
     letterSpacing: LetterSpacing.Spacing0_25,
   },
   H5: {
     fontFamily: Typeface.NotoSansJP,
     fontSize: FontSize.Size24sp,
-    fontStyle: FontStyle.Normal,
+    fontWeight: FontWeight.Normal,
     letterSpacing: LetterSpacing.Spacing0,
   },
   H6: {
     fontFamily: Typeface.NotoSansJP,
     fontSize: FontSize.Size20sp,
-    fontStyle: FontStyle.Normal,
+    fontWeight: FontWeight.Normal,
     letterSpacing: LetterSpacing.Spacing0_15,
   },
   Subtitle1: {
     fontFamily: Typeface.NotoSansJP,
     fontSize: FontSize.Size16sp,
-    fontStyle: FontStyle.Normal,
+    fontWeight: FontWeight.Normal,
     letterSpacing: LetterSpacing.Spacing0_15,
   },
   Subtitle2: {
     fontFamily: Typeface.NotoSansJP,
     fontSize: FontSize.Size14sp,
-    fontStyle: FontStyle.Normal,
+    fontWeight: FontWeight.Normal,
     letterSpacing: LetterSpacing.Spacing0_1,
   },
   Body1: {
     fontFamily: Typeface.NotoSansJP,
     fontSize: FontSize.Size16sp,
-    fontStyle: FontStyle.Normal,
+    fontWeight: FontWeight.Normal,
     letterSpacing: LetterSpacing.Spacing0_5,
   },
   Body2: {
     fontFamily: Typeface.NotoSansJP,
     fontSize: FontSize.Size14sp,
-    fontStyle: FontStyle.Normal,
+    fontWeight: FontWeight.Normal,
     letterSpacing: LetterSpacing.Spacing0_25,
   },
   BUTTON: {
     fontFamily: Typeface.NotoSansJP,
     fontSize: FontSize.Size14sp,
-    fontStyle: FontStyle.Normal,
+    fontWeight: FontWeight.Normal,
     letterSpacing: LetterSpacing.Spacing1_25,
   },
   Caption: {
     fontFamily: Typeface.NotoSansJP,
     fontSize: FontSize.Size12sp,
-    fontStyle: FontStyle.Normal,
+    fontWeight: FontWeight.Normal,
     letterSpacing: LetterSpacing.Spacing0_4,
   },
   OVERLINE: {
     fontFamily: Typeface.NotoSansJP,
     fontSize: FontSize.Size10sp,
-    fontStyle: FontStyle.Normal,
+    fontWeight: FontWeight.Normal,
     letterSpacing: LetterSpacing.Spacing1_5,
   },
 }
+
+export default Typography
