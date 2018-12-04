@@ -15,6 +15,7 @@ enum ColorScheme {
   SurfaceLight = MaterialDesignColors.Grey50,
   SurfaceDark  = MaterialDesignColors.Grey50,
 
+  // TODO: White and Black should be renamed??
   White = MaterialDesignColors.White,
   Black = MaterialDesignColors.Black
 }
