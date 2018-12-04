@@ -1,5 +1,6 @@
 import React from 'react'
 import {ButtonTwitter} from '../components/Atoms/Button'
+import ApplicationBar from '../components/Molecules/ApplicationBar'
 import {Header1} from '../components/style-typography'
 import Layout from '../components/layout'
 import {withAuthStatusContext} from '../context/HOC'
@@ -9,6 +10,7 @@ class IndexPage extends React.Component {
   render () {
     return (
       <Layout>
+        <ApplicationBar />
         <Header1 center>勉強会に来てくれる人を募集しよう</Header1>
         <LayoutBLockCenter>
           <ButtonTwitter onClick={this.props.context.handleLogin}>Twitterでログイン</ButtonTwitter>
