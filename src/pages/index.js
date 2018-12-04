@@ -6,9 +6,7 @@ import {withAuthStatusContext} from '../context/HOC'
 import {LayoutBLockCenter} from '../components/styled'
 
 class IndexPage extends React.Component {
-
   render () {
-    console.log(this.props.context)
     return (
       <Layout>
         <Header1 center>勉強会に来てくれる人を募集しよう</Header1>
