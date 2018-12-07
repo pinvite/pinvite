@@ -53,7 +53,6 @@ const Layout = ({ children }) => {
         </Helmet>
         <Wrapper>
           <Container>
-            <Header />
             {children}
           </Container>
         </Wrapper>
