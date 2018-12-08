@@ -1,5 +1,5 @@
 import React from 'react'
-import Typography  from '@material-ui/core/Typography'
+import Typography, { TypographyProps }  from '@material-ui/core/Typography'
 import Paper from  '@material-ui/core/Paper'
 import styled from 'styled-components'
 import PrimaryButton, { PrimaryButtonProps } from  '../Atoms/PrimaryButton'
@@ -9,16 +9,15 @@ export interface CallToActionProp {
   buttonText: string
 }
 
-const PrimaryButtonStyled = styled(PrimaryButton as React.SFC<PrimaryButtonProps>)`
+const TypographyStyled = styled(Typography as React.SFC<TypographyProps>)`
 && {
-  margin: auto;
-}
-`
+  margin-bottom: 80px;
+}`
 
 const CallToAction: React.SFC<CallToActionProp> = (props) =>
   <Paper elevation={0}>
-    <Typography variant='h4'>{props.description}</Typography>
-    <PrimaryButtonStyled text={props.buttonText} />
+    <TypographyStyled variant='h4'>{props.description}</TypographyStyled>
+    <PrimaryButton text={props.buttonText} />
   </Paper>
 
 export default CallToAction

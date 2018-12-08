@@ -12,14 +12,11 @@ const Wrapper = styled.div`
   position: fixed;
   width: 100%;
   height: 100%;
+  overflow: scroll;
 `
 
 const Container = styled.div`
   max-width: 480px;
-  width: 90%;
-  max-height: 640px;
-  height: 96%;
-  position: relative;
 `
 
 const Layout = ({ children }) => {
