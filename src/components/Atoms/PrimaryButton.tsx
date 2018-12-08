@@ -5,7 +5,7 @@ import Atom from './Atom'
 
 export interface PrimaryButtonProps {
   text: string
-  className?: string //allow styled-components to inject CSS from outside (e.g. for margin)
+  className?: string //allow styled-components to inject CSS margin from outside. Only margin, no other CSS property from outside.
 }
 
 //centering
@@ -16,7 +16,7 @@ const ButtonStyled = styled(Button as React.SFC<ButtonProps>)`
 }`
 
 const PrimaryButton: React.SFC<PrimaryButtonProps> = (props) =>
-  // Important to accept the className prop, to inject CSS from outside (e.g. for margin)
+  // Important to accept the className prop, to inject CSS margin from outside. Only margin, no other CSS property from outside.
   <Atom className={props.className}>
     <ButtonStyled
       variant='contained'

@@ -1,10 +1,10 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
 import { MuiThemeProvider } from '@material-ui/core/styles';
 
-import ApplicationBar from '../../components/Molecules/ApplicationBar'
-import InviteSamplePaper from '../../components/Molecules/InviteSamplePaper'
+import ApplicationBar from '../Molecules/ApplicationBar'
+import InvitationSample from '../Molecules/InvitationSample'
 import {CallToActionTop, CallToActionBottom} from '../../components/Molecules/CallToAction'
 import IssueListPaper from '../../components/Molecules/IssueListPaper'
 import Theme from '../../theme/Theme'
@@ -23,7 +23,7 @@ export interface IndexProps {
 }
 
 const Index: React.SFC<IndexProps> = (props) =>
-  <MuiThemeProvider theme={Theme}>
+  <Fragment>
     <Helmet>
       <title>pinvite</title>
       <link href="https://fonts.googleapis.com/css?family=Fredoka+One" rel="stylesheet" />
@@ -40,19 +40,21 @@ const Index: React.SFC<IndexProps> = (props) =>
         }
       `}</style>
     </Helmet>
-    <Container>
-      <ApplicationBar />
-      <CallToActionTop
-        description={props.firstCallToActionText}
-        buttonText={props.buttonText}
-      />
-      <InviteSamplePaper />
-      <IssueListPaper />
-      <CallToActionBottom
-        description={props.secondCallToActionText}
-        buttonText={props.buttonText}
-      />
-    </Container>
-  </MuiThemeProvider>
+    <MuiThemeProvider theme={Theme}>
+      <Container>
+        <ApplicationBar />
+        <CallToActionTop
+          description={props.firstCallToActionText}
+          buttonText={props.buttonText}
+        />
+        <InvitationSample />
+        <IssueListPaper />
+        <CallToActionBottom
+          description={props.secondCallToActionText}
+          buttonText={props.buttonText}
+        />
+      </Container>
+    </MuiThemeProvider>
+  </Fragment>
 
 export default Index

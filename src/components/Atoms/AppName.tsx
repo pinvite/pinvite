@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Atom from './Atom'
 
 export interface AppNameProps {
-  className?: string //allow styled-components to inject CSS from outside (e.g. for margin)
+  className?: string //allow styled-components to inject CSS margin from outside. Only margin, no other CSS property from outside.
 }
 
 const TypographyStyled = styled(Typography as React.SFC<TypographyProps>)`
@@ -13,7 +13,7 @@ const TypographyStyled = styled(Typography as React.SFC<TypographyProps>)`
 }
 `
 const AppName: React.SFC<AppNameProps> = (props) =>
-  // Important to accept the className prop, to inject CSS from outside (e.g. for margin)
+  // Important to accept the className prop, to inject CSS margin from outside. Only margin, no other CSS property from outside.
   <Atom className={props.className}>
     <TypographyStyled variant="h4" color="textPrimary">pinvite</TypographyStyled>
   </Atom>

@@ -15,7 +15,7 @@ const ButtonStyled = styled(Button as React.SFC<ButtonProps>)`
 }`
 
 const SecondaryButton: React.SFC<SecondaryButtonProps> = (props) =>
-  // Important to accept the className prop, to inject CSS from outside (e.g. for margin)
+  // Important to accept the className prop, to inject CSS margin from outside. Only margin, no other CSS property from outside.
   <Atom className={props.className}>
     <ButtonStyled
       variant='outlined'
