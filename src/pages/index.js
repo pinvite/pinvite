@@ -4,8 +4,8 @@ import ApplicationBar from '../components/Molecules/ApplicationBar'
 import Layout from '../components/layout'
 import InviteSamplePaper from '../components/Molecules/InviteSamplePaper'
 import CallToAction from '../components/Molecules/CallToAction'
+import IssueListPaper from '../components/Molecules/IssueListPaper'
 import {withAuthStatusContext} from '../context/HOC'
-import {LayoutBLockCenter} from '../components/styled'
 
 class IndexPage extends React.Component {
   render () {
@@ -17,6 +17,7 @@ class IndexPage extends React.Component {
           buttonText='Twitterで登録'
         />
         <InviteSamplePaper />
+        <IssueListPaper />
         <CallToAction
           description='勉強会を開きましょう！pinviteがTwitterでの講師探しをお手伝いします' 
           buttonText='Twitterで登録'
