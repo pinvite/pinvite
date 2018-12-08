@@ -1,10 +1,10 @@
 import React from 'react'
 import AppBar from '@material-ui/core/AppBar'
-import AppTitle from '../Atoms/AppTitle'
+import AppName from '../Atoms/AppName'
 
 const ApplicationBar = () =>
   <AppBar color="primary">
-    <AppTitle />
+    <AppName />
   </AppBar>
 
 export default ApplicationBar
