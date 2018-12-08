@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
 import styled from 'styled-components'
-import Header from './header'
 import './layout.css'
 
 const Wrapper = styled.div`
@@ -47,6 +46,7 @@ const Layout = ({ children }) => {
           <html lang="en" />
           <link href="https://fonts.googleapis.com/css?family=Fredoka+One" rel="stylesheet" />
           <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" rel="stylesheet" />
+          <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
         </Helmet>
         <Wrapper>
           <Container>
