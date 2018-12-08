@@ -4,7 +4,8 @@ import styled from 'styled-components'
 import Atom from './Atom'
 
 export interface SecondaryButtonProps {
-  text: string
+  text: string,
+  className?: string //allow styled-components to inject CSS from outside (e.g. for margin)
 }
 
 const ButtonStyled = styled(Button as React.SFC<ButtonProps>)`
@@ -14,7 +15,8 @@ const ButtonStyled = styled(Button as React.SFC<ButtonProps>)`
 }`
 
 const SecondaryButton: React.SFC<SecondaryButtonProps> = (props) =>
-  <Atom>
+  // Important to accept the className prop, to inject CSS from outside (e.g. for margin)
+  <Atom className={props.className}>
     <ButtonStyled
       variant='outlined'
       color="secondary"
