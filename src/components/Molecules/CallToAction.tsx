@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import PrimaryButton, { PrimaryButtonProps } from  '../Atoms/PrimaryButton'
 
 export interface CallToActionProp {
-  description: string,
+  description: React.ReactNode,
   buttonText: string
 }
 
@@ -19,10 +19,14 @@ const PrimaryButtonStyled = styled(PrimaryButton as React.SFC<PrimaryButtonProps
   margin-bottom: 40px;
 }`
 
-const CallToAction: React.SFC<CallToActionProp> = (props) =>
+export const CallToActionTop: React.SFC<CallToActionProp> = (props) =>
+  <Paper elevation={0}>
+    <TypographyStyled variant='h3' align='center'>{props.description}</TypographyStyled>
+    <PrimaryButtonStyled text={props.buttonText} />
+  </Paper>
+
+export const CallToActionBottom: React.SFC<CallToActionProp> = (props) =>
   <Paper elevation={0}>
     <TypographyStyled variant='h4'>{props.description}</TypographyStyled>
     <PrimaryButtonStyled text={props.buttonText} />
   </Paper>
-
-export default CallToAction
