@@ -1,9 +1,9 @@
 import React from 'react'
 import {ButtonTwitter} from '../components/Atoms/Button'
 import ApplicationBar from '../components/Molecules/ApplicationBar'
-import {Header1} from '../components/style-typography'
 import Layout from '../components/layout'
 import InviteSamplePaper from '../components/Molecules/InviteSamplePaper'
+import CallToAction from '../components/Molecules/CallToAction'
 import {withAuthStatusContext} from '../context/HOC'
 import {LayoutBLockCenter} from '../components/styled'
 
@@ -12,11 +12,15 @@ class IndexPage extends React.Component {
     return (
       <Layout>
         <ApplicationBar />
-        <Header1 center>Twitterで勉強会の講師を<br/>募集しましょう</Header1>
-        <LayoutBLockCenter>
-          <ButtonTwitter onClick={this.props.context.handleLogin}>Twitterでログイン</ButtonTwitter>
-        </LayoutBLockCenter>
+        <CallToAction
+          description='Twitterで勉強会の講師を募集しましょう'
+          buttonText='Twitterで登録'
+        />
         <InviteSamplePaper />
+        <CallToAction
+          description='勉強会を開きましょう！pinviteがTwitterでの講師探しをお手伝いします' 
+          buttonText='Twitterで登録'
+        />
       </Layout>
     )
   }
