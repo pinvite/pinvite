@@ -1,11 +1,13 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
+import { MuiThemeProvider } from '@material-ui/core/styles';
 
 import ApplicationBar from '../../components/Molecules/ApplicationBar'
 import InviteSamplePaper from '../../components/Molecules/InviteSamplePaper'
 import CallToAction from '../../components/Molecules/CallToAction'
 import IssueListPaper from '../../components/Molecules/IssueListPaper'
+import Theme from '../../theme/Theme'
 
 const Container = styled.div`
   max-width: 600px;
@@ -21,7 +23,7 @@ export interface IndexProps {
 }
 
 const Index: React.SFC<IndexProps> = (props) =>
-  <Fragment>
+  <MuiThemeProvider theme={Theme}>
     <Helmet>
       <title>pinvite</title>
       <link href="https://fonts.googleapis.com/css?family=Fredoka+One" rel="stylesheet" />
@@ -51,6 +53,6 @@ const Index: React.SFC<IndexProps> = (props) =>
         buttonText={props.buttonText}
       />
     </Container>
-  </Fragment>
+  </MuiThemeProvider>
 
 export default Index
