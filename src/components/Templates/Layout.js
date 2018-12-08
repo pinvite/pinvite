@@ -1,9 +1,8 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
 import styled from 'styled-components'
-import './layout.css'
 
 const Wrapper = styled.div`
   align-items: center;
@@ -32,15 +31,9 @@ const Layout = ({ children }) => {
       }
     `}
     render={data => (
-      <>
-        <Helmet
-          title={data.site.siteMetadata.title}
-          meta={[
-            { name: 'description', content: 'Sample' },
-            { name: 'keywords', content: 'sample, something' },
-          ]}
-        >
-          <html lang="en" />
+      <Fragment>
+        <Helmet>
+          <title>pinvite</title>
           <link href="https://fonts.googleapis.com/css?family=Fredoka+One" rel="stylesheet" />
           <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" rel="stylesheet" />
           <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
@@ -50,7 +43,7 @@ const Layout = ({ children }) => {
             {children}
           </Container>
         </Wrapper>
-      </>
+      </Fragment>
     )}
   />
 )}

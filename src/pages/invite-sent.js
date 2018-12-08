@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Header2} from '../components/style-typography'
-import Layout from '../components/layout'
+import Layout from '../components/Templates/Layout'
 
 class InviteSentPage extends Component {
   componentDidMount() {
