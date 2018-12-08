@@ -5,7 +5,7 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 
 import ApplicationBar from '../../components/Molecules/ApplicationBar'
 import InviteSamplePaper from '../../components/Molecules/InviteSamplePaper'
-import CallToAction from '../../components/Molecules/CallToAction'
+import {CallToActionTop, CallToActionBottom} from '../../components/Molecules/CallToAction'
 import IssueListPaper from '../../components/Molecules/IssueListPaper'
 import Theme from '../../theme/Theme'
 
@@ -17,7 +17,7 @@ const Container = styled.div`
 `
 
 export interface IndexProps {
-  firstCallToActionText: string,
+  firstCallToActionText: React.ReactNode,
   secondCallToActionText: string,
   buttonText: string
 }
@@ -42,13 +42,13 @@ const Index: React.SFC<IndexProps> = (props) =>
     </Helmet>
     <Container>
       <ApplicationBar />
-      <CallToAction
+      <CallToActionTop
         description={props.firstCallToActionText}
         buttonText={props.buttonText}
       />
       <InviteSamplePaper />
       <IssueListPaper />
-      <CallToAction
+      <CallToActionBottom
         description={props.secondCallToActionText}
         buttonText={props.buttonText}
       />
