@@ -14,10 +14,15 @@ const TypographyStyled = styled(Typography as React.SFC<TypographyProps>)`
   margin-bottom: 80px;
 }`
 
+const PrimaryButtonStyled = styled(PrimaryButton as React.SFC<PrimaryButtonProps>)`
+&& {
+  margin-bottom: 40px;
+}`
+
 const CallToAction: React.SFC<CallToActionProp> = (props) =>
   <Paper elevation={0}>
     <TypographyStyled variant='h4'>{props.description}</TypographyStyled>
-    <PrimaryButton text={props.buttonText} />
+    <PrimaryButtonStyled text={props.buttonText} />
   </Paper>
 
 export default CallToAction
