@@ -5,7 +5,7 @@ import SampleImage from '../Atoms/SampleImage'
 
 const InviteSamplePaper = () =>
   <Paper elevation={0}>
-    <Typography>目を引く画像とともにツイート！</Typography>
+    <Typography variant='h6'>目を引く画像とともにツイート！</Typography>
     <SampleImage />
   </Paper>
 

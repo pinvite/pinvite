@@ -1,7 +1,6 @@
 import React from 'react'
 import Typography, { TypographyProps } from '@material-ui/core/Typography'
 import styled from 'styled-components'
-
 import Atom from './Atom'
 
 const TypographyStyled = styled(Typography as React.SFC<TypographyProps>)`
