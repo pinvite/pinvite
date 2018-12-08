@@ -2,17 +2,17 @@ import React from 'react'
 import Button from '@material-ui/core/Button'
 import Atom from './Atom'
 
-export interface RegistrationButtonProp {
+export interface SecondaryButtonProps {
   text: string
 }
 
-const RegistrationButton: React.SFC<RegistrationButtonProp> = (props) =>
+const SecondaryButton: React.SFC<SecondaryButtonProps> = (props) =>
   <Atom>
     <Button
-      variant='contained'
+      variant='outlined'
       color="secondary"
       size="large"
     >{props.text}</Button>
   </Atom>
 
-export default RegistrationButton
+export default SecondaryButton
