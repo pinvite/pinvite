@@ -7,18 +7,11 @@ import InviteSamplePaper from '../../components/Molecules/InviteSamplePaper'
 import CallToAction from '../../components/Molecules/CallToAction'
 import IssueListPaper from '../../components/Molecules/IssueListPaper'
 
-const Wrapper = styled.div`
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  overflow: scroll;
-`
-
 const Container = styled.div`
-  max-width: 480px;
+  max-width: 600px;
+  margin-top: 80px;
+  margin-left: auto;
+  margin-right: auto;
 `
 
 export interface IndexProps {
@@ -45,21 +38,19 @@ const Index: React.SFC<IndexProps> = (props) =>
         }
       `}</style>
     </Helmet>
-    <Wrapper>
-      <Container>
-        <ApplicationBar />
-        <CallToAction
-          description={props.firstCallToActionText}
-          buttonText={props.buttonText}
-        />
-        <InviteSamplePaper />
-        <IssueListPaper />
-        <CallToAction
-          description={props.secondCallToActionText}
-          buttonText={props.buttonText}
-        />
-      </Container>
-    </Wrapper>
+    <Container>
+      <ApplicationBar />
+      <CallToAction
+        description={props.firstCallToActionText}
+        buttonText={props.buttonText}
+      />
+      <InviteSamplePaper />
+      <IssueListPaper />
+      <CallToAction
+        description={props.secondCallToActionText}
+        buttonText={props.buttonText}
+      />
+    </Container>
   </Fragment>
 
 export default Index
