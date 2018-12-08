@@ -43,12 +43,9 @@ const Layout = ({ children }) => {
             { name: 'description', content: 'Sample' },
             { name: 'keywords', content: 'sample, something' },
           ]}
-          link={[
-            { href:"https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700", rel:"stylesheet" },
-            { href:"https://fonts.googleapis.com/css?family=Noto+Sans+JP", rel:"stylesheet" }
-          ]}
         >
           <html lang="en" />
+          <link href="https://fonts.googleapis.com/css?family=Fredoka+One" rel="stylesheet" />
           <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" rel="stylesheet" />
         </Helmet>
         <Wrapper>
