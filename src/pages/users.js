@@ -1,6 +1,6 @@
 import React from 'react'
 import { Router } from "@reach/router";
-import Layout from '../components/layout'
+import Layout from '../components/Templates/Layout'
 import Helmet from 'react-helmet'
 import { firestore } from '../utils/firebase'
 

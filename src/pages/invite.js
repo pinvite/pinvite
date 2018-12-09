@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
-import Layout from '../components/layout'
+import Layout from '../components/Templates/Layout'
 import {Header2, Caption} from '../components/style-typography'
 import InviteCard from '../components/Molecules/InviteCard'
 import Switch from '@material-ui/core/Switch';

@@ -1,23 +1,17 @@
-import React from 'react'
-import {ButtonTwitter} from '../components/Atoms/Button'
+import React, {Fragment} from 'react'
 import ApplicationBar from '../components/Molecules/ApplicationBar'
-import {Header1} from '../components/style-typography'
-import Layout from '../components/layout'
+import Index from '../components/Templates/Index'
 import {withAuthStatusContext} from '../context/HOC'
-import {LayoutBLockCenter} from '../components/styled'
 
-class IndexPage extends React.Component {
-  render () {
-    return (
-      <Layout>
-        <ApplicationBar />
-        <Header1 center>勉強会に来てくれる人を募集しよう</Header1>
-        <LayoutBLockCenter>
-          <ButtonTwitter onClick={this.props.context.handleLogin}>Twitterでログイン</ButtonTwitter>
-        </LayoutBLockCenter>
-      </Layout>
-    )
-  }
-}
+const IndexPage = () =>
+  <Index
+    concernCaptionText='こんなことで困っていませんか？'
+    concernText1='新技術を導入したいが社内にエキスパートがいない'
+    concernText2='技術書や動画を見たがイマイチ理解が進まない'
+    concernText3='導入したい技術のエキスパートと繋がりを持っていない'
+    firstCallToActionText={<Fragment>Twitterで勉強会の講師を<br/>募集しましょう</Fragment>}
+    secondCallToActionText={<Fragment>勉強会を開きましょう！<br/>pinviteがTwitterでの講師探しをお手伝いします</Fragment>}
+    buttonText='Twitterで登録'
+  />
 
 export default withAuthStatusContext(IndexPage)
