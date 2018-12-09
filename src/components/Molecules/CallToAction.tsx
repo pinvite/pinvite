@@ -2,6 +2,7 @@ import Paper from '@material-ui/core/Paper'
 import Typography, { TypographyProps } from '@material-ui/core/Typography'
 import React from 'react'
 import styled from 'styled-components'
+import {DescriptionProps, H3Centered, H4Left} from '../Atoms/Description'
 import PrimaryButton, { PrimaryButtonProps } from '../Atoms/PrimaryButton'
 
 export interface CallToActionProp {
@@ -9,19 +10,26 @@ export interface CallToActionProp {
   buttonText: string
 }
 
-const TypographyStyled = styled(Typography as React.SFC<TypographyProps>)`
+const H3CenteredStyled = styled(H3Centered as React.SFC<DescriptionProps>)`
 && {
   margin-bottom: 80px;
-}`
+}
+`
+
+const H4LeftStyled = styled(H4Left as React.SFC<DescriptionProps>)`
+&& {
+  margin-bottom: 80px;
+}
+`
 
 export const CallToActionTop: React.SFC<CallToActionProp> = (props) =>
   <Paper elevation={0}>
-    <TypographyStyled variant='h3' align='center'>{props.description}</TypographyStyled>
+    <H3CenteredStyled description={props.description} />
     <PrimaryButton text={props.buttonText} />
   </Paper>
 
 export const CallToActionBottom: React.SFC<CallToActionProp> = (props) =>
   <Paper elevation={0}>
-    <TypographyStyled variant='h4'>{props.description}</TypographyStyled>
+    <H4LeftStyled description={props.description} />
     <PrimaryButton text={props.buttonText} />
   </Paper>
