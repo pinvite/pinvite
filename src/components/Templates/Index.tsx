@@ -9,22 +9,47 @@ import MuiTheme from '../../theme/MuiTheme'
 import ApplicationBar from '../Molecules/ApplicationBar'
 import InvitationSample from '../Molecules/InvitationSample'
 
-const Container = styled.div`
-  max-width: 600px;
-  margin-top: 80px;
-  margin-left: auto;
-  margin-right: auto;
-`
-
 export interface IndexProps {
   firstCallToActionText: React.ReactNode,
   secondCallToActionText: string,
   buttonText: string,
+  sampleCaptionText: string,
   concernCaptionText: string,
   concernText1: string,
   concernText2: string,
   concernText3: string,
 }
+
+const Container = styled.div`
+  max-width: 600px;
+  margin-top: 100px;
+  margin-left: auto;
+  margin-right: auto;
+`
+
+const CallToActionTopStyled　= styled(CallToActionTop)`
+&& {
+  margin-bottom: 80px;
+}
+`
+
+const CallToActionBottomStyled = styled(CallToActionBottom)`
+&& {
+  margin-bottom: 80px;
+}
+`
+
+const InvitationSampleStyled = styled(InvitationSample)`
+&& {
+  margin-bottom: 80px;
+}
+`
+
+const ConcernListStyled = styled(ConcernList)`
+&& {
+  margin-bottom: 80px;
+}
+`
 
 const Index: React.SFC<IndexProps> = (props) =>
   <Fragment>
@@ -47,18 +72,20 @@ const Index: React.SFC<IndexProps> = (props) =>
     <MuiThemeProvider theme={MuiTheme}>
       <Container>
         <ApplicationBar />
-        <CallToActionTop
+        <CallToActionTopStyled
           description={props.firstCallToActionText}
           buttonText={props.buttonText}
         />
-        <InvitationSample />
-        <ConcernList
+        <InvitationSampleStyled
+          captionText={props.sampleCaptionText}
+        />
+        <ConcernListStyled
           captionText={props.concernCaptionText}
           concernText1={props.concernText1}
           concernText2={props.concernText2}
           concernText3={props.concernText3}
         />
-        <CallToActionBottom
+        <CallToActionBottomStyled
           description={props.secondCallToActionText}
           buttonText={props.buttonText}
         />
