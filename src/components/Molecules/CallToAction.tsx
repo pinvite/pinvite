@@ -1,8 +1,8 @@
+import Paper from '@material-ui/core/Paper'
+import Typography, { TypographyProps } from '@material-ui/core/Typography'
 import React from 'react'
-import Typography, { TypographyProps }  from '@material-ui/core/Typography'
-import Paper from  '@material-ui/core/Paper'
 import styled from 'styled-components'
-import PrimaryButton, { PrimaryButtonProps } from  '../Atoms/PrimaryButton'
+import PrimaryButton, { PrimaryButtonProps } from '../Atoms/PrimaryButton'
 
 export interface CallToActionProp {
   description: React.ReactNode,

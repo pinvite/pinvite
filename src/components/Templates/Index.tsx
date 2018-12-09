@@ -1,13 +1,13 @@
+import { MuiThemeProvider } from '@material-ui/core/styles'
 import React, {Fragment} from 'react'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
-import { MuiThemeProvider } from '@material-ui/core/styles';
 
-import ApplicationBar from '../Molecules/ApplicationBar'
-import InvitationSample from '../Molecules/InvitationSample'
-import {CallToActionTop, CallToActionBottom} from '../../components/Molecules/CallToAction'
+import {CallToActionBottom, CallToActionTop} from '../../components/Molecules/CallToAction'
 import IssueListPaper from '../../components/Molecules/IssueListPaper'
 import Theme from '../../theme/Theme'
+import ApplicationBar from '../Molecules/ApplicationBar'
+import InvitationSample from '../Molecules/InvitationSample'
 
 const Container = styled.div`
   max-width: 600px;
@@ -26,16 +26,16 @@ const Index: React.SFC<IndexProps> = (props) =>
   <Fragment>
     <Helmet>
       <title>pinvite</title>
-      <link href="https://fonts.googleapis.com/css?family=Fredoka+One" rel="stylesheet" />
-      <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" rel="stylesheet" />
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-      {
+      <link href='https://fonts.googleapis.com/css?family=Fredoka+One' rel='stylesheet' />
+      <link href='https://fonts.googleapis.com/css?family=Noto+Sans+JP' rel='stylesheet' />
+      <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet' />
+      <style type='text/css'>{
         // !!! Do not add anything else other than body's margin below !!!
-        // All CSS should live beside React components, but <body>'s margin is the only exception as it is not a React component.
+        // All CSS should live beside React components,
+        // but <body>'s margin is the only exception as it is not a React component.
         // By default the <body> element has margin, which we want to disable.
-      }
-      <style type="text/css">{`
-        body { 
+        `
+        body {
           margin: 0;
         }
       `}</style>
