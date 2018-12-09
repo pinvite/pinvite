@@ -11,13 +11,9 @@ const FlexContainer = styled.div`
   flex-direction: row;
 `
 
-const IconStyled = styled(Icon)`
-  margin: auto 0;
-`
-
 const Concern: React.SFC<ConcernProps> = (props) =>
   <FlexContainer>
-    <IconStyled />
+    <Icon />
     <H6Left description={props.text} />
   </FlexContainer>
 
