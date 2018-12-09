@@ -7,7 +7,8 @@ import PrimaryButton, { PrimaryButtonProps } from '../Atoms/PrimaryButton'
 
 export interface CallToActionProp {
   description: React.ReactNode,
-  buttonText: string
+  buttonText: string,
+  className?: string
 }
 
 const H3CenteredStyled = styled(H3Centered as React.SFC<DescriptionProps>)`
@@ -23,13 +24,17 @@ const H4LeftStyled = styled(H4Left as React.SFC<DescriptionProps>)`
 `
 
 export const CallToActionTop: React.SFC<CallToActionProp> = (props) =>
-  <Paper elevation={0}>
+  // Important to accept the className prop, to inject CSS margin from outside.</Atom>
+  // Only margin, no other CSS property from outside.
+  <Paper className={props.className} elevation={0}>
     <H3CenteredStyled description={props.description} />
     <PrimaryButton text={props.buttonText} />
   </Paper>
 
 export const CallToActionBottom: React.SFC<CallToActionProp> = (props) =>
-  <Paper elevation={0}>
+  // Important to accept the className prop, to inject CSS margin from outside.</Atom>
+  // Only margin, no other CSS property from outside.
+  <Paper className={props.className} elevation={0}>
     <H4LeftStyled description={props.description} />
     <PrimaryButton text={props.buttonText} />
   </Paper>

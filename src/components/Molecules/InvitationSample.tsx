@@ -3,9 +3,14 @@ import React from 'react'
 import Caption from '../Atoms/Caption'
 import SampleImage from '../Atoms/SampleImage'
 
-const InvitationSample = () =>
-  <Paper elevation={0}>
-    <Caption text='目を引く画像とともにツイート！' />
+export interface InvitationSampleProps {
+  captionText: string
+  className?: string
+}
+
+const InvitationSample: React.SFC<InvitationSampleProps> = (props) =>
+  <Paper className={props.className} elevation={0}>
+    <Caption text={props.captionText} />
     <SampleImage />
   </Paper>
 
