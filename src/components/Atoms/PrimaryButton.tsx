@@ -1,6 +1,7 @@
 import Button, { ButtonProps } from '@material-ui/core/Button'
 import React from 'react'
 import styled from 'styled-components'
+import MuiTheme from '../../theme/MuiTheme'
 import Atom from './Atom'
 
 export interface PrimaryButtonProps {
@@ -9,11 +10,15 @@ export interface PrimaryButtonProps {
                      // Only margin, no other CSS property from outside.
 }
 
-// centering
 const ButtonStyled = styled(Button as React.SFC<ButtonProps>)`
 && {
+  /* centering */
   display: block;
   margin: 0 auto;
+
+  /* more detailed style which cannot be controlled by Material-UI Button's props*/
+  font-size: ${MuiTheme.typography.h6.fontSize};
+  padding: 16px 20px;
 }`
 
 const PrimaryButton: React.SFC<PrimaryButtonProps> = (props) =>
@@ -22,8 +27,7 @@ const PrimaryButton: React.SFC<PrimaryButtonProps> = (props) =>
   <Atom className={props.className}>
     <ButtonStyled
       variant='contained'
-      color='primary'
-      size='large'
+      color='secondary'
     >{props.text}</ButtonStyled>
   </Atom>
 

@@ -1,6 +1,7 @@
 import Typography from '@material-ui/core/Typography'
 import React from 'react'
 import styled from 'styled-components'
+import MuiTheme from '../../theme/MuiTheme'
 import Atom from './Atom'
 
 export interface SampleImageCaptionProps {
@@ -11,7 +12,8 @@ export interface SampleImageCaptionProps {
 
 const AtomStyled = styled(Atom)`
 && {
-  background-color: orange;
+  background-color: ${MuiTheme.palette.primary.dark};
+  color: ${MuiTheme.palette.primary.contrastText};
 }
 `
 const SampleImageCaption: React.SFC<SampleImageCaptionProps> = (props) =>

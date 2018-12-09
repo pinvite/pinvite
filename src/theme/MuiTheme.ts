@@ -8,7 +8,7 @@ const NotoSansJP = 'Noto Sans JP, sans-serif'
 // <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" rel="stylesheet" />
 const fontWeightRegular = 400
 
-const Theme = createMuiTheme({
+const MuiTheme = createMuiTheme({
   palette: {
     primary: {
       dark: orange[900],
@@ -45,4 +45,4 @@ const Theme = createMuiTheme({
   },
 })
 
-export default Theme
+export default MuiTheme

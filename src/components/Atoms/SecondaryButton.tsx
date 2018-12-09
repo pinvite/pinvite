@@ -1,6 +1,7 @@
 import Button, { ButtonProps } from '@material-ui/core/Button'
 import React from 'react'
 import styled from 'styled-components'
+import MuiTheme from '../../theme/MuiTheme'
 import Atom from './Atom'
 
 export interface SecondaryButtonProps {

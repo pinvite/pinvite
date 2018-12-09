@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 import {CallToActionBottom, CallToActionTop} from '../../components/Molecules/CallToAction'
 import IssueListPaper from '../../components/Molecules/IssueListPaper'
-import Theme from '../../theme/Theme'
+import MuiTheme from '../../theme/MuiTheme'
 import ApplicationBar from '../Molecules/ApplicationBar'
 import InvitationSample from '../Molecules/InvitationSample'
 
@@ -40,7 +40,7 @@ const Index: React.SFC<IndexProps> = (props) =>
         }
       `}</style>
     </Helmet>
-    <MuiThemeProvider theme={Theme}>
+    <MuiThemeProvider theme={MuiTheme}>
       <Container>
         <ApplicationBar />
         <CallToActionTop
