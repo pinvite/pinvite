@@ -4,7 +4,7 @@ import Helmet from 'react-helmet'
 import styled from 'styled-components'
 
 import {CallToActionBottom, CallToActionTop} from '../../components/Molecules/CallToAction'
-import IssueListPaper from '../../components/Molecules/IssueListPaper'
+import ConcernList from '../../components/Molecules/ConcernList'
 import MuiTheme from '../../theme/MuiTheme'
 import ApplicationBar from '../Molecules/ApplicationBar'
 import InvitationSample from '../Molecules/InvitationSample'
@@ -19,7 +19,11 @@ const Container = styled.div`
 export interface IndexProps {
   firstCallToActionText: React.ReactNode,
   secondCallToActionText: string,
-  buttonText: string
+  buttonText: string,
+  concernCaptionText: string,
+  concernText1: string,
+  concernText2: string,
+  concernText3: string,
 }
 
 const Index: React.SFC<IndexProps> = (props) =>
@@ -48,7 +52,12 @@ const Index: React.SFC<IndexProps> = (props) =>
           buttonText={props.buttonText}
         />
         <InvitationSample />
-        <IssueListPaper />
+        <ConcernList
+          captionText={props.concernCaptionText}
+          concernText1={props.concernText1}
+          concernText2={props.concernText2}
+          concernText3={props.concernText3}
+        />
         <CallToActionBottom
           description={props.secondCallToActionText}
           buttonText={props.buttonText}
