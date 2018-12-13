@@ -25,7 +25,7 @@ interface TwitterScreenName {
 }
 
 interface TwitterCredential {
-  access_token: string,
+  accessToken: string,
   secret: string,
 }
 
@@ -42,7 +42,7 @@ function isTwitterScreenName(obj: any): obj is TwitterScreenName {
 
 function isTwitterCredential(obj: any): obj is TwitterCredential {
   const credential = obj as TwitterCredential
-  return credential.access_token !== undefined && credential.secret !== undefined
+  return credential.accessToken !== undefined && credential.secret !== undefined
 }
 
 function isTwitterUserInfo(obj: any): obj is TwitterUserInfo {
@@ -81,7 +81,7 @@ export async function firebaseLogin(): Promise<{}> {
           return Promise.reject(new Error('Failed to get necessary Twitter info via Sign-In'))
         } else {
           const twitterUserInfo: TwitterUserInfo = {
-            access_token: userCredentials.credential.access_token,
+            accessToken: userCredentials.credential.accessToken,
             screen_name: userCredentials.additionalUserInfo.profile.screen_name,
             secret: userCredentials.credential.secret,
           }
