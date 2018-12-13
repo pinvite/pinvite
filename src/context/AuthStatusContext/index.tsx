@@ -1,6 +1,6 @@
 import isequal from 'lodash.isequal'
 import React from 'react'
-import firebase, { firebaseLogin, makeSureTwitterUserInfoStored, TwitterUserInfo } from '../../utils/firebase'
+import firebase, { firebaseLogin, makeSureTwitterUserInfoStored, UserInfo } from '../../utils/firebase'
 
 enum LoginStatus {
   NotLoggedIn,
@@ -11,32 +11,32 @@ enum LoginStatus {
 
 interface AuthState {
   loginStatus: LoginStatus,
-  twitterUserInfo?: TwitterUserInfo
-  errorMessage?: string
-  idToken?: string
+  userInfo: UserInfo
 }
 
-const AuthStatusContext = React.createContext<AuthState>({
-  loginStatus: LoginStatus.NotLoggedIn,
-})
+interface AuthContextProps {
+  handleLogin: () => void
+}
 
-export class AuthStatusProvider extends React.Component {
-  constructor() {
-    super({})
+const AuthStatusContext = React.createContext<AuthContextProps>(undefined as any)
+
+export class AuthStatusProvider extends React.Component<AuthContextProps, AuthState> {
+  constructor(props: AuthContextProps) {
+    super(props)
     this.handleLogin = this.handleLogin.bind(this)
   }
 
   componentDidMount() {
     makeSureTwitterUserInfoStored().then((userInfo) => {
-      this.setState({loginStatus: LoginStatus.ReadyToTweet, twitterUserInfo: userInfo})
+      this.setState({loginStatus: LoginStatus.ReadyToTweet, userInfo})
     }).catch((error) => {
       this.setState({loginStatus: LoginStatus.LoginFailure})
     })
   }
 
   handleLogin = () => {
-    firebaseLogin().then((twitterUserInfo) => {
-      this.setState({loginStatus: LoginStatus.LoggedIn, twitterUserInfo})
+    firebaseLogin().then(() => {
+      this.setState({loginStatus: LoginStatus.LoggedIn})
     }).catch((error) => {
       this.setState({loginStatus: LoginStatus.LoginFailure})
     })
@@ -44,9 +44,13 @@ export class AuthStatusProvider extends React.Component {
 
   render() {
     return(
-      <div />
+      <AuthStatusContext.Provider
+        value={{
+          handleLogin: this.handleLogin,
+          // userInfo: this.state.userInfo,
+        }}>
+        {this.props.children}
+      </AuthStatusContext.Provider>
     )
   }
 }
-
-export const AuthStatusConsumer = AuthStatusContext.Consumer

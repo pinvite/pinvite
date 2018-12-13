@@ -15,4 +15,4 @@ const IndexPage = () =>
     concernText3='導入したい技術のエキスパートと繋がりを持っていない'
   />
 
-export default withAuthStatusContext(IndexPage)
+export default IndexPage

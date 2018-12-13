@@ -49,7 +49,7 @@ function isTwitterUserInfo(obj: any): obj is TwitterUserInfo {
   return isTwitterScreenName(obj) && isTwitterCredential(obj)
 }
 
-export async function firebaseLogin(): Promise<TwitterUserInfo> {
+export async function firebaseLogin(): Promise<{}> {
   try {
     const userCredentials = await firebase.auth().signInWithPopup(providerTwitter)
     const firebaseUser = userCredentials.user
@@ -65,11 +65,7 @@ export async function firebaseLogin(): Promise<TwitterUserInfo> {
         && isTwitterUserInfo(data.twitter)
       ) {
         // TwitterUserInfo was already stored in Firebase, OK
-        return Promise.resolve({
-          access_token: data.twitter.access_token,
-          screen_name: data.twitter.screen_name,
-          secret: data.secret,
-        })
+        return Promise.resolve({})
 
       // if TwitterUserInfo is not stored in Firestore, then try storing it
       } else {
@@ -90,7 +86,7 @@ export async function firebaseLogin(): Promise<TwitterUserInfo> {
             secret: userCredentials.credential.secret,
           }
           await firestore.collection('users').doc(firebaseUser.uid).set({twitter: twitterUserInfo})
-          return Promise.resolve(twitterUserInfo)
+          return Promise.resolve({})
         }
       }
     }
@@ -99,32 +95,33 @@ export async function firebaseLogin(): Promise<TwitterUserInfo> {
   }
 }
 
-async function handleUser(user: firebase.User): Promise<UserInfo> {
-  try {
-    const idToken = await user.getIdToken()
-    const userDoc = await firestore.collection('users').doc(user.uid).get()
-
-    // data() returns 'undefined' if the document doesn't exist.
-    const data = userDoc.data()
-    if (data !== undefined
-      && data.twitter
-      && isTwitterUserInfo(data.twitter)
-    ) {
-      return Promise.resolve({...data.twitter, idToken} )
-    } else {
-      // TwitterUserInfo cannot be obtained inside firebase.auth().onAuthStateChanged()
-      // so, flag an error and encourage the user to re-login
-      return Promise.reject(new Error('Failed to get necessary Twitter info upon auto login. Try logging in again.'))
-    }
-  } catch (error) {
-    return Promise.reject(new Error('Internal server error upon auto login'))
-  }
-}
-
 export async function makeSureTwitterUserInfoStored(): Promise<UserInfo> {
+
+  async function handleUser(user: firebase.User): Promise<UserInfo> {
+    try {
+      const idToken = await user.getIdToken()
+      const userDoc = await firestore.collection('users').doc(user.uid).get()
+
+      // data() returns 'undefined' if the document doesn't exist.
+      const data = userDoc.data()
+      if (data !== undefined
+        && data.twitter
+        && isTwitterUserInfo(data.twitter)
+      ) {
+        return Promise.resolve({...data.twitter, idToken} )
+      } else {
+        // TwitterUserInfo cannot be obtained inside firebase.auth().onAuthStateChanged()
+        // so, flag an error and encourage the user to re-login
+        return Promise.reject(new Error('Failed to get necessary Twitter info upon auto login. Try logging in again.'))
+      }
+    } catch (error) {
+      return Promise.reject(new Error('Internal server error upon auto login'))
+    }
+  }
+
   return new Promise<UserInfo>((resolve, reject) => {
-    // firebase.auth().onAuthStateChanged doesn't retrun Promise but it's a traditional callback
-    // so convert it into Promise using a common technique:
+    // firebase.auth().onAuthStateChanged doesn't return Promise but it's a traditional callback
+    // so convert it into Promise using a common technique
     firebase.auth().onAuthStateChanged((user) => {
       if (user == null) {
         reject(new Error('Failed to get user info upon auto login'))
