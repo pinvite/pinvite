@@ -1,6 +1,7 @@
 import Button, { ButtonProps } from '@material-ui/core/Button'
 import React from 'react'
 import styled from 'styled-components'
+import {AuthStatusContext} from '../../context/AuthStatusContext'
 import MuiTheme from '../../theme/MuiTheme'
 import Atom from './Atom'
 
@@ -25,10 +26,16 @@ const PrimaryButton: React.SFC<PrimaryButtonProps> = (props) =>
   // Important to accept the className prop, to inject CSS margin from outside.
   // Only margin, no other CSS property from outside.
   <Atom className={props.className}>
-    <ButtonStyled
-      variant='contained'
-      color='secondary'
-    >{props.text}</ButtonStyled>
+    <AuthStatusContext.Consumer>
+      {
+        ({handleLogin}) =>
+          <ButtonStyled
+            variant='contained'
+            color='secondary'
+            onClick={handleLogin}
+          >{props.text}</ButtonStyled>
+      }
+    </AuthStatusContext.Consumer>
   </Atom>
 
 export default PrimaryButton

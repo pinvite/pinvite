@@ -11,18 +11,23 @@ enum LoginStatus {
 
 interface AuthState {
   loginStatus: LoginStatus,
-  userInfo: UserInfo
+  userInfo?: UserInfo,
+  errorMessage?: string,
 }
 
-interface AuthContextProps {
-  handleLogin: () => void
+interface AuthContextValues {
+  handleLogin: () => void,
+  loginStatus: LoginStatus,
+  userInfo?: UserInfo,
+  errorMessage?: string,
 }
 
-const AuthStatusContext = React.createContext<AuthContextProps>(undefined as any)
+export const AuthStatusContext = React.createContext<AuthContextValues>(undefined as any)
 
-export class AuthStatusProvider extends React.Component<AuthContextProps, AuthState> {
-  constructor(props: AuthContextProps) {
+export class AuthStatusProvider extends React.Component<{}, AuthState> {
+  constructor(props: any) {
     super(props)
+    this.state = {loginStatus: LoginStatus.NotLoggedIn, errorMessage: ''}
     this.handleLogin = this.handleLogin.bind(this)
   }
 
@@ -46,7 +51,10 @@ export class AuthStatusProvider extends React.Component<AuthContextProps, AuthSt
     return(
       <AuthStatusContext.Provider
         value={{
+          errorMessage: this.state.errorMessage,
           handleLogin: this.handleLogin,
+          loginStatus: this.state.loginStatus,
+          userInfo: this.state.userInfo,
           // userInfo: this.state.userInfo,
         }}>
         {this.props.children}
