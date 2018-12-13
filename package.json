@@ -5,6 +5,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "@material-ui/core": "^3.3.0",
+    "@types/lodash.isequal": "^4.5.3",
     "cloudinary-core": "^2.5.0",
     "core-js": "^2.5.7",
     "firebase": "^5.5.5",
