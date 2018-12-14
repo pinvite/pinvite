@@ -15,7 +15,7 @@ import TwitterIcon from '../components/Atoms/TwitterIcon'
 import {LayoutColumn2, LayoutBottom, TextFieldsWrapper} from '../components/styled'
 import {withAuthStatusContext, withRequestContext} from '../context/HOC'
 import { navigateTo } from 'gatsby-link';
-import cloudinary from '../utils/cloudinary';
+import {cloudinaryImageUrl} from '../utils/cloudinary';
 
 class InvitePage extends React.Component {
   constructor(props){
@@ -50,63 +50,10 @@ class InvitePage extends React.Component {
     return ('/users/' + this.props.context.result.user.uid + '/invites'); 
   }
 
-  imageUrl(title, description) {
-    //https://cloudinary.com/documentation/image_transformations#adding_text_captions
-    return (cloudinary.url(
-      "pinvite-background2.png",
-      {
-        transformation: [
-          {
-            width: 1000,
-            height: 400,
-            x: 100,
-            y: 50,
-            gravity: "north_west",
-            overlay: {
-              font_family: "NotoSansJP-Black.otf",
-              font_size: 60, 
-              font_antialias: "best",
-              text_align: "left",
-              text: encodeURI(this.state.title)
-            },
-            crop: "fit"
-          },
-          {
-            width: 1000,
-            height: 100,
-            x: 100,
-            y: 400,
-            overlay: {
-              font_family: "NotoSansJP-Black.otf",
-              font_size: 60, 
-              text_align: "start",
-              text: encodeURI('勉強会のギャラ: ' + this.state.amount + this.state.currency)
-            },
-            gravity: "north_west",
-            crop: "fit"
-          },
-          {
-            width: 1000,
-            height: 94,
-            x: 100,
-            y: 500,
-            overlay: {
-              font_family: "NotoSansJP-Black.otf",
-              font_size: 60, 
-              text_align: "left",
-              text: encodeURI('勉強会の時間: ' + this.state.time + ' ' + this.state.timeUnit)
-            },
-            gravity: "north_west",
-            crop: "fit"
-          }
-      ]
-    }));
-  }
-
   createPostBody() {
     return ({
       description:   this.state.description,
-      image_url:     this.imageUrl(),
+      image_url:     cloudinaryImageUrl(this.state.title, this.state.time, this.state.amount),
       title:         this.state.title
     });
   }
