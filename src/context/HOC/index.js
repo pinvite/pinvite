@@ -1,13 +1,13 @@
 import React from 'react';
-import { AuthStatusConsumer } from '../AuthStatusContext';
+import { AuthStatusContext } from '../AuthStatusContext';
 import { RequestConsumer } from '../RequestContext';
 
 export function withAuthStatusContext(Component) {
     return function WrapperComponent(props) {
         return (
-            <AuthStatusConsumer>
+            <AuthStatusContext.Consumer>
                 {state => <Component {...props} context={state} />}
-            </AuthStatusConsumer>
+            </AuthStatusContext.Consumer>
         );
     };
 }

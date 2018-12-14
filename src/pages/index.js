@@ -1,7 +1,5 @@
 import React, {Fragment} from 'react'
-import ApplicationBar from '../components/Molecules/ApplicationBar'
 import Index from '../components/Templates/Index'
-import {withAuthStatusContext} from '../context/HOC'
 
 const IndexPage = () =>
   <Index
