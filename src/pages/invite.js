@@ -31,11 +31,6 @@ class InvitePage extends React.Component {
     };
   }
 
-  componentDidMount(){
-    this.forceUpdate();
-    if (!this.props.context.result) navigateTo('/')
-  }
-
   handleChange = name => event => {
     this.setState({ [name]: event.target.checked });
   };
