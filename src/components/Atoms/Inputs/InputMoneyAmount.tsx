@@ -16,7 +16,6 @@ export const InputMoneyAmount: React.SFC<InputFieldProps> = (props) =>
   // Only margin, no other CSS property from outside.
   <Atom className={props.className}>
     <TextField
-      label={props.label}
       variant="outlined"
       margin="none"
       InputProps={{
@@ -24,5 +23,15 @@ export const InputMoneyAmount: React.SFC<InputFieldProps> = (props) =>
         // as the `position` attribute is required but that adds a weird `margin-top: 16px` styling
         startAdornment: <InputAdornmentStyled style={{marginTop: 0}} variant="filled" position="start">¥</InputAdornmentStyled>
       }}
+      label={props.label}
+      helperText={props.helperText}
+      error={props.error}
+      onChange={
+        (event) => {
+          if(props.onChange) // the onChange callback is optional, so call it only when it exists
+            props.onChange(event.currentTarget.value)
+        }
+      }
+
     />
   </Atom>

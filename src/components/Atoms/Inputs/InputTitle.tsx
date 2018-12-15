@@ -8,20 +8,20 @@ export const InputTitle: React.SFC<InputFieldProps> = (props) =>
   // Only margin, no other CSS property from outside.
   <Atom className={props.className}>
     <TextField
-      label={props.label}
-      helperText={props.helperText}
-      fullWidth
+      variant="outlined"
       margin="none"
+      fullWidth
       multiline
       rows={3}
-      variant="outlined"
+      label={props.label}
+      helperText={props.helperText}
+      error={props.error}
       onChange={
         (event) => {
           if(props.onChange) // the onChange callback is optional, so call it only when it exists
             props.onChange(event.currentTarget.value)
         }
       }
-      error={props.error}
     />
   </Atom>
 

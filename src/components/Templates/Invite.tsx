@@ -2,8 +2,7 @@ import React, {Fragment} from 'react'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
 import ApplicationBar from '../Molecules/ApplicationBar'
-import InviteInputs from '../Molecules/InviteInputs'
-import InviteBottom from '../Molecules/InviteBottom'
+import InvitationForm from '../Organisms/InvitationForm'
 import MuiTheme from '../../theme/MuiTheme'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import { AuthStatusProvider } from '../../context/AuthStatusContext'
@@ -14,8 +13,7 @@ export interface InviteProps {
   inputDetailsLabel: string,
   inputMoneyAmountLabel: string,
   inputTimeLabel: string,
-  previewButtonText: string,
-  gobackButtonText: string,
+  previewButtonText: string
 }
 
 const Container = styled.div`
@@ -37,16 +35,13 @@ const Invite: React.SFC<InviteProps> = (props) =>
       <AuthStatusProvider>
         <ApplicationBar />
         <Container>
-          <InviteInputs
+          <InvitationForm
             inputTitleLabel = {props.inputTitleLabel}
             inputTitleHelperText = {props.inputTitleHelperText}
             inputDetailsLabel = {props.inputDetailsLabel}
             inputMoneyAmountLabel = {props.inputMoneyAmountLabel}
             inputTimeLabel = {props.inputTimeLabel}
-          />
-          <InviteBottom
-            gobackButtonText={props.gobackButtonText}
-            previewButtonText={props.previewButtonText}
+            previewButtonText= {props.previewButtonText}
           />
         </Container>
       </AuthStatusProvider>
