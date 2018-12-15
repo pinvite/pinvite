@@ -1,13 +1,12 @@
 import React, {Fragment} from 'react'
 import styled from 'styled-components'
-import {InputTitle, InputDetails, InputMoneyAmount, InputTime} from '../Atoms/Inputs'
+import {InputTitle, InputDetails, InputMoneyAmount, InputTime, InputFieldProps} from '../Atoms/Inputs'
 
 export interface InviteInputsProps {
-  inputTitleLabel: string,
-  inputTitleHelperText: string,
-  inputDetailsLabel: string,
-  inputMoneyAmountLabel: string,
-  inputTimeLabel: string,
+  inputTitleProps: InputFieldProps,
+  inputDetailsProps: InputFieldProps,
+  inputMoneyAmountProps: InputFieldProps,
+  inputTimeProps: InputFieldProps,
 }
 
 interface InviteInputsState {
@@ -36,14 +35,29 @@ class InviteInputs extends React.Component<InviteInputsProps, InviteInputsState>
     return(
       <Fragment>
         <InputTitle
-          label={this.props.inputTitleLabel}
-          helperText={this.props.inputTitleHelperText}
-          onChange={this.onTitleChange}
-          error={this.state.titleError}
+          label={this.props.inputTitleProps.label}
+          helperText={this.props.inputTitleProps.helperText}
+          onChange={this.props.inputTitleProps.onChange}
+          error={this.props.inputTitleProps.error}
         />
-        <InputDetails label={this.props.inputDetailsLabel} />
-        <InputMoneyAmount label={this.props.inputMoneyAmountLabel} />
-        <InputTime label={this.props.inputTimeLabel} />
+        <InputDetails
+          label={this.props.inputDetailsProps.label}
+          helperText={this.props.inputDetailsProps.helperText}
+          onChange={this.props.inputDetailsProps.onChange}
+          error={this.props.inputDetailsProps.error}       
+        />
+        <InputMoneyAmount
+          label={this.props.inputMoneyAmountProps.label}
+          helperText={this.props.inputMoneyAmountProps.helperText}
+          onChange={this.props.inputMoneyAmountProps.onChange}
+          error={this.props.inputMoneyAmountProps.error}               
+        />
+        <InputTime
+          label={this.props.inputTimeProps.label}
+          helperText={this.props.inputTimeProps.helperText}
+          onChange={this.props.inputTimeProps.onChange}
+          error={this.props.inputTimeProps.error}        
+        />
       </Fragment>  
     )
   }

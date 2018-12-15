@@ -15,12 +15,21 @@ export const InputTime: React.SFC<InputFieldProps> = (props) =>
   // Only margin, no other CSS property from outside.
   <Atom className={props.className}>
     <TextField
-      label={props.label}
-      margin="none"
       variant="outlined"
+      margin="none"
       InputProps={{
         endAdornment: <InputAdornmentStyled variant="filled" position="end">時間</InputAdornmentStyled>
       }}
+      label={props.label}
+      helperText={props.helperText}
+      error={props.error}
+      onChange={
+        (event) => {
+          if(props.onChange) // the onChange callback is optional, so call it only when it exists
+            props.onChange(event.currentTarget.value)
+        }
+      }
+
     />
   </Atom>
 
