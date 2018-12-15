@@ -15,6 +15,13 @@ export const InputTitle: React.SFC<InputFieldProps> = (props) =>
       multiline
       rows={3}
       variant="outlined"
+      onChange={
+        (event) => {
+          if(props.onChange) // the onChange callback is optional, so call it only when it exists
+            props.onChange(event.currentTarget.value)
+        }
+      }
+      error={props.error}
     />
   </Atom>
 
