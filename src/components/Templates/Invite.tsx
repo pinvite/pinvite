@@ -7,7 +7,6 @@ import InviteBottom from '../Molecules/InviteBottom'
 import MuiTheme from '../../theme/MuiTheme'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 
-
 export interface InviteProps {
   inputTitleLabel: string,
   inputTitleHelperText: string,

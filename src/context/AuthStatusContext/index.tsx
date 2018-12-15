@@ -1,4 +1,3 @@
-import isequal from 'lodash.isequal'
 import React from 'react'
 import firebase, { firebaseLogin, makeSureTwitterUserInfoStored, UserInfo } from '../../utils/firebase'
 
@@ -55,7 +54,6 @@ export class AuthStatusProvider extends React.Component<{}, AuthState> {
           handleLogin: this.handleLogin,
           loginStatus: this.state.loginStatus,
           userInfo: this.state.userInfo,
-          // userInfo: this.state.userInfo,
         }}>
         {this.props.children}
       </AuthStatusContext.Provider>
