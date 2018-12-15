@@ -4,19 +4,19 @@ import TextField from '@material-ui/core/TextField'
 import InputAdornment, { InputAdornmentProps } from '@material-ui/core/InputAdornment'
 import Atom from '../Atom'
 import MuiTheme from '../../../theme/MuiTheme'
-import {ClassNameProps} from './ClassNameProps'
+import {InputFieldProps} from './InputFieldProps'
 
 const InputAdornmentStyled = styled(InputAdornment as React.SFC<InputAdornmentProps>)`
 && {
   margin-right: ${MuiTheme.spacing.unit},
 }`
 
-export const InputMoneyAmount: React.SFC<ClassNameProps> = (props) =>
+export const InputMoneyAmount: React.SFC<InputFieldProps> = (props) =>
   // Important to accept the className prop, to inject CSS margin from outside.
   // Only margin, no other CSS property from outside.
   <Atom className={props.className}>
     <TextField
-      label="勉強会のギャラ"
+      label={props.label}
       variant="outlined"
       margin="none"
       InputProps={{

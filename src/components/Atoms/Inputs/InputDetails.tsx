@@ -1,15 +1,15 @@
 import React from 'react'
 import TextField from '@material-ui/core/TextField'
 import Atom from '../Atom'
-import {ClassNameProps} from './ClassNameProps'
+import {InputFieldProps} from './InputFieldProps'
 
-export const InputDetails: React.SFC<ClassNameProps> = (props) =>
+export const InputDetails: React.SFC<InputFieldProps> = (props) =>
   // Important to accept the className prop, to inject CSS margin from outside.
   // Only margin, no other CSS property from outside.
   <Atom className={props.className}>
     <TextField
       fullWidth
-      label="勉強会の詳細"
+      label={props.label}
       multiline
       margin="none"
       variant="outlined"
