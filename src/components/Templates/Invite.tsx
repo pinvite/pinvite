@@ -13,7 +13,9 @@ export interface InviteProps {
   inputDetailsLabel: string,
   inputMoneyAmountLabel: string,
   inputTimeLabel: string,
-  previewButtonText: string
+  previewButtonText: string,
+  gobackButtonText: string,
+  tweetButtonText: string,
 }
 
 const Container = styled.div`
@@ -42,6 +44,8 @@ const Invite: React.SFC<InviteProps> = (props) =>
             inputMoneyAmountLabel = {props.inputMoneyAmountLabel}
             inputTimeLabel = {props.inputTimeLabel}
             previewButtonText= {props.previewButtonText}
+            gobackButtonText= {props.gobackButtonText}
+            tweetButtonText={props.tweetButtonText}
           />
         </Container>
       </AuthStatusProvider>
