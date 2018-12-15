@@ -9,6 +9,7 @@ import LandingContents from '../Organisms/LandingContents'
 import {AuthStatusProvider} from '../../context/AuthStatusContext'
 
 export interface IndexProps {
+  sampleImageSrc: string,
   firstCallToActionText: React.ReactNode,
   secondCallToActionText: string,
   buttonText: string,
@@ -49,6 +50,7 @@ const Index: React.SFC<IndexProps> = (props) =>
         <ApplicationBar />
         <Container>
           <LandingContents
+            sampleImageSrc={props.sampleImageSrc}
             firstCallToActionText={props.firstCallToActionText}
             secondCallToActionText={props.secondCallToActionText}
             buttonText={props.buttonText}

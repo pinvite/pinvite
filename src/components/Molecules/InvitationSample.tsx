@@ -1,17 +1,24 @@
-import Paper from '@material-ui/core/Paper'
 import React from 'react'
+import styled from 'styled-components'
 import Caption from '../Atoms/Caption'
-import SampleImage from '../Atoms/SampleImage'
+import FullWidthImage, { FullWidthImageProps } from '../Atoms/FullWidthImage'
+import MuiTheme from '../../theme/MuiTheme'
 
 export interface InvitationSampleProps {
-  captionText: string
-  className?: string
+  src: string,
+  captionText: string,
+  className?: string,
 }
 
+const FullWidthImageStyled = styled(FullWidthImage as React.SFC<FullWidthImageProps>)`
+&& {
+  margin: ${MuiTheme.spacing.unit * (-1) / 2}px
+}`
+
 const InvitationSample: React.SFC<InvitationSampleProps> = (props) =>
-  <Paper className={props.className} elevation={0}>
+  <div className={props.className}>
     <Caption text={props.captionText} />
-    <SampleImage />
-  </Paper>
+    <FullWidthImageStyled src={props.src} />
+  </div>
 
 export default InvitationSample

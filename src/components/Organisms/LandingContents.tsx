@@ -4,9 +4,9 @@ import styled from 'styled-components'
 import {CallToActionBottom, CallToActionTop} from '../../components/Molecules/CallToAction'
 import ConcernList from '../../components/Molecules/ConcernList'
 import InvitationSample from '../Molecules/InvitationSample'
-import { ConcerListProps } from '../Molecules/ConcernList';
 
 export interface LandingContentsProps {
+  sampleImageSrc: string,
   firstCallToActionText: React.ReactNode,
   secondCallToActionText: string,
   buttonText: string,
@@ -22,26 +22,22 @@ export interface LandingContentsProps {
 const CallToActionTopStyled　= styled(CallToActionTop)`
 && {
   margin-bottom: 80px;
-}
-`
+}`
 
 const CallToActionBottomStyled = styled(CallToActionBottom)`
 && {
   margin-bottom: 80px;
-}
-`
+}`
 
 const InvitationSampleStyled = styled(InvitationSample)`
 && {
   margin-bottom: 80px;
-}
-`
+}`
 
 const ConcernListStyled = styled(ConcernList)`
 && {
   margin-bottom: 80px;
-}
-`
+}`
 
 const LandingContents: React.SFC<LandingContentsProps> = (props) =>
   <div className={props.className}>
@@ -51,6 +47,7 @@ const LandingContents: React.SFC<LandingContentsProps> = (props) =>
     />
     <InvitationSampleStyled
       captionText={props.sampleCaptionText}
+      src={props.sampleImageSrc}
     />
     <ConcernListStyled
       captionText={props.concernCaptionText}
