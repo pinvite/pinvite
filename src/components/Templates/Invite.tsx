@@ -44,7 +44,7 @@ const Invite: React.SFC<InviteProps> = (props) =>
             inputMoneyAmountLabel = {props.inputMoneyAmountLabel}
             inputTimeLabel = {props.inputTimeLabel}
             previewButtonText= {props.previewButtonText}
-            gobackButtonText= {props.gobackButtonText}
+            goBackButtonText= {props.gobackButtonText}
             tweetButtonText={props.tweetButtonText}
           />
         </Container>

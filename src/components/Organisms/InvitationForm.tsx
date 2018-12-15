@@ -10,7 +10,7 @@ export interface InvitationFormProps {
   inputMoneyAmountLabel: string,
   inputTimeLabel: string,
   previewButtonText: string,
-  gobackButtonText: string,
+  goBackButtonText: string,
   tweetButtonText: string,
   className?: string // allow styled-components to inject CSS margin from outside.
   // Only margin, no other CSS property from outside
@@ -40,26 +40,23 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
     this.onTimeChange = this.onTimeChange.bind(this)
     this.onPreviewButtonPressed = this.onPreviewButtonPressed.bind(this)
     this.onGoBackButtonPressed = this.onGoBackButtonPressed.bind(this)
+    this.onTweetButtonPressed = this.onTweetButtonPressed.bind(this)
   }
 
   onTitleChange(title: string) {
     this.setState({title})
-    console.log(this.state)
   }
 
   onDetailsChange(details: string) {
     this.setState({details})
-    console.log(this.state)
   }
 
   onMoneyAmountChange(moneyAmount: string) {
     this.setState({moneyAmount})
-    console.log(this.state)
   }
 
   onTimeChange(time: string) {
     this.setState({time})
-    console.log(this.state)
   }
   
   onPreviewButtonPressed() {
@@ -71,6 +68,7 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
   }
 
   onTweetButtonPressed() {
+    console.log('onTweetButtonPressedonTweetButtonPressed')
   }
 
   renderInputs(){
@@ -107,29 +105,9 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
   renderPreview(){
     return(
       <Fragment>
-        <InviteInputs
-          inputTitleProps = {{
-            label: this.props.inputTitleLabel,
-            helperText: this.props.inputTitleHelperText,
-            error: this.state.title != null && this.state.title.length > 70,
-            onChange: this.onTitleChange
-          }}
-          inputDetailsProps  = {{
-            label: this.props.inputDetailsLabel,
-            onChange: this.onTitleChange
-          }}
-          inputMoneyAmountProps  = {{
-            label: this.props.inputMoneyAmountLabel,
-            onChange: this.onTitleChange
-          }}
-          inputTimeProps  = {{
-            label: this.props.inputTimeLabel,
-            onChange: this.onTitleChange
-          }}
-        />
         <PreviewBottom
-          gobackButtonText={this.props.gobackButtonText}
-          gobackButtonCallback={this.onGoBackButtonPressed}
+          goBackButtonText={this.props.goBackButtonText}
+          goBackButtonCallback={this.onGoBackButtonPressed}
           tweetButtonText={this.props.tweetButtonText}
           tweetButtonCallback={this.onTweetButtonPressed}
         />
