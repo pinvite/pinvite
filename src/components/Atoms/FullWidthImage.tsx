@@ -3,17 +3,19 @@ import styled from 'styled-components'
 import Atom from './Atom';
 
 export interface FullWidthImageProps {
+  src: string,
   className?: string,
 }
 
-const FullWidthImg = styled.img`
+const ImgStyled = styled.img`
+&& {
   width: 100%;
-`
+}`
 
 // TODO: enclose this in <Atom></Atom>
-const SampleImage: React.SFC<FullWidthImageProps> = (props) =>
+const FullWidthImg: React.SFC<FullWidthImageProps> = (props) =>
   <Atom className={props.className}>
-    <FullWidthImg src='https://res.cloudinary.com/pinvite/image/upload/v1544140298/invite-sample.png' />
+    <ImgStyled src={props.src} />
   </Atom>
 
-export default SampleImage
+export default FullWidthImg

@@ -3,6 +3,7 @@ import Index from '../components/Templates/Index'
 
 const IndexPage = () =>
   <Index
+    sampleImageSrc="https://res.cloudinary.com/pinvite/image/upload/v1544140298/invite-sample.png"
     firstCallToActionText={<Fragment>Twitterで勉強会の講師を<br/>募集しましょう</Fragment>}
     secondCallToActionText={<Fragment>勉強会を開きましょう！<br/>pinviteがTwitterでの講師探しをお手伝いします</Fragment>}
     sampleCaptionText='目を引く画像とともにツイート！'
