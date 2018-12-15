@@ -8,6 +8,7 @@ import ConcernList from '../../components/Molecules/ConcernList'
 import MuiTheme from '../../theme/MuiTheme'
 import ApplicationBar from '../Molecules/ApplicationBar'
 import InvitationSample from '../Molecules/InvitationSample'
+import {AuthStatusProvider} from '../../context/AuthStatusContext'
 
 export interface IndexProps {
   firstCallToActionText: React.ReactNode,
@@ -70,26 +71,28 @@ const Index: React.SFC<IndexProps> = (props) =>
       `}</style>
     </Helmet>
     <MuiThemeProvider theme={MuiTheme}>
-      <ApplicationBar />
-      <Container>
-        <CallToActionTopStyled
-          description={props.firstCallToActionText}
-          buttonText={props.buttonText}
-        />
-        <InvitationSampleStyled
-          captionText={props.sampleCaptionText}
-        />
-        <ConcernListStyled
-          captionText={props.concernCaptionText}
-          concernText1={props.concernText1}
-          concernText2={props.concernText2}
-          concernText3={props.concernText3}
-        />
-        <CallToActionBottomStyled
-          description={props.secondCallToActionText}
-          buttonText={props.buttonText}
-        />
-      </Container>
+      <AuthStatusProvider>
+        <ApplicationBar />
+        <Container>
+          <CallToActionTopStyled
+            description={props.firstCallToActionText}
+            buttonText={props.buttonText}
+          />
+          <InvitationSampleStyled
+            captionText={props.sampleCaptionText}
+          />
+          <ConcernListStyled
+            captionText={props.concernCaptionText}
+            concernText1={props.concernText1}
+            concernText2={props.concernText2}
+            concernText3={props.concernText3}
+          />
+          <CallToActionBottomStyled
+            description={props.secondCallToActionText}
+            buttonText={props.buttonText}
+          />
+        </Container>
+      </AuthStatusProvider>
     </MuiThemeProvider>
   </Fragment>
 
