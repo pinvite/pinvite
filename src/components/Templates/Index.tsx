@@ -3,11 +3,9 @@ import React, {Fragment} from 'react'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
 
-import {CallToActionBottom, CallToActionTop} from '../../components/Molecules/CallToAction'
-import ConcernList from '../../components/Molecules/ConcernList'
 import MuiTheme from '../../theme/MuiTheme'
 import ApplicationBar from '../Molecules/ApplicationBar'
-import InvitationSample from '../Molecules/InvitationSample'
+import LandingContents from '../Organisms/LandingContents'
 import {AuthStatusProvider} from '../../context/AuthStatusContext'
 
 export interface IndexProps {
@@ -26,30 +24,6 @@ const Container = styled.div`
   margin-top: 100px;
   margin-left: auto;
   margin-right: auto;
-`
-
-const CallToActionTopStyled　= styled(CallToActionTop)`
-&& {
-  margin-bottom: 80px;
-}
-`
-
-const CallToActionBottomStyled = styled(CallToActionBottom)`
-&& {
-  margin-bottom: 80px;
-}
-`
-
-const InvitationSampleStyled = styled(InvitationSample)`
-&& {
-  margin-bottom: 80px;
-}
-`
-
-const ConcernListStyled = styled(ConcernList)`
-&& {
-  margin-bottom: 80px;
-}
 `
 
 const Index: React.SFC<IndexProps> = (props) =>
@@ -74,22 +48,15 @@ const Index: React.SFC<IndexProps> = (props) =>
       <AuthStatusProvider>
         <ApplicationBar />
         <Container>
-          <CallToActionTopStyled
-            description={props.firstCallToActionText}
+          <LandingContents
+            firstCallToActionText={props.firstCallToActionText}
+            secondCallToActionText={props.secondCallToActionText}
             buttonText={props.buttonText}
-          />
-          <InvitationSampleStyled
-            captionText={props.sampleCaptionText}
-          />
-          <ConcernListStyled
-            captionText={props.concernCaptionText}
+            sampleCaptionText={props.sampleCaptionText}
+            concernCaptionText={props.concernCaptionText}
             concernText1={props.concernText1}
             concernText2={props.concernText2}
             concernText3={props.concernText3}
-          />
-          <CallToActionBottomStyled
-            description={props.secondCallToActionText}
-            buttonText={props.buttonText}
           />
         </Container>
       </AuthStatusProvider>

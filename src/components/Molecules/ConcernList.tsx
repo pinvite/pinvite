@@ -1,4 +1,3 @@
-import Paper from '@material-ui/core/Paper'
 import React from 'react'
 import Caption from '../Atoms/Caption'
 import Concern from './Concern'
@@ -14,11 +13,11 @@ export interface ConcerListProps {
 const ConcernList: React.SFC<ConcerListProps> = (props) =>
   // Important to accept the className prop, to inject CSS margin from outside.</Atom>
   // Only margin, no other CSS property from outside.
-  <Paper className={props.className} elevation={0}>
+  <div className={props.className}>
     <Caption text={props.captionText} />
     <Concern text={props.concernText1} />
     <Concern text={props.concernText2} />
     <Concern text={props.concernText3} />
-  </Paper>
+  </div>
 
 export default ConcernList
