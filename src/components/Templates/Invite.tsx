@@ -6,6 +6,7 @@ import InviteInputs from '../Molecules/InviteInputs'
 import InviteBottom from '../Molecules/InviteBottom'
 import MuiTheme from '../../theme/MuiTheme'
 import { MuiThemeProvider } from '@material-ui/core/styles'
+import { AuthStatusProvider } from '../../context/AuthStatusContext'
 
 export interface InviteProps {
   inputTitleLabel: string,
@@ -33,20 +34,22 @@ const Invite: React.SFC<InviteProps> = (props) =>
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     </Helmet>
     <MuiThemeProvider theme={MuiTheme}>
-      <ApplicationBar />
-      <Container>
-        <InviteInputs
-          inputTitleLabel = {props.inputTitleLabel}
-          inputTitleHelperText = {props.inputTitleHelperText}
-          inputDetailsLabel = {props.inputDetailsLabel}
-          inputMoneyAmountLabel = {props.inputMoneyAmountLabel}
-          inputTimeLabel = {props.inputTimeLabel}
-        />
-        <InviteBottom
-          gobackButtonText={props.gobackButtonText}
-          previewButtonText={props.previewButtonText}
-        />
-      </Container>
+      <AuthStatusProvider>
+        <ApplicationBar />
+        <Container>
+          <InviteInputs
+            inputTitleLabel = {props.inputTitleLabel}
+            inputTitleHelperText = {props.inputTitleHelperText}
+            inputDetailsLabel = {props.inputDetailsLabel}
+            inputMoneyAmountLabel = {props.inputMoneyAmountLabel}
+            inputTimeLabel = {props.inputTimeLabel}
+          />
+          <InviteBottom
+            gobackButtonText={props.gobackButtonText}
+            previewButtonText={props.previewButtonText}
+          />
+        </Container>
+      </AuthStatusProvider>
     </MuiThemeProvider>
   </Fragment>
 

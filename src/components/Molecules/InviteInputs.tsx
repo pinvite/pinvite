@@ -39,7 +39,7 @@ class InviteInputs extends React.Component<InviteInputsProps, InviteInputsState>
           label={this.props.inputTitleLabel}
           helperText={this.props.inputTitleHelperText}
           onChange={this.onTitleChange}
-          error={true}
+          error={this.state.titleError}
         />
         <InputDetails label={this.props.inputDetailsLabel} />
         <InputMoneyAmount label={this.props.inputMoneyAmountLabel} />

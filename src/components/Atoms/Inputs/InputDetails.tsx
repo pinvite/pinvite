@@ -13,6 +13,6 @@ export const InputDetails: React.SFC<InputFieldProps> = (props) =>
       multiline
       margin="none"
       variant="outlined"
-      rows={4}
+      rows={10}
     />
   </Atom>
