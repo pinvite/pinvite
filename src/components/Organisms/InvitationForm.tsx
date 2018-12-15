@@ -16,14 +16,14 @@ export interface InvitationFormProps {
 interface InvitationFormState {
   title: string,
   details: string,
-  moneyAmount: number | null,
-  time: number | null,
+  moneyAmount: string,
+  time: string,
 }
 
 class InvitationForm extends React.Component<InvitationFormProps, InvitationFormState> {
   constructor(props: InvitationFormProps){
     super(props)
-    this.state = {title: '', details: '', moneyAmount: null, time: null}
+    this.state = {title: '', details: '', moneyAmount: '', time: ''}
     this.onTitleChange = this.onTitleChange.bind(this)
     this.onDetailsChange = this.onDetailsChange.bind(this)
     this.onMoneyAmountChange = this.onMoneyAmountChange.bind(this)
@@ -38,11 +38,11 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
     this.setState({details})
   }
 
-  onMoneyAmountChange(moneyAmount: number) {
+  onMoneyAmountChange(moneyAmount: string) {
     this.setState({moneyAmount})
   }
 
-  onTimeChange(time: number) {
+  onTimeChange(time: string) {
     this.setState({time})
   }
   
@@ -58,15 +58,15 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
           }}
           inputDetailsProps  = {{
             label: this.props.inputDetailsLabel,
-            onChange: this.onTitleChange
+            onChange: this.onDetailsChange
           }}
           inputMoneyAmountProps  = {{
             label: this.props.inputMoneyAmountLabel,
-            onChange: this.onTitleChange
+            onChange: this.onMoneyAmountChange
           }}
           inputTimeProps  = {{
             label: this.props.inputTimeLabel,
-            onChange: this.onTitleChange
+            onChange: this.onTimeChange
           }}
         />
         <InviteBottom

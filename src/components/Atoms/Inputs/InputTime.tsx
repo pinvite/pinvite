@@ -17,6 +17,7 @@ export const InputTime: React.SFC<InputFieldProps> = (props) =>
     <TextField
       variant="outlined"
       margin="none"
+      type="number"
       InputProps={{
         endAdornment: <InputAdornmentStyled variant="filled" position="end">時間</InputAdornmentStyled>
       }}
