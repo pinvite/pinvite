@@ -17,6 +17,7 @@ export const InputMoneyAmount: React.SFC<InputFieldProps> = (props) =>
   <Atom className={props.className}>
     <TextField
       variant="outlined"
+      type="number"
       margin="none"
       InputProps={{
         // style={{marginTop: 0}} is some hack to correct styling,
