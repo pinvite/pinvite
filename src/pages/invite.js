@@ -1,158 +1,20 @@
 import React from 'react'
-import ReactDOM from 'react-dom';
-import Layout from '../components/Templates/Layout'
-import {Header2, Caption} from '../components/style-typography'
-import InviteCard from '../components/Molecules/InviteCard'
-import Switch from '@material-ui/core/Switch';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import TwitterIcon from '../components/Atoms/TwitterIcon'
-import {LayoutColumn2, LayoutBottom, TextFieldsWrapper} from '../components/styled'
-import {withAuthStatusContext, withRequestContext} from '../context/HOC'
-import { navigateTo } from 'gatsby-link';
-import {cloudinaryImageUrl} from '../utils/cloudinary';
+import Invite from '../components/Templates/Invite'
 
 class InvitePage extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      previewChecked: false,
-      title: '',
-      description: '',
-      amount: '',
-      time: '',
-      timeUnit: '時間',
-      currency: '円'
-    };
-  }
-
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.checked });
-  };
-
-  handleChangeTextField = name => event => {
-    this.setState({
-      [name]: event.target.value,
-    });
-  };
-
-  postUrl() {
-    return ('/users/' + this.props.context.result.user.uid + '/invites'); 
-  }
-
-  createPostBody() {
-    return ({
-      description:   this.state.description,
-      image_url:     cloudinaryImageUrl(this.state.title, this.state.time, this.state.amount),
-      title:         this.state.title
-    });
-  }
-
   render() {
-    const context = this.props.context
-    const requestContext = this.props.requestContext
-    const validationErrorTitle = this.state.title.length > 70
     return (
-      <Layout>
-        <Header2 center>募集内容</Header2>
-        <LayoutColumn2>
-          {context.result && <TwitterIcon src={context.result.user.photoURL} />}
-          <LayoutColumn2>
-            <Caption>プレビュー</Caption>
-            <Switch
-              checked={this.state.previewChecked}
-              onChange={this.handleChange('previewChecked')}
-              value="checked"
-              color="primary"
-            />
-          </LayoutColumn2>
-        </LayoutColumn2>
-        {
-          this.state.previewChecked
-          ? <InviteCard
-            description={this.state.description}
-            imageUrl={this.imageUrl()} />
-          : <TextFieldsWrapper>
-            <FormControl
-              fullWidth
-              margin="normal"
-              aria-describedby="error-title"
-              error={validationErrorTitle}
-              variant="outlined">
-              <InputLabel
-                ref={ref => {
-                  this.labelRef = ReactDOM.findDOMNode(ref);
-                }}
-                htmlFor="title"
-                >勉強会のタイトル</InputLabel>
-              <OutlinedInput
-                id="title"
-                value={this.state.title}
-                onChange={this.handleChangeTextField('title')}
-                labelWidth={this.labelRef ? this.labelRef.offsetWidth : 0}
-                />
-              <FormHelperText id="error-title">70文字以内で入力してください。</FormHelperText>
-            </FormControl>
-            <TextField
-              id="amount"
-              label="勉強会のギャラ"
-              value={this.state.amount}
-              onChange={this.handleChangeTextField('amount')}
-              variant="outlined"
-              margin="normal"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment variant="filled">
-                    ¥
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <TextField
-              fullWidth
-              id="description"
-              label="勉強会の内容"
-              value={this.state.description}
-              onChange={this.handleChangeTextField('description')}
-              multiline
-              margin="normal"
-              variant="outlined"
-            />
-            <TextField
-              fullWidth
-              id="time"
-              label="目安時間"
-              value={this.state.time}
-              onChange={this.handleChangeTextField('time')}
-              multiline
-              margin="normal"
-              variant="outlined"
-            />
-          </TextFieldsWrapper> 
-        }
-        <LayoutBottom>
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            size="large"
-            onClick={() => requestContext.postRequest(
-              this.postUrl(),
-              this.createPostBody(),
-              this.props.context.idToken,
-              'inviteRequest'
-            )}>
-            募集する 
-          </Button>
-        </LayoutBottom>
-      </Layout>
+      <Invite 
+        inputTitleLabel = "勉強会のタイトル"
+        inputTitleHelperText = "70文字以内で入力してください"
+        inputDetailsLabel = "勉強会の詳細"
+        inputMoneyAmountLabel = "勉強会のギャラ"
+        inputTimeLabel = "勉強会の目安時間"
+        gobackButtonText="戻る"
+        previewButtonText="プレビュー"
+      />
     );
   }
 }
 
-export default withRequestContext(withAuthStatusContext(InvitePage))
+export default InvitePage
