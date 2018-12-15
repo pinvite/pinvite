@@ -1,6 +1,5 @@
 import React from 'react'
 import { Router } from "@reach/router";
-import Layout from '../components/Templates/Layout'
 import Helmet from 'react-helmet'
 import { firestore } from '../utils/firebase'
 
@@ -81,7 +80,7 @@ class Invite extends React.Component {
 }
 
 const Users = () => (
-  <Layout>
+  <div>
     {/* These *|something|* values should be replaced by server-side (serverless) Firebase Functions*/}
     <Helmet
       meta={[
@@ -111,7 +110,7 @@ const Users = () => (
         </User>
       </Home>
     </Router>
-  </Layout>
+  </div>
 )
 
 export default Users
