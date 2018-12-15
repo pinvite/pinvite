@@ -70,8 +70,8 @@ const Index: React.SFC<IndexProps> = (props) =>
       `}</style>
     </Helmet>
     <MuiThemeProvider theme={MuiTheme}>
+      <ApplicationBar />
       <Container>
-        <ApplicationBar />
         <CallToActionTopStyled
           description={props.firstCallToActionText}
           buttonText={props.buttonText}
