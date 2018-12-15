@@ -1,4 +1,4 @@
-export {ClassNameProps} from './ClassNameProps'
+export {InputFieldProps} from './InputFieldProps'
 export {InputDetails} from './InputDetails'
 export {InputMoneyAmount} from './InputMoneyAmount'
 export {InputTime} from './InputTime'

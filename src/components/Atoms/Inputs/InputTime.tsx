@@ -3,19 +3,19 @@ import styled from 'styled-components'
 import TextField from '@material-ui/core/TextField'
 import InputAdornment, { InputAdornmentProps } from '@material-ui/core/InputAdornment'
 import Atom from '../Atom'
-import {ClassNameProps} from './ClassNameProps'
+import {InputFieldProps} from './InputFieldProps'
 
 const InputAdornmentStyled = styled(InputAdornment as React.SFC<InputAdornmentProps>)`
 && {
   width: 3rem
 }`
 
-export const InputTime: React.SFC<ClassNameProps> = (props) =>
+export const InputTime: React.SFC<InputFieldProps> = (props) =>
   // Important to accept the className prop, to inject CSS margin from outside.
   // Only margin, no other CSS property from outside.
   <Atom className={props.className}>
     <TextField
-      label="目安時間"
+      label={props.label}
       margin="none"
       variant="outlined"
       InputProps={{

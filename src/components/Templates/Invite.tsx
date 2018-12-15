@@ -2,13 +2,18 @@ import React, {Fragment} from 'react'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
 import ApplicationBar from '../Molecules/ApplicationBar'
+import InviteInputs from '../Molecules/InviteInputs'
 import InviteBottom from '../Molecules/InviteBottom'
 import MuiTheme from '../../theme/MuiTheme'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 
-import {InputTitle, InputDetails, InputMoneyAmount, InputTime} from '../Atoms/Inputs'
 
 export interface InviteProps {
+  inputTitleLabel: string,
+  inputTitleHelperText: string,
+  inputDetailsLabel: string,
+  inputMoneyAmountLabel: string,
+  inputTimeLabel: string,
   previewButtonText: string,
   gobackButtonText: string,
 }
@@ -31,10 +36,13 @@ const Invite: React.SFC<InviteProps> = (props) =>
     <MuiThemeProvider theme={MuiTheme}>
       <ApplicationBar />
       <Container>
-        <InputTitle />
-        <InputDetails />
-        <InputMoneyAmount />
-        <InputTime />
+        <InviteInputs
+          inputTitleLabel = {props.inputTitleLabel}
+          inputTitleHelperText = {props.inputTitleHelperText}
+          inputDetailsLabel = {props.inputDetailsLabel}
+          inputMoneyAmountLabel = {props.inputMoneyAmountLabel}
+          inputTimeLabel = {props.inputTimeLabel}
+        />
         <InviteBottom
           gobackButtonText={props.gobackButtonText}
           previewButtonText={props.previewButtonText}
