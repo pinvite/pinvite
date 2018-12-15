@@ -12,6 +12,7 @@ class InvitePage extends React.Component {
         inputTimeLabel = "勉強会の目安時間"
         gobackButtonText="戻る"
         previewButtonText="プレビュー"
+        tweetButtonText="ツイート"
       />
     );
   }

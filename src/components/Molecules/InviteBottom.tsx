@@ -4,6 +4,7 @@ import PrimaryButton from '../Atoms/PrimaryButton'
 
 export interface InviteBottomProps {
   previewButtonText: string
+  previewButtonCallback: () => void
 }
 
 const BottomLayout = styled.div`
@@ -14,7 +15,7 @@ const BottomLayout = styled.div`
 
 const InviteBottom: React.SFC<InviteBottomProps> = (props) =>
   <BottomLayout>
-    <PrimaryButton text={props.previewButtonText} callback={()=>{}}/>
+    <PrimaryButton text={props.previewButtonText} callback={props.previewButtonCallback}/>
   </BottomLayout>
 
 export default InviteBottom
