@@ -45,6 +45,7 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
 
   onTitleChange(title: string) {
     this.setState({title})
+    console.log(this.state)
   }
 
   onDetailsChange(details: string) {
@@ -68,7 +69,6 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
   }
 
   onTweetButtonPressed() {
-    console.log('onTweetButtonPressedonTweetButtonPressed')
   }
 
   renderInputs(){
@@ -77,20 +77,24 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
         <InviteInputs
           inputTitleProps = {{
             label: this.props.inputTitleLabel,
+            value: this.state.title,
             helperText: this.props.inputTitleHelperText,
             error: this.state.title != null && this.state.title.length > 70,
             onChange: this.onTitleChange
           }}
           inputDetailsProps  = {{
             label: this.props.inputDetailsLabel,
+            value: this.state.details,
             onChange: this.onDetailsChange
           }}
           inputMoneyAmountProps  = {{
             label: this.props.inputMoneyAmountLabel,
+            value: this.state.moneyAmount,
             onChange: this.onMoneyAmountChange
           }}
           inputTimeProps  = {{
             label: this.props.inputTimeLabel,
+            value: this.state.time,
             onChange: this.onTimeChange
           }}
         />

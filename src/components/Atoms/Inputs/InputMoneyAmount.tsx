@@ -25,6 +25,7 @@ export const InputMoneyAmount: React.SFC<InputFieldProps> = (props) =>
         startAdornment: <InputAdornmentStyled style={{marginTop: 0}} variant="filled" position="start">¥</InputAdornmentStyled>
       }}
       label={props.label}
+      value={props.value}
       helperText={props.helperText}
       error={props.error}
       onChange={

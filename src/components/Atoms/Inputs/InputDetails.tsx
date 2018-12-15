@@ -14,6 +14,7 @@ export const InputDetails: React.SFC<InputFieldProps> = (props) =>
       multiline
       rows={10}
       label={props.label}
+      value={props.value}
       helperText={props.helperText}
       error={props.error}
       onChange={
