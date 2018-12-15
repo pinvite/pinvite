@@ -30,7 +30,6 @@ export const InputTime: React.SFC<InputFieldProps> = (props) =>
             props.onChange(event.currentTarget.value)
         }
       }
-
     />
   </Atom>
 

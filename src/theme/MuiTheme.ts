@@ -21,6 +21,9 @@ const MuiTheme = createMuiTheme({
       main: yellow[400],
     },
   },
+  spacing: {
+    unit: 16
+  },
   // Check default values at
   // https://github.com/mui-org/material-ui/blob/master/packages/material-ui/src/styles/createTypography.js
   typography: {

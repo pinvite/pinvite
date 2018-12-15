@@ -19,8 +19,8 @@ export interface InvitationFormProps {
 interface InvitationFormState {
   title: string,
   details: string,
-  moneyAmount: number | null,
-  time: number | null,
+  moneyAmount: string,
+  time: string,
   preview: boolean,
 }
 
@@ -30,8 +30,8 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
     this.state = {
       title: '',
       details: '',
-      moneyAmount: null,
-      time: null,
+      moneyAmount: '',
+      time: '',
       preview: false
     }
     this.onTitleChange = this.onTitleChange.bind(this)
