@@ -21,6 +21,7 @@ const ButtonStyled = styled(Button as React.SFC<ButtonProps>)`
   /* more detailed style which cannot be controlled by Material-UI Button's props*/
   font-size: ${MuiTheme.typography.h6.fontSize};
   padding: 16px 20px;
+  color: ${MuiTheme.palette.secondary.contrastText}
 }`
 
 const PrimaryButton: React.SFC<PrimaryButtonProps> = (props) =>

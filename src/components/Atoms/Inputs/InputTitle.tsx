@@ -3,8 +3,6 @@ import TextField from '@material-ui/core/TextField'
 import Atom from '../Atom'
 import {InputFieldProps} from './InputFieldProps'
 
-
-
 export const InputTitle: React.SFC<InputFieldProps> = (props) =>
   // Important to accept the className prop, to inject CSS margin from outside.
   // Only margin, no other CSS property from outside.
