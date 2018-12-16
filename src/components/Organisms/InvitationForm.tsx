@@ -2,8 +2,10 @@ import React, {Fragment} from 'react'
 import InviteInputs from '../Molecules/InviteInputs'
 import InviteBottom from '../Molecules/InviteBottom'
 import PreviewBottom from '../Molecules/PreviewBottom'
-import FullWidthImg from '../Atoms/FullWidthImage';
+import ImageLoader from '../Molecules/ImageLoader';
 import {cloudinaryImageUrl} from '../../utils/cloudinary'
+
+const spinnerImageURL = 'https://res.cloudinary.com/pinvite/image/upload/v1543695206/spinner.gif'
 
 export interface InvitationFormProps {
   inputTitleLabel: string,
@@ -24,6 +26,7 @@ interface InvitationFormState {
   moneyAmount: string,
   time: string,
   preview: boolean,
+  previewImageSrc: string,
 }
 
 class InvitationForm extends React.Component<InvitationFormProps, InvitationFormState> {
@@ -34,7 +37,8 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
       details: '',
       moneyAmount: '',
       time: '',
-      preview: false
+      preview: false,
+      previewImageSrc: spinnerImageURL
     }
     this.onTitleChange = this.onTitleChange.bind(this)
     this.onDetailsChange = this.onDetailsChange.bind(this)
@@ -110,8 +114,9 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
   renderPreview(){
     return(
       <Fragment>
-        <FullWidthImg
-          src={cloudinaryImageUrl(this.state.title, this.state.time, this.state.moneyAmount)}
+        <ImageLoader
+          previewImageURL={this.state.previewImageSrc}
+          imageURL={cloudinaryImageUrl(this.state.title, this.state.time, this.state.moneyAmount)}
         />
         <PreviewBottom
           goBackButtonText={this.props.goBackButtonText}

@@ -49,7 +49,7 @@ export function cloudinaryImageUrl(title: string, time: string, amount: string) 
             .fontFamily("NotoSansJP-Black.otf")
             .fontSize(60)
             .textAlign('left')
-            .text(encodeURI('勉強会の時間: ' + time + ' ' + ' 時間'))
+            .text(encodeURI('勉強会の時間: ' + time + ' 時間'))
             .toString(),
           gravity: "north_west",
           crop: "fit"
