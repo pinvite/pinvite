@@ -13,6 +13,7 @@ export interface SecondaryButtonProps {
 
 const ButtonStyled = styled(Button as React.SFC<ButtonProps>)`
 && {
+  /* centering */
   display: block;
   margin: 0 auto;
 

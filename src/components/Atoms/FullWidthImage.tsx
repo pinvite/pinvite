@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import Atom from './Atom';
 
 export interface FullWidthImageProps {
-  src: string,
-  className?: string,
+  src: string
+  className?: string
 }
 
 const ImgStyled = styled.img`

@@ -8,14 +8,14 @@ import { MuiThemeProvider } from '@material-ui/core/styles'
 import { AuthStatusProvider } from '../../context/AuthStatusContext'
 
 export interface InviteProps {
-  inputTitleLabel: string,
-  inputTitleHelperText: string,
-  inputDetailsLabel: string,
-  inputMoneyAmountLabel: string,
-  inputTimeLabel: string,
-  previewButtonText: string,
-  gobackButtonText: string,
-  tweetButtonText: string,
+  inputTitleLabel: string
+  inputTitleHelperText: string
+  inputDetailsLabel: string
+  inputMoneyAmountLabel: string
+  inputTimeLabel: string
+  previewButtonText: string
+  gobackButtonText: string
+  tweetButtonText: string
 }
 
 const Container = styled.div`

@@ -7,7 +7,7 @@ import {InputFieldProps} from './InputFieldProps'
 
 const InputAdornmentStyled = styled(InputAdornment as React.SFC<InputAdornmentProps>)`
 && {
-  width: 3rem
+  width: 3rem;
 }`
 
 export const InputTime: React.SFC<InputFieldProps> = (props) =>

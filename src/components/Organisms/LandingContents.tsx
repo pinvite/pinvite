@@ -6,16 +6,16 @@ import ConcernList from '../../components/Molecules/ConcernList'
 import InvitationSample from '../Molecules/InvitationSample'
 
 export interface LandingContentsProps {
-  sampleImageSrc: string,
-  firstCallToActionText: React.ReactNode,
-  secondCallToActionText: React.ReactNode,
-  registerButtonText: string,
-  jumpToButtonText: string,
-  sampleCaptionText: string,
-  concernCaptionText: string,
-  concernText1: string,
-  concernText2: string,
-  concernText3: string,
+  sampleImageSrc: string
+  firstCallToActionText: React.ReactNode
+  secondCallToActionText: React.ReactNode
+  registerButtonText: string
+  jumpToButtonText: string
+  sampleCaptionText: string
+  concernCaptionText: string
+  concernText1: string
+  concernText2: string
+  concernText3: string
   className?: string // allow styled-components to inject CSS margin from outside.
                      // Only margin, no other CSS property from outside
 }
