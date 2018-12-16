@@ -22,6 +22,7 @@ export const InputTime: React.SFC<InputFieldProps> = (props) =>
         endAdornment: <InputAdornmentStyled variant="filled" position="end">時間</InputAdornmentStyled>
       }}
       label={props.label}
+      value={props.value}
       helperText={props.helperText}
       error={props.error}
       onChange={

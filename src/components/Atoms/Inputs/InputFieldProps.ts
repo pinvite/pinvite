@@ -2,6 +2,7 @@ import React from 'react'
 
 export interface InputFieldProps {
   label: string,
+  value: string,
   error?: boolean,
   onChange?:  (title: string) => void,
   helperText?: string,

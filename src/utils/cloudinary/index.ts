@@ -6,7 +6,7 @@ const cloudinary = new cloudinaryCore.Cloudinary({
   secure: true,
 })
 
-export function cloudinaryImageUrl(title, time, amount) {
+export function cloudinaryImageUrl(title: string, time: string, amount: string) {
   // https://cloudinary.com/documentation/image_transformations#adding_text_captions
   return (cloudinary.url(
     'pinvite-background2.png',
@@ -18,13 +18,12 @@ export function cloudinaryImageUrl(title, time, amount) {
           x: 100,
           y: 50,
           gravity: "north_west",
-          overlay: {
-            font_family: "NotoSansJP-Black.otf",
-            font_size: 60, 
-            font_antialias: "best",
-            text_align: "left",
-            text: encodeURI(title)
-          },
+          overlay: new cloudinaryCore.TextLayer()
+            .fontFamily("NotoSansJP-Black.otf")
+            .fontSize(60)
+            .textAlign('left')
+            .text(encodeURI(title))
+            .toString(),
           crop: "fit"
         },
         {
@@ -32,12 +31,12 @@ export function cloudinaryImageUrl(title, time, amount) {
           height: 100,
           x: 100,
           y: 400,
-          overlay: {
-            font_family: "NotoSansJP-Black.otf",
-            font_size: 60, 
-            text_align: "start",
-            text: encodeURI('勉強会のギャラ: ' + amount + ' 円')
-          },
+          overlay: new cloudinaryCore.TextLayer()
+            .fontFamily("NotoSansJP-Black.otf")
+            .fontSize(60)
+            .textAlign('start')
+            .text(encodeURI('勉強会のギャラ: ' + amount + ' 円'))
+            .toString(),
           gravity: "north_west",
           crop: "fit"
         },
@@ -46,12 +45,12 @@ export function cloudinaryImageUrl(title, time, amount) {
           height: 94,
           x: 100,
           y: 500,
-          overlay: {
-            font_family: "NotoSansJP-Black.otf",
-            font_size: 60, 
-            text_align: "left",
-            text: encodeURI('勉強会の時間: ' + time + ' ' + ' 時間')
-          },
+          overlay: new cloudinaryCore.TextLayer()
+            .fontFamily("NotoSansJP-Black.otf")
+            .fontSize(60)
+            .textAlign('left')
+            .text(encodeURI('勉強会の時間: ' + time + ' 時間'))
+            .toString(),
           gravity: "north_west",
           crop: "fit"
         }

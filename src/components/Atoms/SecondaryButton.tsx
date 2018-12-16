@@ -30,6 +30,7 @@ const SecondaryButton: React.SFC<SecondaryButtonProps> = (props) =>
       variant='outlined'
       color='secondary'
       size='large'
+      onClick={props.callback}
     >{props.text}</ButtonStyled>
   </Atom>
 

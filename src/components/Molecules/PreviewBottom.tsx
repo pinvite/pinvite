@@ -1,12 +1,12 @@
-import React, {Fragment} from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import PrimaryButton from '../Atoms/PrimaryButton'
 import SecondaryButton from '../Atoms/SecondaryButton'
 
-export interface InviteBottomProps {
-  gobackButtonText: string
+export interface PreviewBottomProps {
+  goBackButtonText: string
   tweetButtonText: string
-  gobackButtonCallback: () => void
+  goBackButtonCallback: () => void
   tweetButtonCallback: () => void
 }
 
@@ -16,9 +16,9 @@ const BottomLayout = styled.div`
   justify-content: space-between;
 }`
 
-const PreviewBottom: React.SFC<InviteBottomProps> = (props) =>
+const PreviewBottom: React.SFC<PreviewBottomProps> = (props) =>
   <BottomLayout>
-    <SecondaryButton text={props.gobackButtonText} callback={props.gobackButtonCallback}/>
+    <SecondaryButton text={props.goBackButtonText} callback={props.goBackButtonCallback}/>
     <PrimaryButton text={props.tweetButtonText} callback={props.tweetButtonCallback}/>
   </BottomLayout>
 

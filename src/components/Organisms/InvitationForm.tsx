@@ -2,6 +2,10 @@ import React, {Fragment} from 'react'
 import InviteInputs from '../Molecules/InviteInputs'
 import InviteBottom from '../Molecules/InviteBottom'
 import PreviewBottom from '../Molecules/PreviewBottom'
+import ImageLoader from '../Molecules/ImageLoader';
+import {cloudinaryImageUrl} from '../../utils/cloudinary'
+
+const spinnerImageURL = 'https://res.cloudinary.com/pinvite/image/upload/v1543695206/spinner.gif'
 
 export interface InvitationFormProps {
   inputTitleLabel: string,
@@ -10,7 +14,7 @@ export interface InvitationFormProps {
   inputMoneyAmountLabel: string,
   inputTimeLabel: string,
   previewButtonText: string,
-  gobackButtonText: string,
+  goBackButtonText: string,
   tweetButtonText: string,
   className?: string // allow styled-components to inject CSS margin from outside.
   // Only margin, no other CSS property from outside
@@ -22,6 +26,7 @@ interface InvitationFormState {
   moneyAmount: string,
   time: string,
   preview: boolean,
+  previewImageSrc: string,
 }
 
 class InvitationForm extends React.Component<InvitationFormProps, InvitationFormState> {
@@ -32,7 +37,8 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
       details: '',
       moneyAmount: '',
       time: '',
-      preview: false
+      preview: false,
+      previewImageSrc: spinnerImageURL
     }
     this.onTitleChange = this.onTitleChange.bind(this)
     this.onDetailsChange = this.onDetailsChange.bind(this)
@@ -40,26 +46,23 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
     this.onTimeChange = this.onTimeChange.bind(this)
     this.onPreviewButtonPressed = this.onPreviewButtonPressed.bind(this)
     this.onGoBackButtonPressed = this.onGoBackButtonPressed.bind(this)
+    this.onTweetButtonPressed = this.onTweetButtonPressed.bind(this)
   }
 
   onTitleChange(title: string) {
     this.setState({title})
-    console.log(this.state)
   }
 
   onDetailsChange(details: string) {
     this.setState({details})
-    console.log(this.state)
   }
 
   onMoneyAmountChange(moneyAmount: string) {
     this.setState({moneyAmount})
-    console.log(this.state)
   }
 
   onTimeChange(time: string) {
     this.setState({time})
-    console.log(this.state)
   }
   
   onPreviewButtonPressed() {
@@ -79,20 +82,24 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
         <InviteInputs
           inputTitleProps = {{
             label: this.props.inputTitleLabel,
+            value: this.state.title,
             helperText: this.props.inputTitleHelperText,
             error: this.state.title != null && this.state.title.length > 70,
             onChange: this.onTitleChange
           }}
           inputDetailsProps  = {{
             label: this.props.inputDetailsLabel,
+            value: this.state.details,
             onChange: this.onDetailsChange
           }}
           inputMoneyAmountProps  = {{
             label: this.props.inputMoneyAmountLabel,
+            value: this.state.moneyAmount,
             onChange: this.onMoneyAmountChange
           }}
           inputTimeProps  = {{
             label: this.props.inputTimeLabel,
+            value: this.state.time,
             onChange: this.onTimeChange
           }}
         />
@@ -107,29 +114,13 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
   renderPreview(){
     return(
       <Fragment>
-        <InviteInputs
-          inputTitleProps = {{
-            label: this.props.inputTitleLabel,
-            helperText: this.props.inputTitleHelperText,
-            error: this.state.title != null && this.state.title.length > 70,
-            onChange: this.onTitleChange
-          }}
-          inputDetailsProps  = {{
-            label: this.props.inputDetailsLabel,
-            onChange: this.onTitleChange
-          }}
-          inputMoneyAmountProps  = {{
-            label: this.props.inputMoneyAmountLabel,
-            onChange: this.onTitleChange
-          }}
-          inputTimeProps  = {{
-            label: this.props.inputTimeLabel,
-            onChange: this.onTitleChange
-          }}
+        <ImageLoader
+          previewImageURL={this.state.previewImageSrc}
+          imageURL={cloudinaryImageUrl(this.state.title, this.state.time, this.state.moneyAmount)}
         />
         <PreviewBottom
-          gobackButtonText={this.props.gobackButtonText}
-          gobackButtonCallback={this.onGoBackButtonPressed}
+          goBackButtonText={this.props.goBackButtonText}
+          goBackButtonCallback={this.onGoBackButtonPressed}
           tweetButtonText={this.props.tweetButtonText}
           tweetButtonCallback={this.onTweetButtonPressed}
         />
