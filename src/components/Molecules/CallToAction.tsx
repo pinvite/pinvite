@@ -7,7 +7,8 @@ import { navigate } from 'gatsby';
 
 export interface CallToActionProp {
   description: React.ReactNode,
-  buttonText: string,
+  registerButtonText: string,
+  jumpToButtonText: string,
   className?: string // allow styled-components to inject CSS margin from outside.
                      // Only margin, no other CSS property from outside.
 }
@@ -31,9 +32,9 @@ export const CallToActionTop: React.SFC<CallToActionProp> = (props) =>
       {
         ({handleLogin, loginStatus}) => {
           if(loginStatus == LoginStatus.LoggedIn) 
-            return(<PrimaryButton text={props.buttonText} callback={handleLogin} />)
+            return(<PrimaryButton text={props.registerButtonText} callback={handleLogin} />)
           else 
-            return(<PrimaryButton text={props.buttonText} callback={() => {navigate('/invite/')}} />)
+            return(<PrimaryButton text={props.jumpToButtonText} callback={() => {navigate('/invite/')}} />)
         }
       }
     </AuthStatusContext.Consumer>    
@@ -48,9 +49,9 @@ export const CallToActionBottom: React.SFC<CallToActionProp> = (props) =>
       {
         ({handleLogin, loginStatus}) => {
           if(loginStatus == LoginStatus.LoggedIn) 
-            return(<PrimaryButton text={props.buttonText} callback={handleLogin} />)
+            return(<PrimaryButton text={props.registerButtonText} callback={handleLogin} />)
           else 
-            return(<PrimaryButton text={props.buttonText} callback={() => {navigate('/invite/')}} />)
+            return(<PrimaryButton text={props.jumpToButtonText} callback={() => {navigate('/invite/')}} />)
         }
       }
     </AuthStatusContext.Consumer>    

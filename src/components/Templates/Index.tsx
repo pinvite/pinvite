@@ -12,7 +12,8 @@ export interface IndexProps {
   sampleImageSrc: string,
   firstCallToActionText: React.ReactNode,
   secondCallToActionText: string,
-  buttonText: string,
+  registerButtonText: string,
+  jumpToButtonText: string,
   sampleCaptionText: string,
   concernCaptionText: string,
   concernText1: string,
@@ -53,7 +54,8 @@ const Index: React.SFC<IndexProps> = (props) =>
             sampleImageSrc={props.sampleImageSrc}
             firstCallToActionText={props.firstCallToActionText}
             secondCallToActionText={props.secondCallToActionText}
-            buttonText={props.buttonText}
+            registerButtonText={props.registerButtonText}
+            jumpToButtonText={props.jumpToButtonText}
             sampleCaptionText={props.sampleCaptionText}
             concernCaptionText={props.concernCaptionText}
             concernText1={props.concernText1}

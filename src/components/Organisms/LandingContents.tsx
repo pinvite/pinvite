@@ -9,7 +9,8 @@ export interface LandingContentsProps {
   sampleImageSrc: string,
   firstCallToActionText: React.ReactNode,
   secondCallToActionText: string,
-  buttonText: string,
+  registerButtonText: string,
+  jumpToButtonText: string,
   sampleCaptionText: string,
   concernCaptionText: string,
   concernText1: string,
@@ -43,7 +44,8 @@ const LandingContents: React.SFC<LandingContentsProps> = (props) =>
   <div className={props.className}>
     <CallToActionTopStyled
       description={props.firstCallToActionText}
-      buttonText={props.buttonText}
+      registerButtonText={props.registerButtonText}
+      jumpToButtonText={props.jumpToButtonText}
     />
     <InvitationSampleStyled
       captionText={props.sampleCaptionText}
@@ -57,7 +59,8 @@ const LandingContents: React.SFC<LandingContentsProps> = (props) =>
     />
     <CallToActionBottomStyled
       description={props.secondCallToActionText}
-      buttonText={props.buttonText}
+      registerButtonText={props.registerButtonText}
+      jumpToButtonText={props.jumpToButtonText}
     />
   </div>
 
