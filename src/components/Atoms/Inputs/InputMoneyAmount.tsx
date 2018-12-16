@@ -8,7 +8,7 @@ import {InputFieldProps} from './InputFieldProps'
 
 const InputAdornmentStyled = styled(InputAdornment as React.SFC<InputAdornmentProps>)`
 && {
-  margin-right: ${MuiTheme.spacing.unit},
+  margin-right: ${MuiTheme.spacing.unit};
 }`
 
 export const InputMoneyAmount: React.SFC<InputFieldProps> = (props) =>

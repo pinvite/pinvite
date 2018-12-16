@@ -9,16 +9,16 @@ import LandingContents from '../Organisms/LandingContents'
 import {AuthStatusProvider} from '../../context/AuthStatusContext'
 
 export interface IndexProps {
-  sampleImageSrc: string,
-  firstCallToActionText: React.ReactNode,
-  secondCallToActionText: React.ReactNode,
-  registerButtonText: string,
-  jumpToButtonText: string,
-  sampleCaptionText: string,
-  concernCaptionText: string,
-  concernText1: string,
-  concernText2: string,
-  concernText3: string,
+  sampleImageSrc: string
+  firstCallToActionText: React.ReactNode
+  secondCallToActionText: React.ReactNode
+  registerButtonText: string
+  jumpToButtonText: string
+  sampleCaptionText: string
+  concernCaptionText: string
+  concernText1: string
+  concernText2: string
+  concernText3: string
 }
 
 const Container = styled.div`

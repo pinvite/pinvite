@@ -5,7 +5,7 @@ import MuiTheme from '../../theme/MuiTheme'
 import Atom from './Atom'
 
 export interface AppNameProps {
-  onClick?: () => void,
+  onClick?: () => void
   className?: string // allow styled-components to inject CSS margin from outside.
                      // Only margin, no other CSS property from outside.
 }

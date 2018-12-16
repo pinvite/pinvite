@@ -2,10 +2,10 @@ import React from 'react'
 import {InputTitle, InputDetails, InputMoneyAmount, InputTime, InputFieldProps} from '../Atoms/Inputs'
 
 export interface InviteInputsProps {
-  inputTitleProps: InputFieldProps,
-  inputDetailsProps: InputFieldProps,
-  inputMoneyAmountProps: InputFieldProps,
-  inputTimeProps: InputFieldProps,
+  inputTitleProps: InputFieldProps
+  inputDetailsProps: InputFieldProps
+  inputMoneyAmountProps: InputFieldProps
+  inputTimeProps: InputFieldProps
   className?: string // allow styled-components to inject CSS margin from outside.
                      // Only margin, no other CSS property from outside.
 }

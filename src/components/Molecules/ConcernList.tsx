@@ -3,10 +3,10 @@ import Caption from '../Atoms/Caption'
 import Concern from './Concern'
 
 export interface ConcerListProps {
-  captionText: string,
-  concernText1: string,
-  concernText2: string,
-  concernText3: string,
+  captionText: string
+  concernText1: string
+  concernText2: string
+  concernText3: string
   className?: string // allow styled-components to inject CSS margin from outside.
                      // Only margin, no other CSS property from outside.
 }

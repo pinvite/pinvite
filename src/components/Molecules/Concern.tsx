@@ -4,7 +4,7 @@ import {H6Left} from '../Atoms/Description'
 import Icon from '../Atoms/Icon'
 
 export interface ConcernProps {
-  text: string,
+  text: string
   className?: string // allow styled-components to inject CSS margin from outside.
   // Only margin, no other CSS property from outside.
 }

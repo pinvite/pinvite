@@ -2,8 +2,8 @@ import React, {Fragment} from 'react'
 import FullWidthImage from '../Atoms/FullWidthImage'
 
 export interface ImageLoaderProps {
-  previewImageURL: string,
-  imageURL: string,
+  previewImageURL: string
+  imageURL: string
   className?: string
 }
 

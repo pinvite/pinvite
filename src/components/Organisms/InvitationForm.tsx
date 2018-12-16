@@ -8,25 +8,25 @@ import {cloudinaryImageUrl} from '../../utils/cloudinary'
 const spinnerImageURL = 'https://res.cloudinary.com/pinvite/image/upload/v1543695206/spinner.gif'
 
 export interface InvitationFormProps {
-  inputTitleLabel: string,
-  inputTitleHelperText: string,
-  inputDetailsLabel: string,
-  inputMoneyAmountLabel: string,
-  inputTimeLabel: string,
-  previewButtonText: string,
-  goBackButtonText: string,
-  tweetButtonText: string,
+  inputTitleLabel: string
+  inputTitleHelperText: string
+  inputDetailsLabel: string
+  inputMoneyAmountLabel: string
+  inputTimeLabel: string
+  previewButtonText: string
+  goBackButtonText: string
+  tweetButtonText: string
   className?: string // allow styled-components to inject CSS margin from outside.
                      // Only margin, no other CSS property from outside
 }
 
 interface InvitationFormState {
-  title: string,
-  details: string,
-  moneyAmount: string,
-  time: string,
-  preview: boolean,
-  previewImageSrc: string,
+  title: string
+  details: string
+  moneyAmount: string
+  time: string
+  preview: boolean
+  previewImageSrc: string
 }
 
 class InvitationForm extends React.Component<InvitationFormProps, InvitationFormState> {

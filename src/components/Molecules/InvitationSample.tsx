@@ -5,8 +5,8 @@ import FullWidthImage, { FullWidthImageProps } from '../Atoms/FullWidthImage'
 import MuiTheme from '../../theme/MuiTheme'
 
 export interface InvitationSampleProps {
-  src: string,
-  captionText: string,
+  src: string
+  captionText: string
   className?: string // allow styled-components to inject CSS margin from outside.
                      // Only margin, no other CSS property from outside.
 }

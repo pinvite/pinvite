@@ -3,7 +3,7 @@ import React from 'react'
 import Atom from './Atom'
 
 export interface DescriptionProps {
-  description: React.ReactNode,
+  description: React.ReactNode
   className?: string // allow styled-components to inject CSS margin from outside.
                      // Only margin, no other CSS property from outside.
 }
