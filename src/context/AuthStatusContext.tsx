@@ -1,5 +1,5 @@
 import React from 'react'
-import firebase, { firebaseLogin, makeSureTwitterUserInfoStored, UserInfo } from '../../utils/firebase'
+import firebase, { firebaseLogin, makeSureTwitterUserInfoStored, UserInfo } from '../utils/firebase'
 
 enum LoginStatus {
   NotLoggedIn,
