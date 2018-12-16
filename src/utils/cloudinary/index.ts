@@ -19,7 +19,7 @@ export function cloudinaryImageUrl(title: string, time: string, amount: string) 
           y: 50,
           gravity: "north_west",
           overlay: new cloudinaryCore.TextLayer()
-            .fontFamily("NotoSansJP-Black")
+            .fontFamily("NotoSansJP-Black.otf")
             .fontSize(60)
             .textAlign('left')
             .text(encodeURI(title))
@@ -32,7 +32,7 @@ export function cloudinaryImageUrl(title: string, time: string, amount: string) 
           x: 100,
           y: 400,
           overlay: new cloudinaryCore.TextLayer()
-            .fontFamily("NotoSansJP-Black")
+            .fontFamily("NotoSansJP-Black.otf")
             .fontSize(60)
             .textAlign('start')
             .text(encodeURI('勉強会のギャラ: ' + amount + ' 円'))
@@ -46,7 +46,7 @@ export function cloudinaryImageUrl(title: string, time: string, amount: string) 
           x: 100,
           y: 500,
           overlay: new cloudinaryCore.TextLayer()
-            .fontFamily("NotoSansJP-Black")
+            .fontFamily("NotoSansJP-Black.otf")
             .fontSize(60)
             .textAlign('left')
             .text(encodeURI('勉強会の時間: ' + time + ' ' + ' 時間'))

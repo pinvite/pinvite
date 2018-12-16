@@ -47,7 +47,6 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
 
   onTitleChange(title: string) {
     this.setState({title})
-    console.log(this.state)
   }
 
   onDetailsChange(details: string) {
@@ -112,7 +111,7 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
     return(
       <Fragment>
         <FullWidthImg
-          src={cloudinaryImageUrl(this.state.title)}
+          src={cloudinaryImageUrl(this.state.title, this.state.time, this.state.moneyAmount)}
         />
         <PreviewBottom
           goBackButtonText={this.props.goBackButtonText}
