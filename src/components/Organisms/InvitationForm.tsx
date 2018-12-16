@@ -17,7 +17,7 @@ export interface InvitationFormProps {
   goBackButtonText: string,
   tweetButtonText: string,
   className?: string // allow styled-components to inject CSS margin from outside.
-  // Only margin, no other CSS property from outside
+                     // Only margin, no other CSS property from outside
 }
 
 interface InvitationFormState {

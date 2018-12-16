@@ -1,5 +1,4 @@
 import React from 'react'
-import styled from 'styled-components'
 import {InputTitle, InputDetails, InputMoneyAmount, InputTime, InputFieldProps} from '../Atoms/Inputs'
 
 export interface InviteInputsProps {
@@ -11,59 +10,39 @@ export interface InviteInputsProps {
                      // Only margin, no other CSS property from outside.
 }
 
-interface InviteInputsState {
-  titleError: boolean,
-}
-
-const Layout = styled.div`
-&& {
-  display: flex;
-  justify-content: space-between;
-}`
-
-class InviteInputs extends React.Component<InviteInputsProps, InviteInputsState> {
-  constructor(props: InviteInputsProps){
-    super(props)
-    this.state= {titleError: false}
-  }
-
-  render(){
-    return(
-      // Important to accept the className prop, to inject CSS margin from outside.
-      // Only margin, no other CSS property from outside.
-      <div className={this.props.className} >
-        <InputTitle
-          label={this.props.inputTitleProps.label}
-          value={this.props.inputTitleProps.value}
-          helperText={this.props.inputTitleProps.helperText}
-          onChange={this.props.inputTitleProps.onChange}
-          error={this.props.inputTitleProps.error}
-        />
-        <InputDetails
-          label={this.props.inputDetailsProps.label}
-          value={this.props.inputDetailsProps.value}
-          helperText={this.props.inputDetailsProps.helperText}
-          onChange={this.props.inputDetailsProps.onChange}
-          error={this.props.inputDetailsProps.error}       
-        />
-        <InputMoneyAmount
-          label={this.props.inputMoneyAmountProps.label}
-          value={this.props.inputMoneyAmountProps.value}
-          helperText={this.props.inputMoneyAmountProps.helperText}
-          onChange={this.props.inputMoneyAmountProps.onChange}
-          error={this.props.inputMoneyAmountProps.error}               
-        />
-        <InputTime
-          label={this.props.inputTimeProps.label}
-          value={this.props.inputTimeProps.value}
-          helperText={this.props.inputTimeProps.helperText}
-          onChange={this.props.inputTimeProps.onChange}
-          error={this.props.inputTimeProps.error}        
-        />
-      </div>  
-    )
-  }
-}
+const InviteInputs: React.SFC<InviteInputsProps> = (props) =>
+  // Important to accept the className prop, to inject CSS margin from outside.
+  // Only margin, no other CSS property from outside.
+  <div className={props.className} >
+    <InputTitle
+      label={props.inputTitleProps.label}
+      value={props.inputTitleProps.value}
+      helperText={props.inputTitleProps.helperText}
+      onChange={props.inputTitleProps.onChange}
+      error={props.inputTitleProps.error}
+    />
+    <InputDetails
+      label={props.inputDetailsProps.label}
+      value={props.inputDetailsProps.value}
+      helperText={props.inputDetailsProps.helperText}
+      onChange={props.inputDetailsProps.onChange}
+      error={props.inputDetailsProps.error}       
+    />
+    <InputMoneyAmount
+      label={props.inputMoneyAmountProps.label}
+      value={props.inputMoneyAmountProps.value}
+      helperText={props.inputMoneyAmountProps.helperText}
+      onChange={props.inputMoneyAmountProps.onChange}
+      error={props.inputMoneyAmountProps.error}               
+    />
+    <InputTime
+      label={props.inputTimeProps.label}
+      value={props.inputTimeProps.value}
+      helperText={props.inputTimeProps.helperText}
+      onChange={props.inputTimeProps.onChange}
+      error={props.inputTimeProps.error}        
+    />
+  </div>  
 
 export default InviteInputs
 
