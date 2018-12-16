@@ -11,9 +11,10 @@ import {AuthStatusProvider} from '../../context/AuthStatusContext'
 export interface IndexProps {
   sampleImageSrc: string,
   firstCallToActionText: React.ReactNode,
-  secondCallToActionText: string,
+  secondCallToActionText: React.ReactNode,
   registerButtonText: string,
   jumpToButtonText: string,
+  buttonText: string,
   sampleCaptionText: string,
   concernCaptionText: string,
   concernText1: string,
