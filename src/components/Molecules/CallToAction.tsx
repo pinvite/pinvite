@@ -8,7 +8,8 @@ import { navigate } from 'gatsby';
 export interface CallToActionProp {
   description: React.ReactNode,
   buttonText: string,
-  className?: string
+  className?: string // allow styled-components to inject CSS margin from outside.
+                     // Only margin, no other CSS property from outside.
 }
 
 const H3CenteredStyled = styled(H3Centered as React.SFC<DescriptionProps>)`

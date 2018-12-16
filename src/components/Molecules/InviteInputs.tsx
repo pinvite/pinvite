@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import {InputTitle, InputDetails, InputMoneyAmount, InputTime, InputFieldProps} from '../Atoms/Inputs'
 
@@ -7,6 +7,8 @@ export interface InviteInputsProps {
   inputDetailsProps: InputFieldProps,
   inputMoneyAmountProps: InputFieldProps,
   inputTimeProps: InputFieldProps,
+  className?: string // allow styled-components to inject CSS margin from outside.
+                     // Only margin, no other CSS property from outside.
 }
 
 interface InviteInputsState {
@@ -23,12 +25,13 @@ class InviteInputs extends React.Component<InviteInputsProps, InviteInputsState>
   constructor(props: InviteInputsProps){
     super(props)
     this.state= {titleError: false}
-
   }
 
   render(){
     return(
-      <Fragment>
+      // Important to accept the className prop, to inject CSS margin from outside.
+      // Only margin, no other CSS property from outside.
+      <div className={this.props.className} >
         <InputTitle
           label={this.props.inputTitleProps.label}
           value={this.props.inputTitleProps.value}
@@ -57,7 +60,7 @@ class InviteInputs extends React.Component<InviteInputsProps, InviteInputsState>
           onChange={this.props.inputTimeProps.onChange}
           error={this.props.inputTimeProps.error}        
         />
-      </Fragment>  
+      </div>  
     )
   }
 }

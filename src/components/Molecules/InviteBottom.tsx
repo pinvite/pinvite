@@ -4,7 +4,9 @@ import PrimaryButton from '../Atoms/PrimaryButton'
 
 export interface InviteBottomProps {
   previewButtonText: string
-  previewButtonCallback: () => void
+  previewButtonCallback: () => void,
+  className?: string // allow styled-components to inject CSS margin from outside.
+                     // Only margin, no other CSS property from outside.
 }
 
 const BottomLayout = styled.div`
@@ -14,7 +16,9 @@ const BottomLayout = styled.div`
 }`
 
 const InviteBottom: React.SFC<InviteBottomProps> = (props) =>
-  <BottomLayout>
+  // Important to accept the className prop, to inject CSS margin from outside.
+  // Only margin, no other CSS property from outside.
+  <BottomLayout className={props.className} >
     <PrimaryButton text={props.previewButtonText} callback={props.previewButtonCallback}/>
   </BottomLayout>
 

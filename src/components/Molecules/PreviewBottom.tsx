@@ -4,10 +4,12 @@ import PrimaryButton from '../Atoms/PrimaryButton'
 import SecondaryButton from '../Atoms/SecondaryButton'
 
 export interface PreviewBottomProps {
-  goBackButtonText: string
-  tweetButtonText: string
-  goBackButtonCallback: () => void
-  tweetButtonCallback: () => void
+  goBackButtonText: string,
+  tweetButtonText: string,
+  goBackButtonCallback: () => void,
+  tweetButtonCallback: () => void,
+  className?: string, // allow styled-components to inject CSS margin from outside.
+                      // Only margin, no other CSS property from outside.
 }
 
 const BottomLayout = styled.div`
@@ -17,7 +19,9 @@ const BottomLayout = styled.div`
 }`
 
 const PreviewBottom: React.SFC<PreviewBottomProps> = (props) =>
-  <BottomLayout>
+  // Important to accept the className prop, to inject CSS margin from outside.
+  // Only margin, no other CSS property from outside.
+  <BottomLayout className={props.className} >
     <SecondaryButton text={props.goBackButtonText} callback={props.goBackButtonCallback}/>
     <PrimaryButton text={props.tweetButtonText} callback={props.tweetButtonCallback}/>
   </BottomLayout>
