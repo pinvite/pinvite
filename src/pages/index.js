@@ -7,7 +7,8 @@ const IndexPage = () =>
     firstCallToActionText={<Fragment>Twitterで勉強会の講師を<br/>募集しましょう</Fragment>}
     secondCallToActionText={<Fragment>勉強会を開きましょう！<br/>pinviteがTwitterでの講師探しをお手伝いします</Fragment>}
     sampleCaptionText='目を引く画像とともにツイート！'
-    buttonText='Twitterで登録'
+    registerButtonText='Twitterで登録'
+    jumpToButtonText='募集内容を入力'
     concernCaptionText='こんなことで困っていませんか？'
     concernText1='新技術を導入したいが社内にエキスパートがいない'
     concernText2='技術書や動画を見たがイマイチ理解が進まない'
