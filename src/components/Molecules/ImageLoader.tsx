@@ -27,15 +27,20 @@ class ImageLoader extends React.Component<ImageLoaderProps, LoadingState> {
   renderImageOrSpinner() {
     if(this.state.isLoadCompleted)
       return(
+        // Important to accept the className prop, to inject CSS margin from outside.
+        // Only margin, no other CSS property from outside.
         <FullWidthImage className={this.props.className} src={this.props.imageURL} />
       )
     else 
       return(
+        // Important to accept the className prop, to inject CSS margin from outside.
+        // Only margin, no other CSS property from outside.
         <FullWidthImage className={this.props.className} src={this.props.previewImageURL} />
       )
   }
 
   render() {
+    // className prop is passed down to inner component
     return (
       <Fragment>
         <img hidden src={this.props.imageURL} onLoad={this.onLoad} />
