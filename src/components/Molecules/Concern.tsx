@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import {DescriptionProps, H6Left} from '../Atoms/Description'
+import {H6Left} from '../Atoms/Description'
 import Icon from '../Atoms/Icon'
+
 export interface ConcernProps {
   text: string
 }

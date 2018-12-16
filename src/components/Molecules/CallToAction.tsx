@@ -2,7 +2,8 @@ import React,  {Fragment} from 'react'
 import styled from 'styled-components'
 import {DescriptionProps, H3Centered, H4Left} from '../Atoms/Description'
 import PrimaryButton, { PrimaryButtonProps } from '../Atoms/PrimaryButton'
-import {AuthStatusContext} from '../../context/AuthStatusContext'
+import {AuthStatusContext, LoginStatus} from '../../context/AuthStatusContext'
+import { navigate } from 'gatsby';
 
 export interface CallToActionProp {
   description: React.ReactNode,
@@ -27,8 +28,12 @@ export const CallToActionTop: React.SFC<CallToActionProp> = (props) =>
     <H3CenteredStyled description={props.description} />
     <AuthStatusContext.Consumer>
       {
-        ({handleLogin}) => 
-          <PrimaryButton text={props.buttonText} callback={handleLogin} />
+        ({handleLogin, loginStatus}) => {
+          if(loginStatus == LoginStatus.LoggedIn) 
+            return(<PrimaryButton text={props.buttonText} callback={handleLogin} />)
+          else 
+            return(<PrimaryButton text={props.buttonText} callback={() => {navigate('/invite/')}} />)
+        }
       }
     </AuthStatusContext.Consumer>    
   </div>
@@ -40,8 +45,12 @@ export const CallToActionBottom: React.SFC<CallToActionProp> = (props) =>
     <H4LeftStyled description={props.description} />
     <AuthStatusContext.Consumer>
       {
-        ({handleLogin}) => 
-          <PrimaryButton text={props.buttonText} callback={handleLogin} />
+        ({handleLogin, loginStatus}) => {
+          if(loginStatus == LoginStatus.LoggedIn) 
+            return(<PrimaryButton text={props.buttonText} callback={handleLogin} />)
+          else 
+            return(<PrimaryButton text={props.buttonText} callback={() => {navigate('/invite/')}} />)
+        }
       }
     </AuthStatusContext.Consumer>    
   </div>
