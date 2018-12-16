@@ -40,7 +40,7 @@ class ImageLoader extends React.Component<ImageLoaderProps, LoadingState> {
   }
 
   render() {
-    // className prop is passed down to inner component
+    // className prop is passed down to the inner FullWidthImage component
     return (
       <Fragment>
         <img hidden src={this.props.imageURL} onLoad={this.onLoad} />

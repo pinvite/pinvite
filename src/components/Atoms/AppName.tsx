@@ -5,6 +5,7 @@ import MuiTheme from '../../theme/MuiTheme'
 import Atom from './Atom'
 
 export interface AppNameProps {
+  onClick?: () => void,
   className?: string // allow styled-components to inject CSS margin from outside.
                      // Only margin, no other CSS property from outside.
 }
@@ -12,13 +13,14 @@ export interface AppNameProps {
 const TypographyStyled = styled(Typography as React.SFC<TypographyProps>)`
 && {
   font-family: 'Fredoka One', cursive;
-  color: ${MuiTheme.palette.common.white}
+  cursor: pointer;
+  color: ${MuiTheme.palette.common.white};
 }
 `
 const AppName: React.SFC<AppNameProps> = (props) =>
   // Important to accept the className prop, to inject CSS margin from outside.
   // Only margin, no other CSS property from outside.
-  <Atom className={props.className}>
+  <Atom className={props.className} onClick={props.onClick}>
     <TypographyStyled variant='h4'>pinvite</TypographyStyled>
   </Atom>
 

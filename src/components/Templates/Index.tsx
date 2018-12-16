@@ -14,7 +14,6 @@ export interface IndexProps {
   secondCallToActionText: React.ReactNode,
   registerButtonText: string,
   jumpToButtonText: string,
-  buttonText: string,
   sampleCaptionText: string,
   concernCaptionText: string,
   concernText1: string,
