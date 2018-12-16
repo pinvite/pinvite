@@ -23,12 +23,7 @@ class InviteInputs extends React.Component<InviteInputsProps, InviteInputsState>
   constructor(props: InviteInputsProps){
     super(props)
     this.state= {titleError: false}
-    this.onTitleChange = this.onTitleChange.bind(this)
 
-  }
-
-  onTitleChange(title: string) {
-    this.setState({titleError: title.length > 70})
   }
 
   render(){
