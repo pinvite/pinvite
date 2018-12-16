@@ -2,6 +2,8 @@ import React, {Fragment} from 'react'
 import InviteInputs from '../Molecules/InviteInputs'
 import InviteBottom from '../Molecules/InviteBottom'
 import PreviewBottom from '../Molecules/PreviewBottom'
+import FullWidthImg from '../Atoms/FullWidthImage';
+import {cloudinaryImageUrl} from '../../utils/cloudinary'
 
 export interface InvitationFormProps {
   inputTitleLabel: string,
@@ -109,6 +111,9 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
   renderPreview(){
     return(
       <Fragment>
+        <FullWidthImg
+          src={cloudinaryImageUrl(this.state.title)}
+        />
         <PreviewBottom
           goBackButtonText={this.props.goBackButtonText}
           goBackButtonCallback={this.onGoBackButtonPressed}
