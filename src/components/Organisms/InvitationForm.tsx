@@ -76,6 +76,35 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
   onTweetButtonPressed() {
   }
 
+  isEmpty(input: string): boolean {
+    return (input.length == 0)
+  }
+
+  isErrorTitle(): boolean {
+    return (this.state.title.length > 70)
+  }
+
+  isErrorDetails(): boolean {
+    return (this.state.details.length > 1000)
+  }
+
+  isErrorMoneyAmount(): boolean {
+    return (parseInt(this.state.moneyAmount) < 0)
+  }
+
+  isErrorTime(): boolean {
+    return (parseInt(this.state.time) < 0)
+  }
+
+  isDisabledInput(): boolean {
+    return (
+      this.isEmpty(this.state.title) || this.isErrorTitle()
+      || this.isEmpty(this.state.details) || this.isErrorDetails()
+      || this.isEmpty(this.state.moneyAmount) || this.isErrorMoneyAmount()
+      || this.isEmpty(this.state.time) || this.isErrorTime()
+    )
+  }
+
   renderInputs(){
     return(
       <Fragment>
@@ -84,29 +113,33 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
             label: this.props.inputTitleLabel,
             value: this.state.title,
             helperText: this.props.inputTitleHelperText,
-            error: this.state.title != null && this.state.title.length > 70,
+            error: this.isErrorTitle(),
             onChange: this.onTitleChange
           }}
           inputDetailsProps  = {{
             label: this.props.inputDetailsLabel,
             value: this.state.details,
+            error: this.isErrorDetails(),
             onChange: this.onDetailsChange
           }}
           inputMoneyAmountProps  = {{
             label: this.props.inputMoneyAmountLabel,
             value: this.state.moneyAmount,
+            error: this.isErrorMoneyAmount(),
             onChange: this.onMoneyAmountChange
           }}
           inputTimeProps  = {{
             label: this.props.inputTimeLabel,
             value: this.state.time,
+            error: this.isErrorTime(),
             onChange: this.onTimeChange
           }}
         />
         <InviteBottom
           previewButtonText={this.props.previewButtonText}
           previewButtonCallback={this.onPreviewButtonPressed}
-        />
+          previewDisabled={this.isDisabledInput()}
+          />
       </Fragment>
     )
   }
