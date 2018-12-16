@@ -9,7 +9,7 @@ const cloudinary = new cloudinaryCore.Cloudinary({
 export function cloudinaryImageUrl(title: string, time: string, amount: string) {
   // https://cloudinary.com/documentation/image_transformations#adding_text_captions
   return (cloudinary.url(
-    'pinvite-background2.png',
+    'background.png',
     {
       transformation: [
         {
