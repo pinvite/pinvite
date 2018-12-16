@@ -8,7 +8,7 @@ import InvitationSample from '../Molecules/InvitationSample'
 export interface LandingContentsProps {
   sampleImageSrc: string,
   firstCallToActionText: React.ReactNode,
-  secondCallToActionText: string,
+  secondCallToActionText: React.ReactNode,
   registerButtonText: string,
   jumpToButtonText: string,
   sampleCaptionText: string,
