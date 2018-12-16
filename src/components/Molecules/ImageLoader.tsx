@@ -11,6 +11,8 @@ export interface LoadingState {
   isLoadCompleted: boolean
 }
 
+// Exceptional case where a Molecule has a state, becase this state is pretty self-contained and simple.
+// Usually state should exist in Organisms or Template, not Atoms or Organisms to keep granular components simple.
 class ImageLoader extends React.Component<ImageLoaderProps, LoadingState> {
   constructor(props: ImageLoaderProps) {
     super(props)
