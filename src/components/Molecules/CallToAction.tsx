@@ -6,9 +6,9 @@ import {AuthStatusContext, LoginStatus} from '../../context/AuthStatusContext'
 import { navigate } from 'gatsby';
 
 export interface CallToActionProp {
-  description: React.ReactNode,
-  registerButtonText: string,
-  jumpToButtonText: string,
+  description: React.ReactNode
+  registerButtonText: string
+  jumpToButtonText: string
   className?: string // allow styled-components to inject CSS margin from outside.
                      // Only margin, no other CSS property from outside.
 }
