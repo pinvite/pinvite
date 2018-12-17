@@ -76,10 +76,6 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
   onTweetButtonPressed() {
   }
 
-  isEmpty(input: string): boolean {
-    return (input.length == 0)
-  }
-
   isErrorTitle(): boolean {
     return (this.state.title.length > 70)
   }
@@ -97,11 +93,14 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
   }
 
   isDisabledInput(): boolean {
+    function isEmpty(input: string): boolean {
+      return (input.length == 0)
+    }
     return (
-      this.isEmpty(this.state.title) || this.isErrorTitle()
-      || this.isEmpty(this.state.details) || this.isErrorDetails()
-      || this.isEmpty(this.state.moneyAmount) || this.isErrorMoneyAmount()
-      || this.isEmpty(this.state.time) || this.isErrorTime()
+      isEmpty(this.state.title) || this.isErrorTitle()
+      || isEmpty(this.state.details) || this.isErrorDetails()
+      || isEmpty(this.state.moneyAmount) || this.isErrorMoneyAmount()
+      || isEmpty(this.state.time) || this.isErrorTime()
     )
   }
 
