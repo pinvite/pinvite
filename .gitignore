@@ -3,10 +3,13 @@
 .vscode
 .firebase
 node_modules
-yarn-error.log
-firebase-debug.log
 
 # Build directory
 /public
+
+# Others
 .DS_Store
+.history
 firebase-adminsdk-secrets.json
+firebase-debug.log
+yarn-error.log

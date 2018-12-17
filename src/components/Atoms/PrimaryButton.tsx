@@ -7,6 +7,7 @@ import Atom from './Atom'
 export interface PrimaryButtonProps {
   text: string
   callback: () => void
+  disabled?: boolean
   className?: string // allow styled-components to inject CSS margin from outside.
                      // Only margin, no other CSS property from outside.
 }
@@ -30,6 +31,7 @@ const PrimaryButton: React.SFC<PrimaryButtonProps> = (props) =>
     <ButtonStyled
       variant='contained'
       color='secondary'
+      disabled={props.disabled}
       onClick={props.callback}
     >{props.text}</ButtonStyled>
   </Atom>
