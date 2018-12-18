@@ -1,5 +1,6 @@
 import {WorkshopPromotion} from './Promotion'
 
+
 export interface TwitterCard {
   readonly twitterCard: string
   readonly twitterSite: string

@@ -10,17 +10,11 @@ export interface CaptionProps {
                      // Only margin, no other CSS property from outside.
 }
 
-const AtomStyled = styled(Atom)`
-&& {
-  background-color: ${MuiTheme.palette.primary.dark};
-  color: ${MuiTheme.palette.primary.contrastText};
-}
-`
 const Caption: React.SFC<CaptionProps> = (props) =>
   // Important to accept the className prop, to inject CSS margin from outside.
   // Only margin, no other CSS property from outside.
-  <AtomStyled className={props.className}>
+  <Atom className={props.className}>
     <Typography variant='h6' color='textPrimary'>{props.text}</Typography>
-  </AtomStyled>
+  </Atom>
 
 export default Caption

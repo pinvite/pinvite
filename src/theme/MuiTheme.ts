@@ -10,16 +10,26 @@ const fontWeightRegular = 400
 
 const MuiTheme = createMuiTheme({
   palette: {
+    // You can enter the main color here https://material-ui.com/style/color/#color-tool
+    // and get the associated dark and light colors
     primary: {
-      dark: orange[900],
-      light: orange[500],
-      main: orange[700],
+      dark: '#000027',
+      light: '#333360',
+      main: '#010039',
+      contrastText: '#FFFFFF'
     },
     secondary: {
-      dark: yellow[500],
-      light: yellow[200],
-      main: yellow[400],
+      dark: '#b29500',
+      light: '#ffde33',
+      main: '#FFD600',
     },
+    background: {
+      default: '#13194F',
+      paper: '#000000',
+    },
+    text: {
+      primary: '#FFFFFF'
+    }
   },
   spacing: {
     unit: 16

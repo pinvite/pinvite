@@ -19,9 +19,14 @@ export interface InviteProps {
   detailsText: string
 }
 
+const Background = styled.div`
+  background-color: ${MuiTheme.palette.background.default};
+  height: 100%;
+  width: 100%;
+`
+
 const Container = styled.div`
   max-width: 600px;
-  margin-top: 100px;
   margin-left: auto;
   margin-right: auto;
 `
@@ -30,14 +35,14 @@ const Invite: React.SFC<InviteProps> = (props) =>
   <Fragment>
     <Helmet>
       <title>pinvite</title>
-      <link href="https://fonts.googleapis.com/css?family=Fredoka+One" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css?family=Molle:400i" rel="stylesheet" />
       <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" rel="stylesheet" />
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     </Helmet>
     <MuiThemeProvider theme={MuiTheme}>
       <AuthStatusProvider>
-        <ApplicationBar />
         <Container>
+          <ApplicationBar />
           <Invitation
             twitterCard={props.twitterCard}
             twitterSite={props.twitterSite}
