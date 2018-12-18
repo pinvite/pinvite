@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import Caption from '../Atoms/Caption'
+import {H6Left} from '../Atoms/Description'
 import FullWidthImage, { FullWidthImageProps } from '../Atoms/FullWidthImage'
 import MuiTheme from '../../theme/MuiTheme'
 
@@ -20,7 +20,7 @@ const InvitationSample: React.SFC<InvitationSampleProps> = (props) =>
   // Important to accept the className prop, to inject CSS margin from outside.
   // Only margin, no other CSS property from outside.
   <div className={props.className}>
-    <Caption text={props.captionText} />
+    <H6Left description={props.captionText} />
     <FullWidthImageStyled src={props.src} />
   </div>
 
