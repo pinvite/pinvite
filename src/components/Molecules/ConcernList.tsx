@@ -1,5 +1,5 @@
 import React from 'react'
-import Caption from '../Atoms/Caption'
+import {H6Left} from '../Atoms/Description'
 import Concern from './Concern'
 
 export interface ConcerListProps {
@@ -15,7 +15,7 @@ const ConcernList: React.SFC<ConcerListProps> = (props) =>
   // Important to accept the className prop, to inject CSS margin from outside.</Atom>
   // Only margin, no other CSS property from outside.
   <div className={props.className}>
-    <Caption text={props.captionText} />
+    <H6Left description={props.captionText} />
     <Concern text={props.concernText1} />
     <Concern text={props.concernText2} />
     <Concern text={props.concernText3} />
