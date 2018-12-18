@@ -1,5 +1,16 @@
 import {WorkshopPromotion} from './Promotion'
 
+
+type TwitterUserName = string
+
+export interface TwitterUser {
+  userName: TwitterUserName
+}
+
+const a: TwitterUser = {
+  userName: 'hello'
+}
+
 export interface TwitterCard {
   readonly twitterCard: string
   readonly twitterSite: string

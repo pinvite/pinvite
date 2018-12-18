@@ -22,6 +22,7 @@ export interface LandingContentsProps {
 
 const CallToActionTopStyled　= styled(CallToActionTop)`
 && {
+  margin-top: 80px;
   margin-bottom: 80px;
 }`
 

@@ -21,9 +21,14 @@ export interface IndexProps {
   concernText3: string
 }
 
+const Background = styled.div`
+  background-color: ${MuiTheme.palette.background.default};
+  height: 100%;
+  width: 100%;
+`
+
 const Container = styled.div`
   max-width: 600px;
-  margin-top: 100px;
   margin-left: auto;
   margin-right: auto;
 `
@@ -32,7 +37,7 @@ const Index: React.SFC<IndexProps> = (props) =>
   <Fragment>
     <Helmet>
       <title>pinvite</title>
-      <link href='https://fonts.googleapis.com/css?family=Fredoka+One' rel='stylesheet' />
+      <link href="https://fonts.googleapis.com/css?family=Molle:400i" rel="stylesheet" />
       <link href='https://fonts.googleapis.com/css?family=Noto+Sans+JP' rel='stylesheet' />
       <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet' />
       <style type='text/css'>{
@@ -48,21 +53,23 @@ const Index: React.SFC<IndexProps> = (props) =>
     </Helmet>
     <MuiThemeProvider theme={MuiTheme}>
       <AuthStatusProvider>
-        <ApplicationBar />
-        <Container>
-          <LandingContents
-            sampleImageSrc={props.sampleImageSrc}
-            firstCallToActionText={props.firstCallToActionText}
-            secondCallToActionText={props.secondCallToActionText}
-            registerButtonText={props.registerButtonText}
-            jumpToButtonText={props.jumpToButtonText}
-            sampleCaptionText={props.sampleCaptionText}
-            concernCaptionText={props.concernCaptionText}
-            concernText1={props.concernText1}
-            concernText2={props.concernText2}
-            concernText3={props.concernText3}
-          />
-        </Container>
+        <Background>
+          <ApplicationBar />
+          <Container>
+            <LandingContents
+              sampleImageSrc={props.sampleImageSrc}
+              firstCallToActionText={props.firstCallToActionText}
+              secondCallToActionText={props.secondCallToActionText}
+              registerButtonText={props.registerButtonText}
+              jumpToButtonText={props.jumpToButtonText}
+              sampleCaptionText={props.sampleCaptionText}
+              concernCaptionText={props.concernCaptionText}
+              concernText1={props.concernText1}
+              concernText2={props.concernText2}
+              concernText3={props.concernText3}
+            />
+          </Container>
+        </Background>
       </AuthStatusProvider>
     </MuiThemeProvider>
   </Fragment>
