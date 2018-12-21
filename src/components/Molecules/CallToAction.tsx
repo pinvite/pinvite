@@ -31,10 +31,10 @@ export const CallToActionTop: React.SFC<CallToActionProp> = (props) =>
     <AuthStatusContext.Consumer>
       {
         ({handleLogin, loginStatus}) => {
-          if(loginStatus == LoginStatus.LoggedIn) 
-            return(<PrimaryButton text={props.registerButtonText} callback={handleLogin} />)
-          else 
+          if(loginStatus == LoginStatus.ReadyToTweet) 
             return(<PrimaryButton text={props.jumpToButtonText} callback={() => {navigate('/invite/')}} />)
+          else 
+            return(<PrimaryButton text={props.registerButtonText} callback={handleLogin} />)
         }
       }
     </AuthStatusContext.Consumer>    
@@ -48,10 +48,10 @@ export const CallToActionBottom: React.SFC<CallToActionProp> = (props) =>
     <AuthStatusContext.Consumer>
       {
         ({handleLogin, loginStatus}) => {
-          if(loginStatus == LoginStatus.LoggedIn) 
-            return(<PrimaryButton text={props.registerButtonText} callback={handleLogin} />)
-          else 
+          if(loginStatus == LoginStatus.ReadyToTweet) 
             return(<PrimaryButton text={props.jumpToButtonText} callback={() => {navigate('/invite/')}} />)
+          else 
+            return(<PrimaryButton text={props.registerButtonText} callback={handleLogin} />)
         }
       }
     </AuthStatusContext.Consumer>    
