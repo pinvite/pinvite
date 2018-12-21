@@ -21,12 +21,6 @@ export interface IndexProps {
   concernText3: string
 }
 
-const Background = styled.div`
-  background-color: ${MuiTheme.palette.background.default};
-  height: 100%;
-  width: 100%;
-`
-
 const Container = styled.div`
   max-width: 600px;
   margin-left: auto;
@@ -41,35 +35,33 @@ const Index: React.SFC<IndexProps> = (props) =>
       <link href='https://fonts.googleapis.com/css?family=Noto+Sans+JP' rel='stylesheet' />
       <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet' />
       <style type='text/css'>{
-        // !!! Do not add anything else other than body's margin below !!!
-        // All CSS should live beside React components,
+        // !!! Do not add anything else other than body's margin and background-color below !!!
+        // All CSS should live inside React components.
         // but <body>'s margin is the only exception as it is not a React component.
         // By default the <body> element has margin, which we want to disable.
-        `
-        body {
+        `body {
           margin: 0;
-        }
-      `}</style>
+          background-color: ${MuiTheme.palette.background.default};
+        }`
+      }</style>
     </Helmet>
     <MuiThemeProvider theme={MuiTheme}>
       <AuthStatusProvider>
-        <Background>
-          <ApplicationBar />
-          <Container>
-            <LandingContents
-              sampleImageSrc={props.sampleImageSrc}
-              firstCallToActionText={props.firstCallToActionText}
-              secondCallToActionText={props.secondCallToActionText}
-              registerButtonText={props.registerButtonText}
-              jumpToButtonText={props.jumpToButtonText}
-              sampleCaptionText={props.sampleCaptionText}
-              concernCaptionText={props.concernCaptionText}
-              concernText1={props.concernText1}
-              concernText2={props.concernText2}
-              concernText3={props.concernText3}
-            />
-          </Container>
-        </Background>
+        <ApplicationBar />
+        <Container>
+          <LandingContents
+            sampleImageSrc={props.sampleImageSrc}
+            firstCallToActionText={props.firstCallToActionText}
+            secondCallToActionText={props.secondCallToActionText}
+            registerButtonText={props.registerButtonText}
+            jumpToButtonText={props.jumpToButtonText}
+            sampleCaptionText={props.sampleCaptionText}
+            concernCaptionText={props.concernCaptionText}
+            concernText1={props.concernText1}
+            concernText2={props.concernText2}
+            concernText3={props.concernText3}
+          />
+        </Container>
       </AuthStatusProvider>
     </MuiThemeProvider>
   </Fragment>
