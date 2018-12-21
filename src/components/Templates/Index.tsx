@@ -22,7 +22,6 @@ export interface IndexProps {
 }
 
 const Background = styled.div`
-  background-color: ${MuiTheme.palette.background.default};
   height: 100%;
   width: 100%;
 `
@@ -41,15 +40,15 @@ const Index: React.SFC<IndexProps> = (props) =>
       <link href='https://fonts.googleapis.com/css?family=Noto+Sans+JP' rel='stylesheet' />
       <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet' />
       <style type='text/css'>{
-        // !!! Do not add anything else other than body's margin below !!!
-        // All CSS should live beside React components,
+        // !!! Do not add anything else other than body's margin and background-color below !!!
+        // All CSS should live inside React components.
         // but <body>'s margin is the only exception as it is not a React component.
         // By default the <body> element has margin, which we want to disable.
-        `
-        body {
+        `body {
           margin: 0;
-        }
-      `}</style>
+          background-color: ${MuiTheme.palette.background.default};
+        }`
+      }</style>
     </Helmet>
     <MuiThemeProvider theme={MuiTheme}>
       <AuthStatusProvider>
