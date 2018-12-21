@@ -9,19 +9,20 @@ const NotoSansJP = 'Noto Sans JP, sans-serif'
 const fontWeightRegular = 400
 
 const MuiTheme = createMuiTheme({
+  // Default values at:
+  // https://github.com/mui-org/material-ui/blob/master/packages/material-ui/src/styles/createPalette.js
   palette: {
     // You can enter the main color here https://material-ui.com/style/color/#color-tool
     // and get the associated dark and light colors
     primary: {
+      dark: '#b26500',
+      light: '#ffa733',
+      main: '#FF9100',
+    },
+    secondary: {
       dark: '#000027',
       light: '#333360',
       main: '#010039',
-      contrastText: '#FFFFFF'
-    },
-    secondary: {
-      dark: '#b29500',
-      light: '#ffde33',
-      main: '#FFD600',
     },
     background: {
       default: '#13194F',
@@ -29,7 +30,8 @@ const MuiTheme = createMuiTheme({
     },
     text: {
       primary: '#FFFFFF'
-    }
+    },
+    type: 'dark'
   },
   spacing: {
     unit: 16
