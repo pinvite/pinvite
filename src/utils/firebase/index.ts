@@ -25,16 +25,17 @@ interface TwitterScreenName {
 }
 
 interface TwitterCredential {
-  accessToken: string,
-  secret: string,
+  accessToken: string
+  secret: string
 }
 
-interface FirebaseIdToken {
+interface FirebaseUserInfo {
+  userId: string
   idToken: string
 }
 
 export type TwitterUserInfo = TwitterCredential & TwitterScreenName
-export type UserInfo = TwitterCredential & TwitterScreenName & FirebaseIdToken
+export type UserInfo = TwitterCredential & TwitterScreenName & FirebaseUserInfo
 
 function isTwitterScreenName(obj: any): obj is TwitterScreenName {
   return (obj as TwitterScreenName).screen_name !== undefined
@@ -108,7 +109,8 @@ export async function makeSureTwitterUserInfoStored(): Promise<UserInfo> {
         && data.twitter
         && isTwitterUserInfo(data.twitter)
       ) {
-        return Promise.resolve({...data.twitter, idToken} )
+        const userId = user.uid
+        return Promise.resolve({...data.twitter, idToken, userId} )
       } else {
         // TwitterUserInfo cannot be obtained inside firebase.auth().onAuthStateChanged()
         // so, flag an error and encourage the user to re-login
