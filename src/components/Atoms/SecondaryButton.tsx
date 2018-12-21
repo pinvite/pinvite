@@ -20,7 +20,8 @@ const ButtonStyled = styled(Button as React.SFC<ButtonProps>)`
 
   /* more detailed style which cannot be controlled by Material-UI Button's props*/
   font-size: ${MuiTheme.typography.h6.fontSize};
-  padding: 16px 20px;
+  width: 200px;
+  height: 60px;
   color: ${MuiTheme.palette.secondary.contrastText};
 }`
 
