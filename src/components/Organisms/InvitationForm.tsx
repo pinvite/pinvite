@@ -1,9 +1,10 @@
-import React, {Fragment} from 'react'
+import React from 'react'
 import InviteInputs from '../Molecules/InviteInputs'
 import InviteBottom from '../Molecules/InviteBottom'
 import PreviewBottom from '../Molecules/PreviewBottom'
 import ImageLoader from '../Molecules/ImageLoader';
 import {cloudinaryImageUrl} from '../../utils/cloudinary'
+import { AuthStatusContext } from '../../context/AuthStatusContext';
 
 const spinnerImageURL = 'https://res.cloudinary.com/pinvite/image/upload/v1543695206/spinner.gif'
 
@@ -73,7 +74,37 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
     this.setState({preview: false})
   }
 
-  onTweetButtonPressed() {
+  onTweetButtonPressed(
+    userId: string,
+    idToken: string,
+    title: string,
+    time: string,
+    moneyAmount: string,
+    imageURL: string
+  ) {
+    const request = {
+      title: title,
+      imageUrl: imageURL,
+      time: time,
+      moneyAmount: moneyAmount,
+    }
+    const url = '/users/' + userId + '/invites'
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        "Authorization": "Bearer " + idToken
+      },
+      body: JSON.stringify(request),
+    })
+    .then(response => {
+      console.log(response)
+    })
+  }
+
+  imageURL(): string {
+    return cloudinaryImageUrl(this.state.title, this.state.time, this.state.moneyAmount)
   }
 
   isErrorTitle(): boolean {
@@ -106,7 +137,7 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
 
   renderInputs(){
     return(
-      <Fragment>
+      <React.Fragment>
         <InviteInputs
           inputTitleProps = {{
             label: this.props.inputTitleLabel,
@@ -138,25 +169,41 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
           previewButtonText={this.props.previewButtonText}
           previewButtonCallback={this.onPreviewButtonPressed}
           previewDisabled={this.isDisabledInput()}
-          />
-      </Fragment>
+        />
+      </React.Fragment>
     )
   }
 
   renderPreview(){
     return(
-      <Fragment>
-        <ImageLoader
-          previewImageURL={this.state.previewImageSrc}
-          imageURL={cloudinaryImageUrl(this.state.title, this.state.time, this.state.moneyAmount)}
-        />
-        <PreviewBottom
-          goBackButtonText={this.props.goBackButtonText}
-          goBackButtonCallback={this.onGoBackButtonPressed}
-          tweetButtonText={this.props.tweetButtonText}
-          tweetButtonCallback={this.onTweetButtonPressed}
-        />
-      </Fragment>
+      <AuthStatusContext.Consumer>
+        {({userInfo}) => 
+          <React.Fragment>
+            <ImageLoader
+              previewImageURL={this.state.previewImageSrc}
+              imageURL={cloudinaryImageUrl(this.state.title, this.state.time, this.state.moneyAmount)}
+            />
+            <PreviewBottom
+              goBackButtonText={this.props.goBackButtonText}
+              goBackButtonCallback={this.onGoBackButtonPressed}
+              tweetButtonText={this.props.tweetButtonText}
+              tweetButtonCallback={() => {
+                if(userInfo != null){
+                  const imageURL = this.imageURL()
+                  this.onTweetButtonPressed(
+                    userInfo.userId,
+                    userInfo.idToken,
+                    this.state.title,
+                    this.state.time,
+                    this.state.moneyAmount,
+                    imageURL
+                  )
+                }
+              }}
+            />
+          </React.Fragment>
+        }
+      </AuthStatusContext.Consumer>
     )
   }
 
