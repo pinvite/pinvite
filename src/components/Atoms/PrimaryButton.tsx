@@ -21,7 +21,7 @@ const ButtonStyled = styled(Button as React.SFC<ButtonProps>)`
   /* more detailed style which cannot be controlled by Material-UI Button's props*/
   font-size: ${MuiTheme.typography.h6.fontSize};
   padding: 16px 20px;
-  color: ${MuiTheme.palette.secondary.contrastText}
+  color: ${MuiTheme.palette.primary.contrastText}
 }`
 
 const PrimaryButton: React.SFC<PrimaryButtonProps> = (props) =>
@@ -30,7 +30,7 @@ const PrimaryButton: React.SFC<PrimaryButtonProps> = (props) =>
   <Atom className={props.className}>
     <ButtonStyled
       variant='contained'
-      color='secondary'
+      color='primary'
       disabled={props.disabled}
       onClick={props.callback}
     >{props.text}</ButtonStyled>
