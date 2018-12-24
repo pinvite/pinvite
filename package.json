@@ -31,8 +31,8 @@
   ],
   "license": "MIT",
   "scripts": {
-    "copyUsersPage": "copyfiles -f public/users/*.html functions/src/users",
-    "build": "gatsby build && npm run copyUsersPage",
+    "copyFilesToFunctions": "copyfiles -f public/users/*.html functions/src/users && copyfiles -f src/domain/*.ts functions/src/domain",
+    "build": "gatsby build && npm run copyFilesToFunctions",
     "develop": "gatsby develop",
     "format": "prettier --write '**/*.js'",
     "test": "echo \"Error: no test specified\" && exit 1",
