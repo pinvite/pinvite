@@ -96,7 +96,7 @@ userApp.post('/users/:userId/invites', async (request: express.Request, response
         access_token_secret: userDoc.data().twitter.secret,
       })
 
-      await tweetData.post('statuses/update', { status: "#pinvite " + url }
+      await tweetData.post('statuses/update', { status: "#pinvite " + url })
 
    } catch (error) {
     response.status(500).send("Server error: failed to tweet")      
