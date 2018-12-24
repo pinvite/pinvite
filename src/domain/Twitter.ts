@@ -1,6 +1,5 @@
 import {WorkshopPromotion} from './Promotion'
 
-
 export interface TwitterCard {
   readonly twitterCard: string
   readonly twitterSite: string
@@ -15,7 +14,7 @@ export function toTwitterCard(
   promotion: WorkshopPromotion,
   twitterUserName: string,
   pageURL: string
-) {
+): TwitterCard {
   return ({
     twitterCard: 'summary_large_image',
     twitterSite: '@orgpinvite',
@@ -28,9 +27,9 @@ export function toTwitterCard(
 }
 
 export interface TwitterUserInfo {
-  userId: string
-  oauthToken: string
-  oauthTokenSecret: string
+  readonly userId: string
+  readonly oauthToken: string
+  readonly oauthTokenSecret: string
 }
 
 export function isTwitterUserInfo(obj: any): obj is TwitterUserInfo {

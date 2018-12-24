@@ -23,7 +23,9 @@ userApp.get('/users/:userId/', (request, response) => {
   response.redirect("/users/" + request.params.userId + "/invites" )
 })
 
-userApp.post('/users/:userId/invites', (request, response) => {
+userApp.post('/users/:userId/invites', async (request: express.Request, response: express.Response) => {
+  
+  // following the sample at https://github.com/firebase/functions-samples/blob/Node-8/authorized-https-endpoint/functions/index.js
   console.log('Check if request is authorized with Firebase ID token');
 
   if ((!request.headers.authorization || !request.headers.authorization.startsWith('Bearer ')) &&
@@ -36,7 +38,7 @@ userApp.post('/users/:userId/invites', (request, response) => {
     return;
   }
 
-  let idToken;
+  let idToken: string
   if (request.headers.authorization && request.headers.authorization.startsWith('Bearer ')) {
     console.log('Found "Authorization" header');
     // Read the ID Token from the Authorization header.
@@ -51,80 +53,54 @@ userApp.post('/users/:userId/invites', (request, response) => {
     return;
   }
 
-  admin.auth().verifyIdToken(idToken).then((decodedIdToken) => {
-    console.log('ID Token correctly decoded', decodedIdToken);
-    const twitterUser = decodedIdToken;
-    console.log(twitterUser)
-
-    if(request.params.userId != decodedIdToken.uid) {
-      response.status(403)
-      response.send("Unauthorized: the logged-in user is not allowed to POST a resource to the given path")  
-      return;
-    } 
-   
-    // Firstly, get userDoc to see the twitter user for the signed-in user = request.params.userId
-    firestore
-      .collection('users').doc(request.params.userId).get()
-      .then(userDoc => {
-
-        // Add an empty document to get the ID, before inserting the full data
-        firestore
-          .collection('users').doc(request.params.userId)
-          .collection('invites').add({}) 
-          .then(inviteDoc => {
-
-            inviteDoc.id
-            const url = "https://pinvite.fun/users/" + request.params.userId + "/invites/" + inviteDoc.id
-            const inviteData = {
-              ogp: {
-                'twitter:card'    : "summary_large_image",
-                'twitter:site'    : "@orgpinvite",
-                'twitter:creator' : "@" + userDoc.data().twitter.user_id,
-                'og:url'          : url,
-                'og:title'        : request.body.title,
-                'og:description'  : request.body.description,
-                'og:image'        : request.body.image_url
-              }
-            }
-
-            firestore
-              .collection('users').doc(request.params.userId)
-              .collection('invites').doc(inviteDoc.id).set(inviteData)
-              .then(doc => {
-                const twit = Twit({
-                  consumer_key:        twitterApiKey,
-                  consumer_secret:     twitterApiSecret,
-                  access_token:        userDoc.data().twitter.access_token,
-                  access_token_secret: userDoc.data().twitter.secret,
-                })
-
-                twit.post('statuses/update', { status: "#pinvite " + url }, function(err, data, twitResponse) {
-                  console.log('status update done data:')
-                  console.log(data)
-                  console.log('status update done error:')
-                  console.log(err)
-                })
-
-                response.redirect(301, url)  
-              }).catch(err => {
-                response.status(500)
-                response.send("Server error: failed to tweet")      
-              })
+  // verify the idToken in HTTP 'Authorization' header is correct for the path /users/:userId/invites
+  try {
+    const decodedIdToken = await admin.auth().verifyIdToken(idToken)
+    if(request.params.userId !== decodedIdToken.uid)
+      throw new Error('Login user unmatched with the request path.')
+  } catch(error) {
+    console.log(error)
+    response.status(403).send("Unauthorized: user not allowed to perform this action")  
+    return;
+  }
   
-          }).catch(err => {
-            response.status(500)
-            response.send("Server error: failed to tweet")      
-          })
+  // get stored user Twitter credentials, store tweet information to Firease, and tweet
+   try {
+    const userDoc = await firestore
+      .collection('users').doc(request.params.userId).get()
 
-      }).catch(err => {
-        response.status(500)
-        response.send("Server error: failed to tweet")      
+    if (userDoc == null) throw new Error('Failed to get user doc for ' + request.params.userId)
+
+      // Add an empty document to get the ID, before inserting the full data
+    const invitationDoc = await firestore
+      .collection('users').doc(request.params.userId)
+      .collection('invites').add({}) 
+
+    const invitationData = {
+      ogp: {
+        'twitter:creator' : "@" + userDoc.data().twitter.user_id,
+        'og:title'        : request.body.title,
+        'og:description'  : request.body.description,
+        'og:image'        : request.body.image_url
+      }
+    }
+
+    await firestore
+      .collection('users').doc(request.params.userId)
+      .collection('invites').doc(invitationDoc.id).set(invitationData)
+    
+    const tweetData = new Twit({
+        consumer_key:        twitterApiKey,
+        consumer_secret:     twitterApiSecret,
+        access_token:        userDoc.data().twitter.access_token,
+        access_token_secret: userDoc.data().twitter.secret,
       })
 
-    }).catch((error) => {
-    console.error('Error while verifying Firebase ID token:', error);
-    response.status(403).send('Unauthorized: user cannot be verified');
-  });
+      await tweetData.post('statuses/update', { status: "#pinvite " + url }
+
+   } catch (error) {
+    response.status(500).send("Server error: failed to tweet")      
+   }
 })
 
 //This probably doesn't need to be on the function side, nor SSR 
