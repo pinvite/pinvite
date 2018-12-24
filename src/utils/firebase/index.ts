@@ -1,6 +1,7 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
+import {TwitterUserInfo, isTwitterUserInfo} from '../../domain/Twitter'
 
 firebase.initializeApp({
   apiKey: 'AIzaSyB0wAwkW0DAfyKT7bkhLuQ3IeMPD_ykNUQ',
@@ -15,102 +16,100 @@ export const providerGoogle = new firebase.auth.GoogleAuthProvider()
 export const providerFacebook = new firebase.auth.FacebookAuthProvider()
 export const providerTwitter = new firebase.auth.TwitterAuthProvider()
 export const firestore = firebase.firestore() // firestroeを使う場合
+
 // Disable deprecated features
 firestore.settings({
   timestampsInSnapshots: true,
 })
 
-interface TwitterScreenName {
-  screen_name: string
-}
-
-interface TwitterCredential {
-  accessToken: string
-  secret: string
-}
-
-interface FirebaseUserInfo {
+export interface FirebaseUserInfo {
   userId: string
   idToken: string
 }
 
-export type TwitterUserInfo = TwitterCredential & TwitterScreenName
-export type UserInfo = TwitterCredential & TwitterScreenName & FirebaseUserInfo
+function extractTwitterUserInfo(userCredential: firebase.auth.UserCredential): TwitterUserInfo | null {
+  interface FirebaseTwitterCredential {
+    accessToken: string
+    secret: string
+  }
+  function isTwitterCredential(obj: any): obj is FirebaseTwitterCredential {
+    // User-defined Type Guards at https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards
+    const credential = obj as FirebaseTwitterCredential
+    return credential.accessToken !== undefined && credential.secret !== undefined
+  }
 
-function isTwitterScreenName(obj: any): obj is TwitterScreenName {
-  return (obj as TwitterScreenName).screen_name !== undefined
+  interface FirebaseTwitterScreenName {
+    screen_name: string
+  }
+  function isTwitterScreenName(obj: any): obj is FirebaseTwitterScreenName {
+    // User-defined Type Guards at https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards
+    return (obj as FirebaseTwitterScreenName).screen_name !== undefined
+  }
+
+  if(userCredential.user == null ) return null
+  else if ( userCredential.credential == null ) return null
+  else if (
+    // Trick to get around TypeScript compilation errors. 'accessToken' and 'secret' exists
+    // in userCredentials.credential according to https://firebase.google.com/docs/auth/web/twitter-login,
+    // but Firebase Auth's type UserCredential doesn't express the existence of them
+    !isTwitterCredential(userCredential.credential) 
+  ) return null
+  else if (
+    // Similar trick to get around TypeScript complation errors.
+    userCredential.additionalUserInfo == null ||
+    userCredential.additionalUserInfo.profile == null ||
+    !isTwitterScreenName(userCredential.additionalUserInfo.profile)
+  ) return null
+  else {
+    return {
+      userId: userCredential.additionalUserInfo.profile.screen_name,
+      oauthToken: userCredential.credential.accessToken,
+      oauthTokenSecret: userCredential.credential.secret
+    }
+  }
 }
 
-function isTwitterCredential(obj: any): obj is TwitterCredential {
-  const credential = obj as TwitterCredential
-  return credential.accessToken !== undefined && credential.secret !== undefined
-}
-
-function isTwitterUserInfo(obj: any): obj is TwitterUserInfo {
-  return isTwitterScreenName(obj) && isTwitterCredential(obj)
+interface FirebaseAuthTwitterCredentials {
+  additionalUserInfo?: firebase.auth.AdditionalUserInfo | null;
+  credential: firebase.auth.AuthCredential | null;
+  operationType?: string | null;
+  user: firebase.User | null;
 }
 
 export async function firebaseLogin(): Promise<{}> {
   try {
-    const userCredentials = await firebase.auth().signInWithPopup(providerTwitter)
-    const firebaseUser = userCredentials.user
+    const userCredential = await firebase.auth().signInWithPopup(providerTwitter)
+    const firebaseUser = userCredential.user
+    const twitterUserInfo = extractTwitterUserInfo(userCredential)
+    
     if (firebaseUser == null) {
       return Promise.reject(new Error('Failed to get user info upon login'))
+    } else if (twitterUserInfo == null) {
+      return Promise.reject(new Error('Failed to get necessary Twitter info via Sign-In'))
     } else {
-      const userDoc = await firestore.collection('users').doc(firebaseUser.uid).get()
-
-      // data() returns 'undefined' if the document doesn't exist.
-      const data = userDoc.data()
-      if (data !== undefined
-        && data.twitter
-        && isTwitterUserInfo(data.twitter)
-      ) {
-        // TwitterUserInfo was already stored in Firebase, OK
-        return Promise.resolve({})
-
-      // if TwitterUserInfo is not stored in Firestore, then try storing it
-      } else {
-        if (
-          userCredentials.credential == null ||
-          // According to https://firebase.google.com/docs/auth/web/twitter-login
-          // userCredentials.credential should have `accessToken` and `secret` properties
-          !isTwitterCredential(userCredentials.credential) ||
-          userCredentials.additionalUserInfo == null ||
-          userCredentials.additionalUserInfo.profile == null ||
-          !isTwitterScreenName(userCredentials.additionalUserInfo.profile)
-        ) {
-          return Promise.reject(new Error('Failed to get necessary Twitter info via Sign-In'))
-        } else {
-          const twitterUserInfo: TwitterUserInfo = {
-            accessToken: userCredentials.credential.accessToken,
-            screen_name: userCredentials.additionalUserInfo.profile.screen_name,
-            secret: userCredentials.credential.secret,
-          }
-          await firestore.collection('users').doc(firebaseUser.uid).set({twitter: twitterUserInfo})
-          return Promise.resolve({})
-        }
-      }
+      await firestore.collection('users').doc(firebaseUser.uid).set({twitter: twitterUserInfo})
+      return Promise.resolve({})
     }
   } catch (error) {
     return Promise.reject(new Error('Internal server error upon login'))
   }
 }
 
-export async function makeSureTwitterUserInfoStored(): Promise<UserInfo> {
+export async function makeSureTwitterUserInfoStored(): Promise<FirebaseUserInfo> {
 
-  async function handleUser(user: firebase.User): Promise<UserInfo> {
+  async function handleUser(user: firebase.User): Promise<FirebaseUserInfo> {
     try {
       const idToken = await user.getIdToken()
-      const userDoc = await firestore.collection('users').doc(user.uid).get()
+      const userSnapshot = await firestore.collection('users').doc(user.uid).get()
 
       // data() returns 'undefined' if the document doesn't exist.
-      const data = userDoc.data()
+      const data = userSnapshot.data()
       if (data !== undefined
         && data.twitter
         && isTwitterUserInfo(data.twitter)
-      ) {
+      ) { 
         const userId = user.uid
-        return Promise.resolve({...data.twitter, idToken, userId} )
+        return Promise.resolve({...data.twitter, idToken, userId})
       } else {
         // TwitterUserInfo cannot be obtained inside firebase.auth().onAuthStateChanged()
         // so, flag an error and encourage the user to re-login
@@ -121,7 +120,7 @@ export async function makeSureTwitterUserInfoStored(): Promise<UserInfo> {
     }
   }
 
-  return new Promise<UserInfo>((resolve, reject) => {
+  return new Promise<FirebaseUserInfo>((resolve, reject) => {
     // firebase.auth().onAuthStateChanged doesn't return Promise but it's a traditional callback
     // so convert it into Promise using a common technique
     firebase.auth().onAuthStateChanged((user) => {
