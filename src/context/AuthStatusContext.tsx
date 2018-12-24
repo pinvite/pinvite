@@ -1,5 +1,5 @@
 import React from 'react'
-import firebase, { firebaseLogin, makeSureTwitterUserInfoStored, UserInfo } from '../utils/firebase'
+import firebase, { firebaseLogin, makeSureTwitterUserInfoStored, FirebaseUserInfo } from '../utils/firebase'
 
 export enum LoginStatus {
   NotLoggedIn,
@@ -10,14 +10,14 @@ export enum LoginStatus {
 
 interface AuthState {
   loginStatus: LoginStatus,
-  userInfo?: UserInfo,
+  userInfo?: FirebaseUserInfo,
   errorMessage?: string,
 }
 
 interface AuthContextValues {
   handleLogin: () => void,
   loginStatus: LoginStatus,
-  userInfo?: UserInfo,
+  userInfo?: FirebaseUserInfo,
   errorMessage?: string,
 }
 
