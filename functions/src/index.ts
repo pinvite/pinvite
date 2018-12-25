@@ -23,39 +23,36 @@ userApp.get('/users/:userId/', (request, response) => {
   response.redirect("/users/" + request.params.userId + "/invites" )
 })
 
-userApp.post('/users/:userId/invites', async (request: express.Request, response: express.Response) => {
-  
+async function extractFirebaseUserIdToken(request: express.Request): Promise<string> {
   // following the sample at https://github.com/firebase/functions-samples/blob/Node-8/authorized-https-endpoint/functions/index.js
-  console.log('Check if request is authorized with Firebase ID token');
-
   if ((!request.headers.authorization || !request.headers.authorization.startsWith('Bearer ')) &&
       !(request.cookies && request.cookies.__session)) {
-    console.error('No Firebase ID token was passed as a Bearer token in the Authorization header.',
-        'Make sure you authorize your request by providing the following HTTP header:',
-        'Authorization: Bearer <Firebase ID Token>',
-        'or by passing a "__session" cookie.');
-    response.status(403).send('Unauthorized: user needs to login');
-    return;
+    throw new Error('No Firebase ID token was passed as a Bearer token in the Authorization header.\n' +
+      'Make sure you authorize your request by providing the following HTTP header:\n' +
+      'Authorization: Bearer <Firebase ID Token>\n' +
+      'or by passing a "__session" cookie.'
+    )
   }
 
-  let idToken: string
   if (request.headers.authorization && request.headers.authorization.startsWith('Bearer ')) {
-    console.log('Found "Authorization" header');
     // Read the ID Token from the Authorization header.
-    idToken = request.headers.authorization.split('Bearer ')[1];
+    return request.headers.authorization.split('Bearer ')[1]
   } else if(request.cookies) {
-    console.log('Found "__session" cookie');
     // Read the ID Token from cookie.
-    idToken = request.cookies.__session;
+    return request.cookies.__session
   } else {
     // No cookie
-    response.status(403).send('Unauthorized: user needs to login');
-    return;
+    throw new Error('Firebase user ID token not found in Authorization header nor in the cookie.');
   }
+}
 
-  // verify the idToken in HTTP 'Authorization' header is correct for the path /users/:userId/invites
+userApp.post('/users/:userId/invites', async (request: express.Request, response: express.Response) => {
+  
+  console.log('Check if request is authorized with Firebase ID token');
+
   try {
-    const decodedIdToken = await admin.auth().verifyIdToken(idToken)
+    const firebaseUserIdToken = await extractFirebaseUserIdToken(request)
+    const decodedIdToken = await admin.auth().verifyIdToken(firebaseUserIdToken)
     if(request.params.userId !== decodedIdToken.uid)
       throw new Error('Login user unmatched with the request path.')
   } catch(error) {
@@ -65,7 +62,7 @@ userApp.post('/users/:userId/invites', async (request: express.Request, response
   }
   
   // get stored user Twitter credentials, store tweet information to Firease, and tweet
-   try {
+  try {
     const userDoc = await firestore
       .collection('users').doc(request.params.userId).get()
 
