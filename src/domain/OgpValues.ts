@@ -3,6 +3,8 @@
 
 import {WorkshopPromotion} from './Promotion'
 
+//Twitter Cards and Open Graph at https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started.html
+
 export interface OgpValues {
   readonly twitterCard: string
   readonly twitterSite: string
