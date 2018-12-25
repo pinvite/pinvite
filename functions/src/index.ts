@@ -5,6 +5,7 @@ import * as express from 'express'
 import * as fs from 'fs'
 import { WorkshopPromotion, isWorkshopPromotion } from './domain/Promotion';
 import { TwitterUserInfo, isTwitterUserInfo } from './domain/Twitter';
+import { toOgpValues } from './domain/OgpValues';
 
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
@@ -57,6 +58,31 @@ async function storePromotion(
   return result.id
 }
 
+async function retrievePromotion(
+  firebaseUserId: string,
+  promotionId: string
+): Promise<WorkshopPromotion> {
+  const snapshot = await firestore
+    .collection('users').doc(firebaseUserId)
+    .collection('invites').doc(promotionId).get()
+
+  const promotion = snapshot.data()
+  if(isWorkshopPromotion(promotion))
+    return promotion
+  else
+    throw new Error('Failed to retrieve promotion')
+}
+
+async function retrieveTwitterUserInfo(firebaseUserId: string): Promise<TwitterUserInfo> {
+  const snapshot = await firestore.collection('users').doc(firebaseUserId).get()
+  const data = snapshot.data()
+  
+  if(isTwitterUserInfo(data))
+    return data
+  else
+    throw new Error('Failed to retrieve twitter user info')
+}
+
 async function tweet(
   twitterUserInfo: TwitterUserInfo,
   promotion: WorkshopPromotion,
@@ -69,14 +95,6 @@ async function tweet(
     access_token_secret: twitterUserInfo.oauthTokenSecret,
   })
   return tweetData.post('statuses/update', { status: "#pinvite " + promotion })  
-}
-
-async function retrieveTwitterUserInfo(firebaseUserId: string): Promise<TwitterUserInfo> {
-  const snapshot = await firestore.collection('users').doc(firebaseUserId).get()
-  const data = snapshot.data()
-  
-  if(isTwitterUserInfo(data)) return data
-  else throw new Error('Failed to retrieve twitter user info')
 }
 
 userApp.post('/users/:userId/invites', async (request: express.Request, response: express.Response) => {
@@ -108,7 +126,7 @@ userApp.post('/users/:userId/invites', async (request: express.Request, response
     try {
       const storeResult = await storePromotion(firebaseUserId, promotion)
       const twitterUserInfo = await retrieveTwitterUserInfo(firebaseUserId)
-
+      
       // https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
       const pageURL = request.protocol + '://' + request.get('host') + request.originalUrl;
       await tweet(twitterUserInfo, promotion, pageURL)
@@ -128,34 +146,27 @@ userApp.get('/users/:userId/invites', (request, response) => {
 
 //This needs to be SSR
 const usersHtml = fs.readFileSync(__dirname + '/users/index.html', 'utf8')
-userApp.get('/users/:userId/invites/:invitationId', (request, response) => {
-  console.log(request.params.userId)
-  console.log(request.params.invitationId)
-  firestore
-    .collection('users').doc(request.params.userId)
-    .collection('invites').doc(request.params.invitationId).get().then(invitationDoc => {
-      if(!invitationDoc.exists){
-        console.log('No such invitationNo such invitationNo such invitationNo such invitation')
-        response.status(404)
-        response.send("No such invitation")    
-      } else {
-        const html = usersHtml
-          .replace('*|twitter:card|*',    invitationDoc.data().ogp['twitter:card'])
-          .replace('*|twitter:site|*',    invitationDoc.data().ogp['twitter:site']) 
-          .replace('*|twitter:creator|*', invitationDoc.data().ogp['twitter:creator'])
-          .replace('*|og:url|*',          invitationDoc.data().ogp['og:url'])
-          .replace('*|og:title|*',        invitationDoc.data().ogp['og:title'])
-          .replace('*|og:description|*',  invitationDoc.data().ogp['og:description'])
-          .replace('*|og:image|*',        invitationDoc.data().ogp['og:image'])         
-          .replace('*|title|*',           invitationDoc.data().ogp['og:title'])
-        
-        response.send(html)
-      }
-    }).catch(err => {
-      console.log(err)
-      response.status(404)
-      response.send("No such invitation")    
-    })
-  })
+userApp.get('/users/:userId/invites/:invitationId', async (request, response) => {
+  try {
+    const promotion = await retrievePromotion(request.params.userId, request.params.invitationId)
+    const pageURL = request.protocol + '://' + request.get('host') + request.originalUrl;
+    const ogpValues = toOgpValues(promotion, pageURL)
+    // Twitter Cards and Open Graph at https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started.html
+    const html = usersHtml
+      .replace('*|twitter:card|*',    ogpValues.twitterCard)
+      .replace('*|twitter:site|*',    ogpValues.twitterSite) 
+      .replace('*|twitter:creator|*', ogpValues.twitterCreater)
+      .replace('*|og:url|*',          ogpValues.ogURL)
+      .replace('*|og:title|*',        ogpValues.ogTitle)
+      .replace('*|og:description|*',  ogpValues.ogDescription)
+      .replace('*|og:image|*',        ogpValues.ogImage)
+      .replace('*|title|*',           promotion.title)
+  
+    response.send(html)
+  } catch (error) {
+    console.log(error)
+    response.status(404).send("No such invitation")
+  }
+})
 
 exports.userApp = functions.https.onRequest(userApp)
