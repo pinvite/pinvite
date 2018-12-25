@@ -28,12 +28,13 @@ export interface FirebaseUserInfo {
 }
 
 function extractTwitterUserInfo(userCredential: firebase.auth.UserCredential): TwitterUserInfo | null {
+  // *** User-defined Type Guards at: ***
+  //   https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards
   interface FirebaseTwitterCredential {
     accessToken: string
     secret: string
   }
   function isTwitterCredential(obj: any): obj is FirebaseTwitterCredential {
-    // User-defined Type Guards at https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards
     const credential = obj as FirebaseTwitterCredential
     return credential.accessToken !== undefined && credential.secret !== undefined
   }
@@ -46,11 +47,13 @@ function extractTwitterUserInfo(userCredential: firebase.auth.UserCredential): T
     return (obj as FirebaseTwitterScreenName).screen_name !== undefined
   }
 
+  // *** Actual logic ***
   if(userCredential.user == null ) return null
   else if ( userCredential.credential == null ) return null
   else if (
-    // Trick to get around TypeScript compilation errors. 'accessToken' and 'secret' exists
-    // in userCredentials.credential according to https://firebase.google.com/docs/auth/web/twitter-login,
+    // Trick to get around TypeScript compilation errors. 
+    // 'accessToken' and 'secret' exists in userCredentials.credential according to
+    // https://firebase.google.com/docs/auth/web/twitter-login,
     // but Firebase Auth's type UserCredential doesn't express the existence of them
     !isTwitterCredential(userCredential.credential) 
   ) return null

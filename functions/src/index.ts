@@ -2,8 +2,9 @@ import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import * as Twit from 'twit'
 import * as express from 'express'
-import { resolve } from 'url'
 import * as fs from 'fs'
+import { WorkshopPromotion, isWorkshopPromotion } from './domain/Promotion';
+import { TwitterUserInfo, isTwitterUserInfo } from './domain/Twitter';
 
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
@@ -46,10 +47,42 @@ async function extractFirebaseUserIdToken(request: express.Request): Promise<str
   }
 }
 
-userApp.post('/users/:userId/invites', async (request: express.Request, response: express.Response) => {
-  
-  console.log('Check if request is authorized with Firebase ID token');
+async function storePromotion(
+  firebaseUserId: string,
+  promotion: WorkshopPromotion
+): Promise<string> {
+  const result = await firestore
+    .collection('users').doc(firebaseUserId)
+    .collection('promotions').add(promotion)
+  return result.id
+}
 
+async function tweet(
+  twitterUserInfo: TwitterUserInfo,
+  promotion: WorkshopPromotion,
+  pageURL: string
+): Promise<{}> {
+  const tweetData = new Twit({
+    consumer_key:        twitterApiKey,
+    consumer_secret:     twitterApiSecret,
+    access_token:        twitterUserInfo.oauthToken,
+    access_token_secret: twitterUserInfo.oauthTokenSecret,
+  })
+  return tweetData.post('statuses/update', { status: "#pinvite " + promotion })  
+}
+
+async function retrieveTwitterUserInfo(firebaseUserId: string): Promise<TwitterUserInfo> {
+  const snapshot = await firestore.collection('users').doc(firebaseUserId).get()
+  const data = snapshot.data()
+  
+  if(isTwitterUserInfo(data)) return data
+  else throw new Error('Failed to retrieve twitter user info')
+}
+
+userApp.post('/users/:userId/invites', async (request: express.Request, response: express.Response) => {
+  //********************************************************************
+  console.log('Check if request is authorized with Firebase ID token');
+  //********************************************************************
   try {
     const firebaseUserIdToken = await extractFirebaseUserIdToken(request)
     const decodedIdToken = await admin.auth().verifyIdToken(firebaseUserIdToken)
@@ -59,45 +92,27 @@ userApp.post('/users/:userId/invites', async (request: express.Request, response
     console.log(error)
     response.status(403).send("Unauthorized: user not allowed to perform this action")  
     return;
-  }
-  
-  // get stored user Twitter credentials, store tweet information to Firease, and tweet
-  try {
-    const userDoc = await firestore
-      .collection('users').doc(request.params.userId).get()
+  } 
+  const firebaseUserId: string = request.params.userId
 
-    if (userDoc == null) throw new Error('Failed to get user doc for ' + request.params.userId)
-
-      // Add an empty document to get the ID, before inserting the full data
-    const invitationDoc = await firestore
-      .collection('users').doc(request.params.userId)
-      .collection('invites').add({}) 
-
-    const invitationData = {
-      ogp: {
-        'twitter:creator' : "@" + userDoc.data().twitter.user_id,
-        'og:title'        : request.body.title,
-        'og:description'  : request.body.description,
-        'og:image'        : request.body.image_url
-      }
+  //********************************************************************
+  console.log('Store the promotion data and tweet it');
+  //********************************************************************
+  const promotion = request.body
+  if(isWorkshopPromotion(promotion)) {
+    console.log("bad request received")
+    response.status(400).send("Bad Request: properties are missing or wrong in the body")  
+    return
+  } else {
+    // get stored user Twitter credentials, store tweet information to Firease, and tweet
+    try {
+      const storeResult = await storePromotion(firebaseUserId, promotion)
+      const twitterUserInfo = await retrieveTwitterUserInfo(firebaseUserId)
+      const twetResult = await tweet(twitterUserInfo, promotion, '')
+    } catch(error) {
+      response.status(500).send("Server error: failed to tweet")      
     }
-
-    await firestore
-      .collection('users').doc(request.params.userId)
-      .collection('invites').doc(invitationDoc.id).set(invitationData)
-    
-    const tweetData = new Twit({
-        consumer_key:        twitterApiKey,
-        consumer_secret:     twitterApiSecret,
-        access_token:        userDoc.data().twitter.access_token,
-        access_token_secret: userDoc.data().twitter.secret,
-      })
-
-      await tweetData.post('statuses/update', { status: "#pinvite " + url })
-
-   } catch (error) {
-    response.status(500).send("Server error: failed to tweet")      
-   }
+  }
 })
 
 //This probably doesn't need to be on the function side, nor SSR 

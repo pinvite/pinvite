@@ -11,3 +11,18 @@ export interface WorkshopPromotion {
   readonly moneyAmount: number
   readonly imageURL: string
 }
+
+export function isWorkshopPromotion(obj: any): obj is WorkshopPromotion {
+  // User-defined Type Guards at https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards
+  const promotion = obj as WorkshopPromotion
+  return (
+    promotion.twitterCard !== undefined
+    && promotion.twitterSite !== undefined
+    && promotion.twitterUserId !== undefined
+    && promotion.title !== undefined
+    && promotion.details !== undefined
+    && promotion.time !== undefined
+    && promotion.moneyAmount !== undefined
+    && promotion.imageURL !== undefined
+  )
+}
