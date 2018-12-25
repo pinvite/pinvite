@@ -108,9 +108,15 @@ userApp.post('/users/:userId/invites', async (request: express.Request, response
     try {
       const storeResult = await storePromotion(firebaseUserId, promotion)
       const twitterUserInfo = await retrieveTwitterUserInfo(firebaseUserId)
-      const twetResult = await tweet(twitterUserInfo, promotion, '')
+
+      // https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
+      const pageURL = request.protocol + '://' + request.get('host') + request.originalUrl;
+      await tweet(twitterUserInfo, promotion, pageURL)
+      response.send('successfully tweeted')
+      return
     } catch(error) {
       response.status(500).send("Server error: failed to tweet")      
+      return
     }
   }
 })
