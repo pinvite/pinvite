@@ -5,6 +5,8 @@ import PreviewBottom from '../Molecules/PreviewBottom'
 import ImageLoader from '../Molecules/ImageLoader';
 import {cloudinaryImageUrl} from '../../utils/cloudinary'
 import { AuthStatusContext } from '../../context/AuthStatusContext';
+import {InvitationInfo} from '../../domain/Invitation'
+import { InvitationRequest } from '../../protocols/InvitationRequest';
 
 const spinnerImageURL = 'https://res.cloudinary.com/pinvite/image/upload/v1543695206/spinner.gif'
 
@@ -78,17 +80,19 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
     userId: string,
     idToken: string,
     title: string,
+    details: string,
     time: string,
     moneyAmount: string,
     imageURL: string
   ) {
-    const request = {
+    const requestBody: InvitationRequest = {
       title: title,
-      imageUrl: imageURL,
-      time: time,
-      moneyAmount: moneyAmount,
+      details: details,
+      time: parseInt(time),
+      moneyAmount: parseInt(moneyAmount),
+      imageURL: imageURL
     }
-    const url = '/users/' + userId + '/invites'
+    const url = '/users/' + userId + '/invitations'
 
     fetch(url, {
       method: 'POST',
@@ -96,7 +100,7 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
         "Content-Type": "application/json; charset=utf-8",
         "Authorization": "Bearer " + idToken
       },
-      body: JSON.stringify(request),
+      body: JSON.stringify(requestBody),
     })
     .then(response => {
       console.log(response)
@@ -194,6 +198,7 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
                     userInfo.userId,
                     userInfo.idToken,
                     this.state.title,
+                    this.state.details,
                     this.state.time,
                     this.state.moneyAmount,
                     imageURL

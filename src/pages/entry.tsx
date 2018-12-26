@@ -1,10 +1,10 @@
 import React from 'react'
-import Invite from '../components/Templates/Invite'
+import Entry from '../components/Templates/Entry'
 
-class InvitePage extends React.Component {
+class EntryPage extends React.Component {
   render() {
     return (
-      <Invite 
+      <Entry 
         inputTitleLabel = "勉強会のタイトル"
         inputTitleHelperText = "70文字以内で入力してください"
         inputDetailsLabel = "勉強会の詳細"
@@ -18,4 +18,4 @@ class InvitePage extends React.Component {
   }
 }
 
-export default InvitePage
+export default EntryPage

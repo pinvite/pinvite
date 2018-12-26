@@ -32,7 +32,7 @@ export const CallToActionTop: React.SFC<CallToActionProp> = (props) =>
       {
         ({handleLogin, loginStatus}) => {
           if(loginStatus == LoginStatus.ReadyToTweet) 
-            return(<PrimaryButton text={props.jumpToButtonText} callback={() => {navigate('/invite/')}} />)
+            return(<PrimaryButton text={props.jumpToButtonText} callback={() => {navigate('/entry/')}} />)
           else 
             return(<PrimaryButton text={props.registerButtonText} callback={handleLogin} />)
         }
@@ -49,7 +49,7 @@ export const CallToActionBottom: React.SFC<CallToActionProp> = (props) =>
       {
         ({handleLogin, loginStatus}) => {
           if(loginStatus == LoginStatus.ReadyToTweet) 
-            return(<PrimaryButton text={props.jumpToButtonText} callback={() => {navigate('/invite/')}} />)
+            return(<PrimaryButton text={props.jumpToButtonText} callback={() => {navigate('/entry/')}} />)
           else 
             return(<PrimaryButton text={props.registerButtonText} callback={handleLogin} />)
         }
