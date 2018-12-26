@@ -1,4 +1,6 @@
-// It is an HTTP request body structure, not actually a domain object though... 
+// DO NOT edit this directly in functions/src/protocols. (i.e. Firebase Functions directory)
+// Edit only this in src/protocols (i.e. Firebase hosting directory) then copy it to functions/src/domain by `npm run build`
+
 export interface InvitationRequest {
   readonly title: string
   readonly details: string
