@@ -45,8 +45,8 @@ const Invite: React.SFC<InviteProps> = (props) =>
     </Helmet>
     <MuiThemeProvider theme={MuiTheme}>
       <AuthStatusProvider>
+        <ApplicationBar />
         <Container>
-          <ApplicationBar />
           <Invitation
             twitterCard={props.twitterCard}
             twitterSite={props.twitterSite}
