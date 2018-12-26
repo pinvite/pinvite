@@ -1,7 +1,7 @@
 // DO NOT edit this directly in functions/src/domain. (i.e. Firebase Functions directory)
 // Edit only this in src/domain (i.e. Firebase hosting directory) then copy it to functions/src/domain by `npm run build`
 
-export interface WorkshopPromotion {
+export interface Invitation {
   readonly twitterCard: 'summary' | 'summary_large_image' | 'app' | 'player'
   readonly twitterSite: '@orgpinvite'
   readonly twitterUserId: string
@@ -12,9 +12,9 @@ export interface WorkshopPromotion {
   readonly imageURL: string
 }
 
-export function isWorkshopPromotion(obj: any): obj is WorkshopPromotion {
+export function isInvitation(obj: any): obj is Invitation {
   // User-defined Type Guards at https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards
-  const promotion = obj as WorkshopPromotion
+  const promotion = obj as Invitation
   return (
     promotion.twitterCard !== undefined
     && promotion.twitterSite !== undefined

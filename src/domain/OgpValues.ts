@@ -1,7 +1,7 @@
 // DO NOT edit this directly in functions/src/domain. (i.e. Firebase Functions directory)
 // Edit only this in src/domain (i.e. Firebase hosting directory) then copy it to functions/src/domain by `npm run build`
 
-import {WorkshopPromotion} from './Promotion'
+import {Invitation} from './Invitation'
 
 //Twitter Cards and Open Graph at https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started.html
 
@@ -16,17 +16,17 @@ export interface OgpValues {
 }
 
 export function toOgpValues(
-  promotion: WorkshopPromotion,
+  invitation: Invitation,
   pageURL: string
 ): OgpValues {
   return ({
-    twitterCard: promotion.twitterCard,
-    twitterSite: promotion.twitterSite,
-    twitterCreater: '@' + promotion.twitterUserId,
+    twitterCard: invitation.twitterCard,
+    twitterSite: invitation.twitterSite,
+    twitterCreater: '@' + invitation.twitterUserId,
     ogURL: pageURL,
-    ogTitle: promotion.title,
-    ogDescription: promotion.details,
-    ogImage: promotion.imageURL,
+    ogTitle: invitation.title,
+    ogDescription: invitation.details,
+    ogImage: invitation.imageURL,
   })
 }
   
