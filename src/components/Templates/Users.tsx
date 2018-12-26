@@ -1,23 +1,12 @@
 import React, {Fragment} from 'react'
 import Helmet from 'react-helmet'
+import { Router, RouteComponentProps } from "@reach/router";
 import styled from 'styled-components'
 import ApplicationBar from '../Molecules/ApplicationBar'
-import Invitation from '../Organisms/Invitation'
+import Invitation, {InvitationProps} from '../Organisms/Invitation'
 import MuiTheme from '../../theme/MuiTheme'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import { AuthStatusProvider } from '../../context/AuthStatusContext'
-
-export interface InviteProps {
-  twitterCard: string
-  twitterSite: string
-  twitterCreator: string
-  ogUrl: string
-  ogTitle: string
-  ogDescription: string
-  ogImage: string
-  captionText: string
-  detailsText: string
-}
 
 const Container = styled.div`
   max-width: 600px;
@@ -25,7 +14,27 @@ const Container = styled.div`
   margin-right: auto;
 `
 
-const Invite: React.SFC<InviteProps> = (props) =>
+interface InvitationContainerProps extends RouteComponentProps {
+  firebaseUserId?: string
+  invitationId?: string
+}
+
+const InvitationContainer: React.SFC<InvitationContainerProps> = (props) => {
+  if(props.firebaseUserId != null && props.invitationId != null) {
+    return (
+      <Invitation
+        firebaseUserId={props.firebaseUserId}
+        invitationId={props.invitationId}
+      />
+    )
+  } else {
+    return (
+      <React.Fragment />
+    )
+  }
+}
+
+const Users: React.SFC<{}> = (props) =>
   <Fragment>
     <Helmet>
       <title>pinvite</title>
@@ -47,21 +56,19 @@ const Invite: React.SFC<InviteProps> = (props) =>
       <AuthStatusProvider>
         <ApplicationBar />
         <Container>
-          <Invitation
-            twitterCard={props.twitterCard}
-            twitterSite={props.twitterSite}
-            twitterCreator={props.twitterCreator}
-            ogUrl={props.ogUrl}
-            ogTitle={props.ogTitle}
-            ogDescription={props.ogDescription}
-            ogImage={props.ogImage}
-            captionText={props.captionText}
-            detailsText={props.detailsText}
-          />
+          <Router>
+            {
+              // (https://www.gatsbyjs.org/docs/authentication-tutorial/#creating-client-only-routes)
+              // Note that in gatsby, client-only routing requires @reach/router and either of the below:
+              //   - gatsby-node.js to implement `onCreatePage`
+              //   - gatsby-plugin-create-client-paths 
+            }
+            <InvitationContainer path="/users/:firebaseUserId/invitations/:invitationId" />
+          </Router>
         </Container>
       </AuthStatusProvider>
     </MuiThemeProvider>
   </Fragment>
 
 
-export default Invite
+export default Users

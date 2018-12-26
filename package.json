@@ -5,6 +5,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "@material-ui/core": "^3.7.0",
+    "@types/reach__router": "^1.2.2",
     "cloudinary-core": "^2.5.0",
     "core-js": "^2.5.7",
     "event-stream": "3.3.4",
@@ -31,7 +32,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "copyFilesToFunctions": "copyfiles -f public/users/*.html functions/src/users && copyfiles -f src/domain/*.ts functions/src/domain",
+    "copyFilesToFunctions": "copyfiles -f public/users/*.html functions/src/users && copyfiles -f src/domain/*.ts functions/src/domain && copyfiles -f src/protocols/*.ts functions/src/protocols",
     "build": "gatsby build && npm run copyFilesToFunctions",
     "develop": "gatsby develop",
     "format": "prettier --write '**/*.js'",

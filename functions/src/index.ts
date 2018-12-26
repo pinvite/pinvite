@@ -3,9 +3,10 @@ import * as admin from 'firebase-admin'
 import * as Twit from 'twit'
 import * as express from 'express'
 import * as fs from 'fs'
-import { Invitation, isInvitation } from './domain/Invitation';
+import { InvitationInfo, isInvitationInfo } from './domain/Invitation';
 import { TwitterUserInfo, isTwitterUserInfo } from './domain/Twitter';
 import { toOgpValues } from './domain/OgpValues';
+import { isInvitationRequest, InvitationRequest } from './protocols/InvitationRequest';
 
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
@@ -48,44 +49,44 @@ async function extractFirebaseUserIdToken(request: express.Request): Promise<str
   }
 }
 
-async function storeInvitation(
+async function storeInvitationInfo(
   firebaseUserId: string,
-  invitation: Invitation
+  invitationInfo: InvitationInfo
 ): Promise<string> {
   const result = await firestore
     .collection('users').doc(firebaseUserId)
-    .collection('invitations').add(invitation)
+    .collection('invitations').add(invitationInfo)
   return result.id
 }
 
-async function retrieveInvitation(
+async function retrieveInvitationInfo(
   firebaseUserId: string,
   invitationId: string
-): Promise<Invitation> {
+): Promise<InvitationInfo> {
   const snapshot = await firestore
     .collection('users').doc(firebaseUserId)
     .collection('invitations').doc(invitationId).get()
 
-  const invitation = snapshot.data()
-  if(isInvitation(invitation))
-    return invitation
+  const invitationInfo = snapshot.data()
+  if(isInvitationInfo(invitationInfo))
+    return invitationInfo
   else
-    throw new Error('Failed to retrieve invitation')
+    throw new Error('Failed to retrieve invitationInfo')
 }
 
 async function retrieveTwitterUserInfo(firebaseUserId: string): Promise<TwitterUserInfo> {
   const snapshot = await firestore.collection('users').doc(firebaseUserId).get()
   const data = snapshot.data()
   
-  if(isTwitterUserInfo(data))
-    return data
+  if(data.twitter !== null && isTwitterUserInfo(data.twitter))
+    return data.twitter
   else
     throw new Error('Failed to retrieve twitter user info')
 }
 
 async function tweet(
   twitterUserInfo: TwitterUserInfo,
-  invitation: Invitation,
+  invitationInfo: InvitationInfo,
   pageURL: string
 ): Promise<{}> {
   const tweetData = new Twit({
@@ -94,10 +95,26 @@ async function tweet(
     access_token:        twitterUserInfo.oauthToken,
     access_token_secret: twitterUserInfo.oauthTokenSecret,
   })
-  return tweetData.post('statuses/update', { status: "#pinvite " + pageURL })  
+  return tweetData.post('statuses/update', { status: invitationInfo.title + " #pinvite\n" + pageURL })  
 }
 
-userApp.post('/users/:userId/invites', async (request: express.Request, response: express.Response) => {
+function toInvitationInfo(
+  invitationRequest: InvitationRequest,
+  twitterUserId: string
+): InvitationInfo {
+  return {
+    twitterCard: 'summary_large_image',
+    twitterSite: '@orgpinvite',
+    twitterUserId: twitterUserId,
+    title: invitationRequest.title,
+    details: invitationRequest.details,
+    time: invitationRequest.time,
+    moneyAmount: invitationRequest.moneyAmount,
+    imageURL: invitationRequest.imageURL
+  }
+}
+
+userApp.post('/users/:userId/invitations', async (request: express.Request, response: express.Response) => {
   //********************************************************************
   console.log('Check if request is authorized with Firebase ID token');
   //********************************************************************
@@ -106,6 +123,7 @@ userApp.post('/users/:userId/invites', async (request: express.Request, response
     const decodedIdToken = await admin.auth().verifyIdToken(firebaseUserIdToken)
     if(request.params.userId !== decodedIdToken.uid)
       throw new Error('Login user unmatched with the request path.')
+
   } catch(error) {
     console.log(error)
     response.status(403).send("Unauthorized: user not allowed to perform this action")  
@@ -114,25 +132,28 @@ userApp.post('/users/:userId/invites', async (request: express.Request, response
   const firebaseUserId: string = request.params.userId
 
   //********************************************************************
-  console.log('Store the invitation data and tweet it');
+  console.log('Store the invitationInfo data and tweet it');
   //********************************************************************
-  const invitation = request.body
-  if(isInvitation(invitation)) {
+  const invitationRequest = request.body
+  if(!isInvitationRequest(invitationRequest)) {
     console.log("bad request received")
     response.status(400).send("Bad Request: properties are missing or wrong in the body")  
     return
   } else {
     // get stored user Twitter credentials, store tweet information to Firease, and tweet
     try {
-      const storeResult = await storeInvitation(firebaseUserId, invitation)
       const twitterUserInfo = await retrieveTwitterUserInfo(firebaseUserId)
+      const invitationInfo = toInvitationInfo(invitationRequest, twitterUserInfo.userId)
+      const invitationId = await storeInvitationInfo(firebaseUserId, invitationInfo)
       
       // https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
-      const pageURL = request.protocol + '://' + request.get('host') + request.originalUrl;
-      await tweet(twitterUserInfo, invitation, pageURL)
+      const pageURL = request.protocol + '://' + request.get('host') + request.originalUrl + "/" + invitationId;
+      await tweet(twitterUserInfo, invitationInfo, pageURL)
+      console.log('successfully tweeted')
       response.send('successfully tweeted')
       return
     } catch(error) {
+      console.log(error)
       response.status(500).send("Server error: failed to tweet")      
       return
     }
@@ -148,24 +169,24 @@ userApp.get('/users/:userId/invitations', (request, response) => {
 const usersHtml = fs.readFileSync(__dirname + '/users/index.html', 'utf8')
 userApp.get('/users/:userId/invitations/:invitationId', async (request, response) => {
   try {
-    const invitation = await retrieveInvitation(request.params.userId, request.params.invitationId)
+    const invitationInfo = await retrieveInvitationInfo(request.params.userId, request.params.invitationId)
     const pageURL = request.protocol + '://' + request.get('host') + request.originalUrl;
-    const ogpValues = toOgpValues(invitation, pageURL)
+    const ogpValues = toOgpValues(invitationInfo, pageURL)
     // Twitter Cards and Open Graph at https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started.html
     const html = usersHtml
       .replace('*|twitter:card|*',    ogpValues.twitterCard)
       .replace('*|twitter:site|*',    ogpValues.twitterSite) 
-      .replace('*|twitter:creator|*', ogpValues.twitterCreater)
+      .replace('*|twitter:creator|*', ogpValues.twitterCreator)
       .replace('*|og:url|*',          ogpValues.ogURL)
       .replace('*|og:title|*',        ogpValues.ogTitle)
       .replace('*|og:description|*',  ogpValues.ogDescription)
       .replace('*|og:image|*',        ogpValues.ogImage)
-      .replace('*|title|*',           invitation.title)
+      .replace('*|title|*',           invitationInfo.title)
   
     response.send(html)
   } catch (error) {
     console.log(error)
-    response.status(404).send("No such invitation")
+    response.status(404).send("No such invitationInfo")
   }
 })
 
