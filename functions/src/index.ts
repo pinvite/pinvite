@@ -3,7 +3,7 @@ import * as admin from 'firebase-admin'
 import * as Twit from 'twit'
 import * as express from 'express'
 import * as fs from 'fs'
-import { WorkshopPromotion, isWorkshopPromotion } from './domain/Promotion';
+import { Invitation, isInvitation } from './domain/Invitation';
 import { TwitterUserInfo, isTwitterUserInfo } from './domain/Twitter';
 import { toOgpValues } from './domain/OgpValues';
 
@@ -22,7 +22,7 @@ const userApp = express()
 
 // At the moment, user's invitations are everything we can show for the user, so redirecting
 userApp.get('/users/:userId/', (request, response) => {
-  response.redirect("/users/" + request.params.userId + "/invites" )
+  response.redirect("/users/" + request.params.userId + "/invitations" )
 })
 
 async function extractFirebaseUserIdToken(request: express.Request): Promise<string> {
@@ -48,29 +48,29 @@ async function extractFirebaseUserIdToken(request: express.Request): Promise<str
   }
 }
 
-async function storePromotion(
+async function storeInvitation(
   firebaseUserId: string,
-  promotion: WorkshopPromotion
+  invitation: Invitation
 ): Promise<string> {
   const result = await firestore
     .collection('users').doc(firebaseUserId)
-    .collection('promotions').add(promotion)
+    .collection('invitations').add(invitation)
   return result.id
 }
 
-async function retrievePromotion(
+async function retrieveInvitation(
   firebaseUserId: string,
-  promotionId: string
-): Promise<WorkshopPromotion> {
+  invitationId: string
+): Promise<Invitation> {
   const snapshot = await firestore
     .collection('users').doc(firebaseUserId)
-    .collection('invites').doc(promotionId).get()
+    .collection('invitations').doc(invitationId).get()
 
-  const promotion = snapshot.data()
-  if(isWorkshopPromotion(promotion))
-    return promotion
+  const invitation = snapshot.data()
+  if(isInvitation(invitation))
+    return invitation
   else
-    throw new Error('Failed to retrieve promotion')
+    throw new Error('Failed to retrieve invitation')
 }
 
 async function retrieveTwitterUserInfo(firebaseUserId: string): Promise<TwitterUserInfo> {
@@ -85,7 +85,7 @@ async function retrieveTwitterUserInfo(firebaseUserId: string): Promise<TwitterU
 
 async function tweet(
   twitterUserInfo: TwitterUserInfo,
-  promotion: WorkshopPromotion,
+  invitation: Invitation,
   pageURL: string
 ): Promise<{}> {
   const tweetData = new Twit({
@@ -94,7 +94,7 @@ async function tweet(
     access_token:        twitterUserInfo.oauthToken,
     access_token_secret: twitterUserInfo.oauthTokenSecret,
   })
-  return tweetData.post('statuses/update', { status: "#pinvite " + promotion })  
+  return tweetData.post('statuses/update', { status: "#pinvite " + pageURL })  
 }
 
 userApp.post('/users/:userId/invites', async (request: express.Request, response: express.Response) => {
@@ -114,22 +114,22 @@ userApp.post('/users/:userId/invites', async (request: express.Request, response
   const firebaseUserId: string = request.params.userId
 
   //********************************************************************
-  console.log('Store the promotion data and tweet it');
+  console.log('Store the invitation data and tweet it');
   //********************************************************************
-  const promotion = request.body
-  if(isWorkshopPromotion(promotion)) {
+  const invitation = request.body
+  if(isInvitation(invitation)) {
     console.log("bad request received")
     response.status(400).send("Bad Request: properties are missing or wrong in the body")  
     return
   } else {
     // get stored user Twitter credentials, store tweet information to Firease, and tweet
     try {
-      const storeResult = await storePromotion(firebaseUserId, promotion)
+      const storeResult = await storeInvitation(firebaseUserId, invitation)
       const twitterUserInfo = await retrieveTwitterUserInfo(firebaseUserId)
       
       // https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
       const pageURL = request.protocol + '://' + request.get('host') + request.originalUrl;
-      await tweet(twitterUserInfo, promotion, pageURL)
+      await tweet(twitterUserInfo, invitation, pageURL)
       response.send('successfully tweeted')
       return
     } catch(error) {
@@ -140,17 +140,17 @@ userApp.post('/users/:userId/invites', async (request: express.Request, response
 })
 
 //This probably doesn't need to be on the function side, nor SSR 
-userApp.get('/users/:userId/invites', (request, response) => {
-  response.send("hello GET /users/:userId/invites")
+userApp.get('/users/:userId/invitations', (request, response) => {
+  response.send("hello GET /users/:userId/invitations")
 })
 
 //This needs to be SSR
 const usersHtml = fs.readFileSync(__dirname + '/users/index.html', 'utf8')
-userApp.get('/users/:userId/invites/:invitationId', async (request, response) => {
+userApp.get('/users/:userId/invitations/:invitationId', async (request, response) => {
   try {
-    const promotion = await retrievePromotion(request.params.userId, request.params.invitationId)
+    const invitation = await retrieveInvitation(request.params.userId, request.params.invitationId)
     const pageURL = request.protocol + '://' + request.get('host') + request.originalUrl;
-    const ogpValues = toOgpValues(promotion, pageURL)
+    const ogpValues = toOgpValues(invitation, pageURL)
     // Twitter Cards and Open Graph at https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started.html
     const html = usersHtml
       .replace('*|twitter:card|*',    ogpValues.twitterCard)
@@ -160,7 +160,7 @@ userApp.get('/users/:userId/invites/:invitationId', async (request, response) =>
       .replace('*|og:title|*',        ogpValues.ogTitle)
       .replace('*|og:description|*',  ogpValues.ogDescription)
       .replace('*|og:image|*',        ogpValues.ogImage)
-      .replace('*|title|*',           promotion.title)
+      .replace('*|title|*',           invitation.title)
   
     response.send(html)
   } catch (error) {

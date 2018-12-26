@@ -3,7 +3,7 @@ service cloud.firestore {
     match /users/{uid} {
       allow read, write: if request.auth.uid == uid;
 
-      match /invites/{documnet=**} {
+      match /invitations/{documnet=**} {
         allow read, write: if true;
       }
     }
