@@ -24,7 +24,7 @@ const Container = styled.div`
   margin-right: auto;
 `
 
-const Invite: React.SFC<InviteProps> = (props) =>
+const Entry: React.SFC<InviteProps> = (props) =>
   <Fragment>
     <Helmet>
       <title>pinvite</title>
@@ -62,4 +62,4 @@ const Invite: React.SFC<InviteProps> = (props) =>
   </Fragment>
 
 
-export default Invite
+export default Entry
