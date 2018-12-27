@@ -1,7 +1,9 @@
-import React, {Fragment} from 'react'
+import React, { Fragment } from 'react'
 import styled from 'styled-components'
-
-import {CallToActionBottom, CallToActionTop} from '../../components/Molecules/CallToAction'
+import {
+  CallToActionBottom,
+  CallToActionTop,
+} from '../../components/Molecules/CallToAction'
 import ConcernList from '../../components/Molecules/ConcernList'
 import InvitationSample from '../Molecules/InvitationSample'
 
@@ -17,31 +19,35 @@ export interface LandingContentsProps {
   concernText2: string
   concernText3: string
   className?: string // allow styled-components to inject CSS margin from outside.
-                     // Only margin, no other CSS property from outside
+  // Only margin, no other CSS property from outside
 }
 
-const CallToActionTopStyled　= styled(CallToActionTop)`
-&& {
-  margin-top: 80px;
-  margin-bottom: 80px;
-}`
+const CallToActionTopStyled = styled(CallToActionTop)`
+  && {
+    margin-top: 80px;
+    margin-bottom: 80px;
+  }
+`
 
 const CallToActionBottomStyled = styled(CallToActionBottom)`
-&& {
-  margin-bottom: 80px;
-}`
+  && {
+    margin-bottom: 80px;
+  }
+`
 
 const InvitationSampleStyled = styled(InvitationSample)`
-&& {
-  margin-bottom: 80px;
-}`
+  && {
+    margin-bottom: 80px;
+  }
+`
 
 const ConcernListStyled = styled(ConcernList)`
-&& {
-  margin-bottom: 80px;
-}`
+  && {
+    margin-bottom: 80px;
+  }
+`
 
-const LandingContents: React.SFC<LandingContentsProps> = (props) =>
+const LandingContents: React.SFC<LandingContentsProps> = props => (
   <div className={props.className}>
     <CallToActionTopStyled
       description={props.firstCallToActionText}
@@ -64,5 +70,6 @@ const LandingContents: React.SFC<LandingContentsProps> = (props) =>
       jumpToButtonText={props.jumpToButtonText}
     />
   </div>
+)
 
 export default LandingContents

@@ -8,34 +8,37 @@ export interface SecondaryButtonProps {
   text: string
   callback: () => void
   disabled?: boolean
-  className?: string // allow styled-components to inject CSS margin from outside.
-                     // Only margin, no other CSS property from outside.
+  className?: string // allow styled-components to inject CSS margin from outside. Only margin, no other CSS property from outside.
 }
 
 const ButtonStyled = styled(Button as React.SFC<ButtonProps>)`
-&& {
-  /* centering */
-  display: block;
-  margin: 0 auto;
+  && {
+    /* centering */
+    display: block;
+    margin: 0 auto;
 
-  /* more detailed style which cannot be controlled by Material-UI Button's props*/
-  font-size: ${MuiTheme.typography.h6.fontSize};
-  width: 200px;
-  height: 60px;
-  color: ${MuiTheme.palette.secondary.contrastText};
-}`
+    /* more detailed style which cannot be controlled by Material-UI Button's props*/
+    font-size: ${MuiTheme.typography.h6.fontSize};
+    width: 200px;
+    height: 60px;
+    color: ${MuiTheme.palette.secondary.contrastText};
+  }
+`
 
-const SecondaryButton: React.SFC<SecondaryButtonProps> = (props) =>
+const SecondaryButton: React.SFC<SecondaryButtonProps> = props => (
   // Important to accept the className prop, to inject CSS margin from outside.
   // Only margin, no other CSS property from outside.
   <Atom className={props.className}>
     <ButtonStyled
-      variant='outlined'
-      color='default'
-      size='large'
+      variant="outlined"
+      color="default"
+      size="large"
       disabled={props.disabled}
       onClick={props.callback}
-    >{props.text}</ButtonStyled>
+    >
+      {props.text}
+    </ButtonStyled>
   </Atom>
+)
 
 export default SecondaryButton

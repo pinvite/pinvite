@@ -2,13 +2,13 @@ import React from 'react'
 import InviteInputs from '../Molecules/InviteInputs'
 import InviteBottom from '../Molecules/InviteBottom'
 import PreviewBottom from '../Molecules/PreviewBottom'
-import ImageLoader from '../Molecules/ImageLoader';
-import {cloudinaryImageUrl} from '../../utils/cloudinary'
-import { AuthStatusContext } from '../../context/AuthStatusContext';
-import {InvitationInfo} from '../../domain/Invitation'
-import { InvitationRequest } from '../../protocols/InvitationRequest';
+import ImageLoader from '../Molecules/ImageLoader'
+import { cloudinaryImageUrl } from '../../utils/cloudinary'
+import { AuthStatusContext } from '../../context/AuthStatusContext'
+import { InvitationRequest } from '../../protocols/InvitationRequest'
 
-const spinnerImageURL = 'https://res.cloudinary.com/pinvite/image/upload/v1543695206/spinner.gif'
+const spinnerImageURL =
+  'https://res.cloudinary.com/pinvite/image/upload/v1543695206/spinner.gif'
 
 export interface InvitationFormProps {
   inputTitleLabel: string
@@ -20,7 +20,7 @@ export interface InvitationFormProps {
   goBackButtonText: string
   tweetButtonText: string
   className?: string // allow styled-components to inject CSS margin from outside.
-                     // Only margin, no other CSS property from outside
+  // Only margin, no other CSS property from outside
 }
 
 interface InvitationFormState {
@@ -32,8 +32,11 @@ interface InvitationFormState {
   previewImageSrc: string
 }
 
-class InvitationForm extends React.Component<InvitationFormProps, InvitationFormState> {
-  constructor(props: InvitationFormProps){
+class InvitationForm extends React.Component<
+  InvitationFormProps,
+  InvitationFormState
+> {
+  constructor(props: InvitationFormProps) {
     super(props)
     this.state = {
       title: '',
@@ -41,7 +44,7 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
       moneyAmount: '',
       time: '',
       preview: false,
-      previewImageSrc: spinnerImageURL
+      previewImageSrc: spinnerImageURL,
     }
     this.onTitleChange = this.onTitleChange.bind(this)
     this.onDetailsChange = this.onDetailsChange.bind(this)
@@ -53,27 +56,27 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
   }
 
   onTitleChange(title: string) {
-    this.setState({title})
+    this.setState({ title })
   }
 
   onDetailsChange(details: string) {
-    this.setState({details})
+    this.setState({ details })
   }
 
   onMoneyAmountChange(moneyAmount: string) {
-    this.setState({moneyAmount})
+    this.setState({ moneyAmount })
   }
 
   onTimeChange(time: string) {
-    this.setState({time})
+    this.setState({ time })
   }
-  
+
   onPreviewButtonPressed() {
-    this.setState({preview: true})
+    this.setState({ preview: true })
   }
-  
+
   onGoBackButtonPressed() {
-    this.setState({preview: false})
+    this.setState({ preview: false })
   }
 
   onTweetButtonPressed(
@@ -90,83 +93,90 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
       details: details,
       time: parseInt(time),
       moneyAmount: parseInt(moneyAmount),
-      imageURL: imageURL
+      imageURL: imageURL,
     }
     const url = '/users/' + userId + '/invitations'
 
     fetch(url, {
       method: 'POST',
       headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        "Authorization": "Bearer " + idToken
+        'Content-Type': 'application/json; charset=utf-8',
+        Authorization: 'Bearer ' + idToken,
       },
       body: JSON.stringify(requestBody),
-    })
-    .then(response => {
+    }).then(response => {
       console.log(response)
     })
   }
 
   imageURL(): string {
-    return cloudinaryImageUrl(this.state.title, this.state.time, this.state.moneyAmount)
+    return cloudinaryImageUrl(
+      this.state.title,
+      this.state.time,
+      this.state.moneyAmount
+    )
   }
 
   isErrorTitle(): boolean {
-    return (this.state.title.length > 70)
+    return this.state.title.length > 70
   }
 
   isErrorDetails(): boolean {
-    return (this.state.details.length > 1000)
+    return this.state.details.length > 1000
   }
 
   isErrorMoneyAmount(): boolean {
-    return (parseInt(this.state.moneyAmount) < 0)
+    return parseInt(this.state.moneyAmount) < 0
   }
 
   isErrorTime(): boolean {
-    return (parseInt(this.state.time) < 0)
+    return parseInt(this.state.time) < 0
   }
 
   isDisabledInput(): boolean {
     function isEmpty(input: string): boolean {
-      return (input.length == 0)
+      return input.length == 0
     }
     return (
-      isEmpty(this.state.title) || this.isErrorTitle()
-      || isEmpty(this.state.details) || this.isErrorDetails()
-      || isEmpty(this.state.moneyAmount) || this.isErrorMoneyAmount()
-      || isEmpty(this.state.time) || this.isErrorTime()
+      isEmpty(this.state.title) ||
+      this.isErrorTitle() ||
+      isEmpty(this.state.details) ||
+      this.isErrorDetails() ||
+      isEmpty(this.state.moneyAmount) ||
+      this.isErrorMoneyAmount() ||
+      isEmpty(this.state.time) ||
+      this.isErrorTime()
     )
   }
 
-  renderInputs(){
-    return(
+  renderInputs() {
+    return (
       <React.Fragment>
         <InviteInputs
-          inputTitleProps = {{
+          inputTitleProps={{
             label: this.props.inputTitleLabel,
             value: this.state.title,
             helperText: this.props.inputTitleHelperText,
             error: this.isErrorTitle(),
-            onChange: this.onTitleChange
+            onChange: this.onTitleChange,
           }}
-          inputDetailsProps  = {{
+          inputDetailsProps={{
             label: this.props.inputDetailsLabel,
             value: this.state.details,
             error: this.isErrorDetails(),
-            onChange: this.onDetailsChange
+            onChange: this.onDetailsChange,
           }}
-          inputMoneyAmountProps  = {{
+          inputMoneyAmountProps={{
             label: this.props.inputMoneyAmountLabel,
             value: this.state.moneyAmount,
             error: this.isErrorMoneyAmount(),
-            onChange: this.onMoneyAmountChange
+            onChange: this.onMoneyAmountChange,
           }}
-          inputTimeProps  = {{
+          inputTimeProps={{
             label: this.props.inputTimeLabel,
             value: this.state.time,
             error: this.isErrorTime(),
-            onChange: this.onTimeChange
+            onChange: this.onTimeChange,
           }}
         />
         <InviteBottom
@@ -178,21 +188,25 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
     )
   }
 
-  renderPreview(){
-    return(
+  renderPreview() {
+    return (
       <AuthStatusContext.Consumer>
-        {({userInfo}) => 
+        {({ userInfo }) => (
           <React.Fragment>
             <ImageLoader
               previewImageURL={this.state.previewImageSrc}
-              imageURL={cloudinaryImageUrl(this.state.title, this.state.time, this.state.moneyAmount)}
+              imageURL={cloudinaryImageUrl(
+                this.state.title,
+                this.state.time,
+                this.state.moneyAmount
+              )}
             />
             <PreviewBottom
               goBackButtonText={this.props.goBackButtonText}
               goBackButtonCallback={this.onGoBackButtonPressed}
               tweetButtonText={this.props.tweetButtonText}
               tweetButtonCallback={() => {
-                if(userInfo != null){
+                if (userInfo != null) {
                   const imageURL = this.imageURL()
                   this.onTweetButtonPressed(
                     userInfo.userId,
@@ -207,24 +221,16 @@ class InvitationForm extends React.Component<InvitationFormProps, InvitationForm
               }}
             />
           </React.Fragment>
-        }
+        )}
       </AuthStatusContext.Consumer>
     )
   }
 
-  render(){
+  render() {
     if (this.state.preview)
-      return(
-        <div className={this.props.className}>
-          {this.renderPreview()}
-        </div>        
-      )
+      return <div className={this.props.className}>{this.renderPreview()}</div>
     else
-      return(
-        <div className={this.props.className}>
-          {this.renderInputs()}
-        </div>        
-      )
+      return <div className={this.props.className}>{this.renderInputs()}</div>
   }
 }
 
