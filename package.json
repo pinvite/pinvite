@@ -37,7 +37,7 @@
     "develop": "gatsby develop",
     "format": "prettier --write src/**/*.ts src/**/*.tsx",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "tslint --fix src/**/*.{ts,tsx} -p tsconfig.json",
+    "lint": "tslint --fix src/**/*.ts src/**/*.tsx -p tsconfig.json",
     "tsc": "tsc"
   },
   "devDependencies": {

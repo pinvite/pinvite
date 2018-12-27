@@ -16,15 +16,12 @@ export interface OgpValues {
   readonly title: string
 }
 
-export function toOgpValues(
-  invitationInfo: InvitationInfo,
-  pageURL: string
-): OgpValues {
+export function toOgpValues(invitationInfo: InvitationInfo): OgpValues {
   return {
     twitterCard: invitationInfo.twitterCard,
     twitterSite: '@' + invitationInfo.twitterSiteOwnerId,
     twitterCreator: '@' + invitationInfo.twitterUserId,
-    ogURL: pageURL,
+    ogURL: invitationInfo.pageURL,
     ogTitle: invitationInfo.title,
     ogDescription: invitationInfo.details,
     ogImage: invitationInfo.imageURL,
