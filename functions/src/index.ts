@@ -104,7 +104,7 @@ function toInvitationInfo(
 ): InvitationInfo {
   return {
     twitterCard: 'summary_large_image',
-    twitterSite: '@orgpinvite',
+    twitterSiteOwnerId: 'orgpinvite',
     twitterUserId: twitterUserId,
     title: invitationRequest.title,
     details: invitationRequest.details,

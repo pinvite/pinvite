@@ -44,7 +44,6 @@ class Invitation extends React.Component<InvitationProps, OgpValues> {
   componentDidMount(){
     retrieveInvitation(this.props.firebaseUserId, this.props.invitationId)
       .then((invitationInfo) => {
-        console.log('s6dfs4f56dsf56ds564s5f4sd54f5sd45sd4f56d4s')
         if(window) {
           const pageURL = window.location.href
           const ogpValues = toOgpValues(invitationInfo, pageURL)

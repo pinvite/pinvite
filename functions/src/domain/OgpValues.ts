@@ -22,7 +22,7 @@ export function toOgpValues(
 ): OgpValues {
   return ({
     twitterCard: invitationInfo.twitterCard,
-    twitterSite: invitationInfo.twitterSite,
+    twitterSite: '@' + invitationInfo.twitterSiteOwnerId,
     twitterCreator: '@' + invitationInfo.twitterUserId,
     ogURL: pageURL,
     ogTitle: invitationInfo.title,

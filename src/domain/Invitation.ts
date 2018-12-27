@@ -3,7 +3,7 @@
 
 export interface InvitationInfo {
   readonly twitterCard: 'summary' | 'summary_large_image' | 'app' | 'player'
-  readonly twitterSite: '@orgpinvite'
+  readonly twitterSiteOwnerId: '@orgpinvite'
   readonly twitterUserId: string
   readonly title: string
   readonly details: string
@@ -17,7 +17,7 @@ export function isInvitationInfo(obj: any): obj is InvitationInfo {
   const promotion = obj as InvitationInfo
   return (
     promotion.twitterCard !== undefined
-    && promotion.twitterSite !== undefined
+    && promotion.twitterSiteOwnerId !== undefined
     && promotion.twitterUserId !== undefined
     && promotion.title !== undefined
     && promotion.details !== undefined
