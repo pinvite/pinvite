@@ -2,11 +2,13 @@ import React from 'react'
 import OgpMetaTags from '../Atoms/OgpMetaTags';
 import FullWidthImg from '../Atoms/FullWidthImage';
 import Details from '../Atoms/Details';
-import {toOgpValues, OgpValues} from '../../domain/OgpValues'
+import {toOgpValues, OgpValues, UninitializedOgpValues} from '../../domain/OgpValues'
 import {InvitationInfo, isInvitationInfo} from '../../domain/Invitation'
 import firebase, {firestore} from '../../utils/firebase'
+import ImageLoader from '../Molecules/ImageLoader';
 
 export interface InvitationProps {
+  previewImageURL: string
   firebaseUserId: string
   invitationId: string
 }
@@ -29,16 +31,7 @@ async function retrieveInvitation(
 class Invitation extends React.Component<InvitationProps, OgpValues> {
   constructor(props: InvitationProps){
     super(props)
-    this.state = {
-      twitterCard:    '*|twitter:card|*',
-      twitterSite:    '*|twitter:site|*',
-      twitterCreator: '*|twitter:creator|*',
-      ogURL:          '*|og:url|*',
-      ogTitle:        '*|og:title|*' ,
-      ogDescription:  '*|og:description|*',
-      ogImage:        '*|og:image|*',
-      title:          '*|title|*'
-    }
+    this.state = UninitializedOgpValues
   }
 
   componentDidMount(){
@@ -60,7 +53,10 @@ class Invitation extends React.Component<InvitationProps, OgpValues> {
         <OgpMetaTags
           {...this.state}
         />
-        <FullWidthImg src={this.state.ogURL} />
+        <ImageLoader
+          previewImageURL={this.props.previewImageURL}
+          imageURL={this.state.ogImage}
+        />
         <Details text={this.state.ogDescription}/>
       </React.Fragment>      
     )
