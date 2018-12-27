@@ -17,6 +17,7 @@ const Container = styled.div`
 `
 
 interface InvitationContainerProps extends RouteComponentProps {
+  previewImageURL: string
   firebaseUserId?: string
   invitationId?: string
 }
@@ -27,6 +28,7 @@ const InvitationContainer: React.SFC<InvitationContainerProps> = (props) => {
       <Invitation
         firebaseUserId={props.firebaseUserId}
         invitationId={props.invitationId}
+        previewImageURL={props.previewImageURL}
       />
     )
   } else {
@@ -36,7 +38,11 @@ const InvitationContainer: React.SFC<InvitationContainerProps> = (props) => {
   }
 }
 
-const Users: React.SFC<{}> = (props) =>
+export interface UsersProps {
+  previewImageURL: string
+}
+
+const Users: React.SFC<UsersProps> = (props) =>
   <Fragment>
     <Helmet>
       <title>pinvite</title>
@@ -66,7 +72,10 @@ const Users: React.SFC<{}> = (props) =>
               //   - gatsby-node.js to implement `onCreatePage`
               //   - gatsby-plugin-create-client-paths 
             }
-            <InvitationContainer path="/users/:firebaseUserId/invitations/:invitationId" />
+            <InvitationContainer 
+              path="/users/:firebaseUserId/invitations/:invitationId" 
+              previewImageURL={props.previewImageURL}
+            />
           </Router>
         </Container>
       </AuthStatusProvider>
