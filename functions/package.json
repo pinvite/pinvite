@@ -3,7 +3,7 @@
   "scripts": {
     "copyUsersPage": "copyfiles -f src/users/*.html lib/users",
     "lint": "tslint --project tsconfig.json",
-    "build": "tsc && npm run copyUsersPage",
+    "build": "tsc && lint && npm run copyUsersPage",
     "serve": "npm run build && firebase serve --only functions",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
