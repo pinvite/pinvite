@@ -32,3 +32,13 @@ export function toOgpValues(
   })
 }
   
+export const UninitializedOgpValues: OgpValues = {
+  twitterCard:    '*|twitter:card|*',
+  twitterSite:    '*|twitter:site|*',
+  twitterCreator: '*|twitter:creator|*',
+  ogURL:          '*|og:url|*',
+  ogTitle:        '*|og:title|*' ,
+  ogDescription:  '*|og:description|*',
+  ogImage:        '*|og:image|*',
+  title:          '*|title|*'
+}

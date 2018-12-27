@@ -7,6 +7,8 @@ import Invitation, {InvitationProps} from '../Organisms/Invitation'
 import MuiTheme from '../../theme/MuiTheme'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import { AuthStatusProvider } from '../../context/AuthStatusContext'
+import OgpMetaTags from '../Atoms/OgpMetaTags';
+import { UninitializedOgpValues } from '../../domain/OgpValues'
 
 const Container = styled.div`
   max-width: 600px;
@@ -56,6 +58,7 @@ const Users: React.SFC<{}> = (props) =>
       <AuthStatusProvider>
         <ApplicationBar />
         <Container>
+          <OgpMetaTags {...UninitializedOgpValues} />
           <Router>
             {
               // (https://www.gatsbyjs.org/docs/authentication-tutorial/#creating-client-only-routes)
