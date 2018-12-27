@@ -26,4 +26,3 @@ export function isInvitationInfo(obj: any): obj is InvitationInfo {
     && promotion.imageURL !== undefined
   )
 }
-

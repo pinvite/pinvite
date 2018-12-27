@@ -3,7 +3,7 @@
 
 export interface InvitationInfo {
   readonly twitterCard: 'summary' | 'summary_large_image' | 'app' | 'player'
-  readonly twitterSiteOwnerId: '@orgpinvite'
+  readonly twitterSiteOwnerId: 'orgpinvite'
   readonly twitterUserId: string
   readonly title: string
   readonly details: string

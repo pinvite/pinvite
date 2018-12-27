@@ -147,7 +147,7 @@ userApp.post('/users/:userId/invitations', async (request: express.Request, resp
       const invitationId = await storeInvitationInfo(firebaseUserId, invitationInfo)
       
       // https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
-      const pageURL = request.protocol + '://' + request.get('host') + request.originalUrl + "/" + invitationId;
+      const pageURL = request.protocol + '://' + request.hostname + request.originalUrl + "/" + invitationId;
       await tweet(twitterUserInfo, invitationInfo, pageURL)
       console.log('successfully tweeted')
       response.send('successfully tweeted')
@@ -170,7 +170,7 @@ const usersHtml = fs.readFileSync(__dirname + '/users/index.html', 'utf8')
 userApp.get('/users/:userId/invitations/:invitationId', async (request, response) => {
   try {
     const invitationInfo = await retrieveInvitationInfo(request.params.userId, request.params.invitationId)
-    const pageURL = request.protocol + '://' + request.get('host') + request.originalUrl;
+    const pageURL = request.protocol + '://' + request.hostname + request.originalUrl;
     const ogpValues = toOgpValues(invitationInfo, pageURL)
     // Twitter Cards and Open Graph at https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started.html
     const html = usersHtml
