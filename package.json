@@ -35,7 +35,7 @@
     "buildHosting": "gatsby build && npm run copyFilesToFunctions",
     "build": "gatsby build && npm run copyFilesToFunctions",
     "develop": "gatsby develop",
-    "format": "prettier --write '**/*.js'",
+    "format": "prettier --write src/**/*.ts src/**/*.tsx",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "tslint --fix src/**/*.{ts,tsx} -p tsconfig.json",
     "tsc": "tsc"

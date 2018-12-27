@@ -29,12 +29,12 @@ const MuiTheme = createMuiTheme({
       paper: '#000000',
     },
     text: {
-      primary: '#FFFFFF'
+      primary: '#FFFFFF',
     },
-    type: 'dark'
+    type: 'dark',
   },
   spacing: {
-    unit: 16
+    unit: 16,
   },
   // Check default values at
   // https://github.com/mui-org/material-ui/blob/master/packages/material-ui/src/styles/createTypography.js
