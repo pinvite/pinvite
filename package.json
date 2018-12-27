@@ -1,8 +1,8 @@
 {
-  "name": "gatsby-starter-default",
-  "description": "Gatsby default starter",
+  "name": "pinvite-web-site",
+  "description": "Pinvite web site",
   "version": "1.0.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Richard Imaoka <richard.e.imaoka@gmail.com>",
   "dependencies": {
     "@material-ui/core": "^3.7.0",
     "@types/reach__router": "^1.2.2",
@@ -28,11 +28,11 @@
     "whatwg-fetch": "^2.0.4"
   },
   "keywords": [
-    "gatsby"
   ],
-  "license": "MIT",
   "scripts": {
     "copyFilesToFunctions": "copyfiles -f public/users/*.html functions/src/users && copyfiles -f src/domain/*.ts functions/src/domain && copyfiles -f src/protocols/*.ts functions/src/protocols",
+    "buildFunctions": "cd functions && npm run build",
+    "buildHosting": "gatsby build && npm run copyFilesToFunctions",
     "build": "gatsby build && npm run copyFilesToFunctions",
     "develop": "gatsby develop",
     "format": "prettier --write '**/*.js'",
@@ -55,6 +55,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+    "url": "https://github.com/pinvite/pinvite"
   }
 }
