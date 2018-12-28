@@ -27,8 +27,7 @@
     "styled-components": "^4.0.2",
     "whatwg-fetch": "^2.0.4"
   },
-  "keywords": [
-  ],
+  "keywords": [],
   "scripts": {
     "copyFilesToFunctions": "copyfiles -f public/users/*.html functions/src/users && copyfiles -f src/domain/*.ts functions/src/domain && copyfiles -f src/protocols/*.ts functions/src/protocols",
     "buildFunctions": "cd functions && npm run build",
@@ -51,6 +50,7 @@
     "copyfiles": "^2.1.0",
     "prettier": "^1.14.2",
     "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.17.0",
     "typescript": "^3.2.1"
   },
   "repository": {
