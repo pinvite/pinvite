@@ -5,6 +5,7 @@
   "author": "Richard Imaoka <richard.e.imaoka@gmail.com>",
   "dependencies": {
     "@material-ui/core": "^3.7.0",
+    "@reach/router": "^1.2.1",
     "@types/reach__router": "^1.2.2",
     "cloudinary-core": "^2.5.0",
     "core-js": "^2.5.7",

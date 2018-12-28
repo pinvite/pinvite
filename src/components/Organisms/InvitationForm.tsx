@@ -91,8 +91,8 @@ class InvitationForm extends React.Component<
     const requestBody: InvitationRequest = {
       title,
       details,
-      time: parseInt(time),
-      moneyAmount: parseInt(moneyAmount),
+      time: parseInt(time, 10),
+      moneyAmount: parseInt(moneyAmount, 10),
       imageURL,
       origin: window.location.origin,
     }
@@ -127,16 +127,16 @@ class InvitationForm extends React.Component<
   }
 
   isErrorMoneyAmount(): boolean {
-    return parseInt(this.state.moneyAmount) < 0
+    return parseInt(this.state.moneyAmount, 10) < 0
   }
 
   isErrorTime(): boolean {
-    return parseInt(this.state.time) < 0
+    return parseInt(this.state.time, 10) < 0
   }
 
   isDisabledInput(): boolean {
     function isEmpty(input: string): boolean {
-      return input.length == 0
+      return input.length === 0
     }
     return (
       isEmpty(this.state.title) ||

@@ -31,7 +31,7 @@ export const CallToActionTop: React.SFC<CallToActionProp> = props => (
     <H3CenteredStyled description={props.description} />
     <AuthStatusContext.Consumer>
       {({ handleLogin, loginStatus }) => {
-        if (loginStatus == LoginStatus.ReadyToTweet) {
+        if (loginStatus === LoginStatus.ReadyToTweet) {
           return (
             <PrimaryButton
               text={props.jumpToButtonText}
@@ -60,7 +60,7 @@ export const CallToActionBottom: React.SFC<CallToActionProp> = props => (
     <H4LeftStyled description={props.description} />
     <AuthStatusContext.Consumer>
       {({ handleLogin, loginStatus }) => {
-        if (loginStatus == LoginStatus.ReadyToTweet) {
+        if (loginStatus === LoginStatus.ReadyToTweet) {
           return (
             <PrimaryButton
               text={props.jumpToButtonText}
