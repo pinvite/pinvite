@@ -52,9 +52,11 @@ function extractTwitterUserInfo(
   }
 
   // *** Actual logic ***
-  if (userCredential.user == null) { return null }
-  else if (userCredential.credential == null) { return null }
-  else if (
+  if (userCredential.user == null) {
+    return null
+  } else if (userCredential.credential == null) {
+    return null
+  } else if (
     // Trick to get around TypeScript compilation errors.
     // 'accessToken' and 'secret' exists in userCredentials.credential according to
     // https://firebase.google.com/docs/auth/web/twitter-login,
@@ -62,16 +64,14 @@ function extractTwitterUserInfo(
     !isTwitterCredential(userCredential.credential)
   ) {
     return null
-       }
-  else if (
+  } else if (
     // Similar trick to get around TypeScript complation errors.
     userCredential.additionalUserInfo == null ||
     userCredential.additionalUserInfo.profile == null ||
     !isTwitterScreenName(userCredential.additionalUserInfo.profile)
   ) {
     return null
-       }
-  else {
+  } else {
     return {
       userId: userCredential.additionalUserInfo.profile.screen_name,
       oauthToken: userCredential.credential.accessToken,

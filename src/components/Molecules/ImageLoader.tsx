@@ -34,8 +34,7 @@ class ImageLoader extends React.Component<ImageLoaderProps, LoadingState> {
           src={this.props.imageURL}
         />
       )
-    }
-    else {
+    } else {
       return (
         // Important to accept the className prop, to inject CSS margin from outside.
         // Only margin, no other CSS property from outside.

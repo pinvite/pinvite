@@ -30,8 +30,8 @@ const PrimaryButton: React.SFC<PrimaryButtonProps> = props => (
   // Only margin, no other CSS property from outside.
   <Atom className={props.className}>
     <ButtonStyled
-      variant='contained'
-      color='primary'
+      variant="contained"
+      color="primary"
       disabled={props.disabled}
       onClick={props.callback}
     >

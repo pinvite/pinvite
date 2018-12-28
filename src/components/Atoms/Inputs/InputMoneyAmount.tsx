@@ -21,17 +21,17 @@ export const InputMoneyAmount: React.SFC<InputFieldProps> = props => (
   // Only margin, no other CSS property from outside.
   <Atom className={props.className}>
     <TextField
-      variant='outlined'
-      type='number'
-      margin='none'
+      variant="outlined"
+      type="number"
+      margin="none"
       InputProps={{
         // style={{marginTop: 0}} is some hack to correct styling,
         // as the `position` attribute is required but that adds a weird `margin-top: 16px` styling
         startAdornment: (
           <InputAdornmentStyled
             style={{ marginTop: 0 }}
-            variant='filled'
-            position='start'
+            variant="filled"
+            position="start"
           >
             ¥
           </InputAdornmentStyled>

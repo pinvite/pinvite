@@ -40,8 +40,7 @@ export const CallToActionTop: React.SFC<CallToActionProp> = props => (
               }}
             />
           )
-        }
-        else {
+        } else {
           return (
             <PrimaryButton
               text={props.registerButtonText}
@@ -70,8 +69,7 @@ export const CallToActionBottom: React.SFC<CallToActionProp> = props => (
               }}
             />
           )
-        }
-        else {
+        } else {
           return (
             <PrimaryButton
               text={props.registerButtonText}

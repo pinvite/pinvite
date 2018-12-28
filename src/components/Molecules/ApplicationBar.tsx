@@ -10,7 +10,7 @@ export interface ApplicationBarProps {
 const ApplicationBar: React.SFC<ApplicationBarProps> = props => (
   // Important to accept the className prop, to inject CSS margin from outside.
   // Only margin, no other CSS property from outside.
-  <AppBar className={props.className} color='secondary' position='relative'>
+  <AppBar className={props.className} color="secondary" position="relative">
     <AppName
       onClick={() => {
         navigate('/')

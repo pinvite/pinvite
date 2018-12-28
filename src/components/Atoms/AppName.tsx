@@ -20,7 +20,7 @@ const AppName: React.SFC<AppNameProps> = props => (
   // Important to accept the className prop, to inject CSS margin from outside.
   // Only margin, no other CSS property from outside.
   <Atom className={props.className} onClick={props.onClick}>
-    <TypographyStyled variant='h3'>pinvite</TypographyStyled>
+    <TypographyStyled variant="h3">pinvite</TypographyStyled>
   </Atom>
 )
 

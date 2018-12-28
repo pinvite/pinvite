@@ -8,8 +8,8 @@ export const InputDetails: React.SFC<InputFieldProps> = props => (
   // Only margin, no other CSS property from outside.
   <Atom className={props.className}>
     <TextField
-      variant='outlined'
-      margin='none'
+      variant="outlined"
+      margin="none"
       fullWidth
       multiline
       rows={10}

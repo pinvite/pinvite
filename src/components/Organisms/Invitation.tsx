@@ -28,8 +28,11 @@ async function retrieveInvitation(
     .get()
 
   const invitation = snapshot.data()
-  if (isInvitationInfo(invitation)) { return invitation }
-  else { throw new Error('Failed to retrieve invitation') }
+  if (isInvitationInfo(invitation)) {
+    return invitation
+  } else {
+    throw new Error('Failed to retrieve invitation')
+  }
 }
 
 class Invitation extends React.Component<InvitationProps, OgpValues> {

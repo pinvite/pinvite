@@ -45,18 +45,18 @@ const Users: React.SFC<UsersProps> = props => (
     <Helmet>
       <title>pinvite</title>
       <link
-        href='https://fonts.googleapis.com/css?family=Molle:400i'
-        rel='stylesheet'
+        href="https://fonts.googleapis.com/css?family=Molle:400i"
+        rel="stylesheet"
       />
       <link
-        href='https://fonts.googleapis.com/css?family=Noto+Sans+JP'
-        rel='stylesheet'
+        href="https://fonts.googleapis.com/css?family=Noto+Sans+JP"
+        rel="stylesheet"
       />
       <link
-        href='https://fonts.googleapis.com/icon?family=Material+Icons'
-        rel='stylesheet'
+        href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet"
       />
-      <style type='text/css'>{// !!! Do not add anything else other than body's margin and background-color below !!!
+      <style type="text/css">{// !!! Do not add anything else other than body's margin and background-color below !!!
       // All CSS should live inside React components.
       // but <body>'s margin is the only exception as it is not a React component.
       // By default the <body> element has margin, which we want to disable.
@@ -78,7 +78,7 @@ const Users: React.SFC<UsersProps> = props => (
               //   - gatsby-plugin-create-client-paths
             }
             <InvitationContainer
-              path='/users/:firebaseUserId/invitations/:invitationId'
+              path="/users/:firebaseUserId/invitations/:invitationId"
               previewImageURL={props.previewImageURL}
             />
           </Router>

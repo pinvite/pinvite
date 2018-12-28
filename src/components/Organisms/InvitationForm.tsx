@@ -230,8 +230,7 @@ class InvitationForm extends React.Component<
   render() {
     if (this.state.preview) {
       return <div className={this.props.className}>{this.renderPreview()}</div>
-    }
-    else {
+    } else {
       return <div className={this.props.className}>{this.renderInputs()}</div>
     }
   }
