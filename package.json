@@ -5,6 +5,7 @@
   "author": "Richard Imaoka <richard.e.imaoka@gmail.com>",
   "dependencies": {
     "@material-ui/core": "^3.7.0",
+    "@reach/router": "^1.2.1",
     "@types/reach__router": "^1.2.2",
     "cloudinary-core": "^2.5.0",
     "core-js": "^2.5.7",
@@ -27,8 +28,7 @@
     "styled-components": "^4.0.2",
     "whatwg-fetch": "^2.0.4"
   },
-  "keywords": [
-  ],
+  "keywords": [],
   "scripts": {
     "copyFilesToFunctions": "copyfiles -f public/users/*.html functions/src/users && copyfiles -f src/domain/*.ts functions/src/domain && copyfiles -f src/protocols/*.ts functions/src/protocols",
     "buildFunctions": "cd functions && npm run build",
@@ -50,7 +50,9 @@
     "@types/styled-components": "^4.1.2",
     "copyfiles": "^2.1.0",
     "prettier": "^1.14.2",
+    "prettierrc": "0.0.0-5",
     "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.17.0",
     "typescript": "^3.2.1"
   },
   "repository": {

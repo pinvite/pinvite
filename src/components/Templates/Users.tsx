@@ -1,14 +1,14 @@
+import { MuiThemeProvider } from '@material-ui/core/styles'
+import { RouteComponentProps, Router } from '@reach/router'
 import React, { Fragment } from 'react'
 import Helmet from 'react-helmet'
-import { Router, RouteComponentProps } from '@reach/router'
 import styled from 'styled-components'
+import { AuthStatusProvider } from '../../context/AuthStatusContext'
+import { UninitializedOgpValues } from '../../domain/OgpValues'
+import MuiTheme from '../../theme/MuiTheme'
+import OgpMetaTags from '../Atoms/OgpMetaTags'
 import ApplicationBar from '../Molecules/ApplicationBar'
 import Invitation, { InvitationProps } from '../Organisms/Invitation'
-import MuiTheme from '../../theme/MuiTheme'
-import { MuiThemeProvider } from '@material-ui/core/styles'
-import { AuthStatusProvider } from '../../context/AuthStatusContext'
-import OgpMetaTags from '../Atoms/OgpMetaTags'
-import { UninitializedOgpValues } from '../../domain/OgpValues'
 
 const Container = styled.div`
   max-width: 600px;

@@ -1,5 +1,5 @@
-import React from 'react'
 import TextField from '@material-ui/core/TextField'
+import React from 'react'
 import Atom from '../Atom'
 import { InputFieldProps } from './InputFieldProps'
 
@@ -18,9 +18,10 @@ export const InputTitle: React.SFC<InputFieldProps> = props => (
       helperText={props.helperText}
       error={props.error}
       onChange={event => {
-        if (props.onChange)
+        if (props.onChange) {
           // the onChange callback is optional, so call it only when it exists
           props.onChange(event.currentTarget.value)
+        }
       }}
     />
   </Atom>

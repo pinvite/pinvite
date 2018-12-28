@@ -1,8 +1,8 @@
 import React from 'react'
 import firebase, {
   firebaseLogin,
-  makeSureTwitterUserInfoStored,
   FirebaseUserInfo,
+  makeSureTwitterUserInfoStored,
 } from '../utils/firebase'
 
 export enum LoginStatus {

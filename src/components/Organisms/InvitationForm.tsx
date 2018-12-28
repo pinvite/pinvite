@@ -1,11 +1,11 @@
 import React from 'react'
-import InviteInputs from '../Molecules/InviteInputs'
-import InviteBottom from '../Molecules/InviteBottom'
-import PreviewBottom from '../Molecules/PreviewBottom'
-import ImageLoader from '../Molecules/ImageLoader'
-import { cloudinaryImageUrl } from '../../utils/cloudinary'
 import { AuthStatusContext } from '../../context/AuthStatusContext'
 import { InvitationRequest } from '../../protocols/InvitationRequest'
+import { cloudinaryImageUrl } from '../../utils/cloudinary'
+import ImageLoader from '../Molecules/ImageLoader'
+import InviteBottom from '../Molecules/InviteBottom'
+import InviteInputs from '../Molecules/InviteInputs'
+import PreviewBottom from '../Molecules/PreviewBottom'
 
 const spinnerImageURL =
   'https://res.cloudinary.com/pinvite/image/upload/v1543695206/spinner.gif'
@@ -89,11 +89,11 @@ class InvitationForm extends React.Component<
     imageURL: string
   ) {
     const requestBody: InvitationRequest = {
-      title: title,
-      details: details,
-      time: parseInt(time),
-      moneyAmount: parseInt(moneyAmount),
-      imageURL: imageURL,
+      title,
+      details,
+      time: parseInt(time, 10),
+      moneyAmount: parseInt(moneyAmount, 10),
+      imageURL,
       origin: window.location.origin,
     }
     const url = '/users/' + userId + '/invitations'
@@ -127,16 +127,16 @@ class InvitationForm extends React.Component<
   }
 
   isErrorMoneyAmount(): boolean {
-    return parseInt(this.state.moneyAmount) < 0
+    return parseInt(this.state.moneyAmount, 10) < 0
   }
 
   isErrorTime(): boolean {
-    return parseInt(this.state.time) < 0
+    return parseInt(this.state.time, 10) < 0
   }
 
   isDisabledInput(): boolean {
     function isEmpty(input: string): boolean {
-      return input.length == 0
+      return input.length === 0
     }
     return (
       isEmpty(this.state.title) ||
@@ -228,10 +228,11 @@ class InvitationForm extends React.Component<
   }
 
   render() {
-    if (this.state.preview)
+    if (this.state.preview) {
       return <div className={this.props.className}>{this.renderPreview()}</div>
-    else
+    } else {
       return <div className={this.props.className}>{this.renderInputs()}</div>
+    }
   }
 }
 

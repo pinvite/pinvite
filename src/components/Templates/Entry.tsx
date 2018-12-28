@@ -1,11 +1,11 @@
+import { MuiThemeProvider } from '@material-ui/core/styles'
 import React, { Fragment } from 'react'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
+import { AuthStatusProvider } from '../../context/AuthStatusContext'
+import MuiTheme from '../../theme/MuiTheme'
 import ApplicationBar from '../Molecules/ApplicationBar'
 import InvitationForm from '../Organisms/InvitationForm'
-import MuiTheme from '../../theme/MuiTheme'
-import { MuiThemeProvider } from '@material-ui/core/styles'
-import { AuthStatusProvider } from '../../context/AuthStatusContext'
 
 export interface InviteProps {
   inputTitleLabel: string

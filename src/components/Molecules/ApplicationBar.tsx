@@ -1,7 +1,7 @@
-import React from 'react'
 import AppBar from '@material-ui/core/AppBar'
-import AppName from '../Atoms/AppName'
 import { navigate } from 'gatsby'
+import React from 'react'
+import AppName from '../Atoms/AppName'
 
 export interface ApplicationBarProps {
   className?: string // allow styled-components to inject CSS margin from outside. Only margin, no other CSS property from outside.
