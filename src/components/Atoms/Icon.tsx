@@ -1,8 +1,8 @@
 import MuiIcon, { IconProps } from '@material-ui/core/Icon'
 import React from 'react'
 import styled from 'styled-components'
-import Atom from './Atom'
 import MuiTheme from '../../theme/MuiTheme'
+import Atom from './Atom'
 
 export interface IconProps {
   className?: string // allow styled-components to inject CSS margin from outside. Only margin, no other CSS property from outside.

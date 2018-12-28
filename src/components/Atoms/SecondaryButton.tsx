@@ -30,9 +30,9 @@ const SecondaryButton: React.SFC<SecondaryButtonProps> = props => (
   // Only margin, no other CSS property from outside.
   <Atom className={props.className}>
     <ButtonStyled
-      variant="outlined"
-      color="default"
-      size="large"
+      variant='outlined'
+      color='default'
+      size='large'
       disabled={props.disabled}
       onClick={props.callback}
     >

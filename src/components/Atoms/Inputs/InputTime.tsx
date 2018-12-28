@@ -1,9 +1,9 @@
-import React from 'react'
-import styled from 'styled-components'
-import TextField from '@material-ui/core/TextField'
 import InputAdornment, {
   InputAdornmentProps,
 } from '@material-ui/core/InputAdornment'
+import TextField from '@material-ui/core/TextField'
+import React from 'react'
+import styled from 'styled-components'
 import Atom from '../Atom'
 import { InputFieldProps } from './InputFieldProps'
 
@@ -20,12 +20,12 @@ export const InputTime: React.SFC<InputFieldProps> = props => (
   // Only margin, no other CSS property from outside.
   <Atom className={props.className}>
     <TextField
-      variant="outlined"
-      margin="none"
-      type="number"
+      variant='outlined'
+      margin='none'
+      type='number'
       InputProps={{
         endAdornment: (
-          <InputAdornmentStyled variant="filled" position="end">
+          <InputAdornmentStyled variant='filled' position='end'>
             時間
           </InputAdornmentStyled>
         ),
@@ -35,9 +35,10 @@ export const InputTime: React.SFC<InputFieldProps> = props => (
       helperText={props.helperText}
       error={props.error}
       onChange={event => {
-        if (props.onChange)
+        if (props.onChange) {
           // the onChange callback is optional, so call it only when it exists
           props.onChange(event.currentTarget.value)
+        }
       }}
     />
   </Atom>

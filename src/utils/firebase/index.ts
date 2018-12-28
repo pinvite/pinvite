@@ -1,7 +1,7 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
-import { TwitterUserInfo, isTwitterUserInfo } from '../../domain/Twitter'
+import { isTwitterUserInfo, TwitterUserInfo } from '../../domain/Twitter'
 
 firebase.initializeApp({
   apiKey: 'AIzaSyB0wAwkW0DAfyKT7bkhLuQ3IeMPD_ykNUQ',
@@ -52,23 +52,25 @@ function extractTwitterUserInfo(
   }
 
   // *** Actual logic ***
-  if (userCredential.user == null) return null
-  else if (userCredential.credential == null) return null
+  if (userCredential.user == null) { return null }
+  else if (userCredential.credential == null) { return null }
   else if (
     // Trick to get around TypeScript compilation errors.
     // 'accessToken' and 'secret' exists in userCredentials.credential according to
     // https://firebase.google.com/docs/auth/web/twitter-login,
     // but Firebase Auth's type UserCredential doesn't express the existence of them
     !isTwitterCredential(userCredential.credential)
-  )
+  ) {
     return null
+       }
   else if (
     // Similar trick to get around TypeScript complation errors.
     userCredential.additionalUserInfo == null ||
     userCredential.additionalUserInfo.profile == null ||
     !isTwitterScreenName(userCredential.additionalUserInfo.profile)
-  )
+  ) {
     return null
+       }
   else {
     return {
       userId: userCredential.additionalUserInfo.profile.screen_name,

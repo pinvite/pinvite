@@ -1,10 +1,10 @@
 import React from 'react'
 import {
-  InputTitle,
   InputDetails,
+  InputFieldProps,
   InputMoneyAmount,
   InputTime,
-  InputFieldProps,
+  InputTitle,
 } from '../Atoms/Inputs'
 
 export interface InviteInputsProps {

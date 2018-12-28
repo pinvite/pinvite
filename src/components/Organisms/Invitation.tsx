@@ -1,13 +1,13 @@
 import React from 'react'
-import OgpMetaTags from '../Atoms/OgpMetaTags'
-import Details from '../Atoms/Details'
+import { InvitationInfo, isInvitationInfo } from '../../domain/Invitation'
 import {
-  toOgpValues,
   OgpValues,
+  toOgpValues,
   UninitializedOgpValues,
 } from '../../domain/OgpValues'
-import { InvitationInfo, isInvitationInfo } from '../../domain/Invitation'
 import firebase, { firestore } from '../../utils/firebase'
+import Details from '../Atoms/Details'
+import OgpMetaTags from '../Atoms/OgpMetaTags'
 import ImageLoader from '../Molecules/ImageLoader'
 
 export interface InvitationProps {
@@ -28,8 +28,8 @@ async function retrieveInvitation(
     .get()
 
   const invitation = snapshot.data()
-  if (isInvitationInfo(invitation)) return invitation
-  else throw new Error('Failed to retrieve invitation')
+  if (isInvitationInfo(invitation)) { return invitation }
+  else { throw new Error('Failed to retrieve invitation') }
 }
 
 class Invitation extends React.Component<InvitationProps, OgpValues> {

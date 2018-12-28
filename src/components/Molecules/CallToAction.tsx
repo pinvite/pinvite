@@ -1,9 +1,9 @@
+import { navigate } from 'gatsby'
 import React, { Fragment } from 'react'
 import styled from 'styled-components'
+import { AuthStatusContext, LoginStatus } from '../../context/AuthStatusContext'
 import { DescriptionProps, H3Centered, H4Left } from '../Atoms/Description'
 import PrimaryButton, { PrimaryButtonProps } from '../Atoms/PrimaryButton'
-import { AuthStatusContext, LoginStatus } from '../../context/AuthStatusContext'
-import { navigate } from 'gatsby'
 
 export interface CallToActionProp {
   description: React.ReactNode
@@ -31,7 +31,7 @@ export const CallToActionTop: React.SFC<CallToActionProp> = props => (
     <H3CenteredStyled description={props.description} />
     <AuthStatusContext.Consumer>
       {({ handleLogin, loginStatus }) => {
-        if (loginStatus == LoginStatus.ReadyToTweet)
+        if (loginStatus == LoginStatus.ReadyToTweet) {
           return (
             <PrimaryButton
               text={props.jumpToButtonText}
@@ -40,13 +40,15 @@ export const CallToActionTop: React.SFC<CallToActionProp> = props => (
               }}
             />
           )
-        else
+        }
+        else {
           return (
             <PrimaryButton
               text={props.registerButtonText}
               callback={handleLogin}
             />
           )
+        }
       }}
     </AuthStatusContext.Consumer>
   </div>
@@ -59,7 +61,7 @@ export const CallToActionBottom: React.SFC<CallToActionProp> = props => (
     <H4LeftStyled description={props.description} />
     <AuthStatusContext.Consumer>
       {({ handleLogin, loginStatus }) => {
-        if (loginStatus == LoginStatus.ReadyToTweet)
+        if (loginStatus == LoginStatus.ReadyToTweet) {
           return (
             <PrimaryButton
               text={props.jumpToButtonText}
@@ -68,13 +70,15 @@ export const CallToActionBottom: React.SFC<CallToActionProp> = props => (
               }}
             />
           )
-        else
+        }
+        else {
           return (
             <PrimaryButton
               text={props.registerButtonText}
               callback={handleLogin}
             />
           )
+        }
       }}
     </AuthStatusContext.Consumer>
   </div>
