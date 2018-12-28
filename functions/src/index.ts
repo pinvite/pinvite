@@ -96,8 +96,7 @@ async function retrieveTwitterUserInfo(firebaseUserId: string): Promise<TwitterU
 
 async function tweet(
   twitterUserInfo: TwitterUserInfo,
-  invitationInfo: InvitationInfo,
-  pageURL: string
+  invitationInfo: InvitationInfo
 ): Promise<{}> {
   const tweetData = new Twit({
     consumer_key:        twitterApiKey,
@@ -105,11 +104,11 @@ async function tweet(
     access_token:        twitterUserInfo.oauthToken,
     access_token_secret: twitterUserInfo.oauthTokenSecret,
   })
-  return tweetData.post('statuses/update', { status: invitationInfo.title + " #pinvite\n" + pageURL })  
+  return tweetData.post('statuses/update', { status: invitationInfo.title + " #pinvite\n" + invitationInfo.pageURL })  
 }
 
 function toPageURL(origin: string, firebaseUserId: string, invitationId: string): string {
-  return origin + "/" + firebaseUserId + "/" + invitationId
+  return origin + "/users/" + firebaseUserId + "/invitations/" + invitationId
 }
 
 function toInvitationInfo(
@@ -165,8 +164,7 @@ userApp.post('/users/:userId/invitations', async (request: express.Request, resp
       await storeInvitationInfo(firebaseUserId, invitationId, invitationInfo)
       
       // https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
-      const pageURL = request.protocol + '://' + request.hostname + request.originalUrl + "/" + invitationId;
-      await tweet(twitterUserInfo, invitationInfo, pageURL)
+      await tweet(twitterUserInfo, invitationInfo)
       console.log('successfully tweeted')
       response.send('successfully tweeted')
       return
