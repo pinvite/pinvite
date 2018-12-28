@@ -46,7 +46,7 @@ class Invitation extends React.Component<InvitationProps, OgpValues> {
       .then(invitationInfo => {
         if (window) {
           const pageURL = window.location.href
-          const ogpValues = toOgpValues(invitationInfo, pageURL)
+          const ogpValues = toOgpValues(invitationInfo)
           this.setState(ogpValues)
         }
       })

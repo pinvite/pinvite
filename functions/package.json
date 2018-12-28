@@ -2,13 +2,15 @@
   "name": "functions",
   "scripts": {
     "copyUsersPage": "copyfiles -f src/users/*.html lib/users",
-    "lint": "tslint --project tsconfig.json",
-    "build": "tsc && npm run lint && npm run copyUsersPage",
+    "lint": "tslint --fix --project tsconfig.json",
+    "build": "npm run tsc && npm run format && npm run lint && npm run copyUsersPage",
+    "format": "prettier --write src/**/*.ts src/**/*.tsx",
     "serve": "npm run build && firebase serve --only functions",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
-    "logs": "firebase functions:log"
+    "logs": "firebase functions:log",
+    "tsc": "tsc"
   },
   "main": "lib/index.js",
   "dependencies": {
@@ -21,8 +23,11 @@
   },
   "devDependencies": {
     "copyfiles": "^2.1.0",
+    "prettier": "^1.15.3",
+    "prettierrc": "0.0.0-5",
     "tslint": "~5.8.0",
-    "typescript": "~2.8.3"
+    "tslint-config-prettier": "^1.17.0",
+    "typescript": "^3.2.2"
   },
   "private": true
 }
