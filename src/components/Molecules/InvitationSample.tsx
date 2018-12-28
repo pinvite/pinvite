@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
+import MuiTheme from '../../theme/MuiTheme'
 import { H6Left } from '../Atoms/Description'
 import FullWidthImage, { FullWidthImageProps } from '../Atoms/FullWidthImage'
-import MuiTheme from '../../theme/MuiTheme'
 
 export interface InvitationSampleProps {
   src: string

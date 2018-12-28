@@ -94,6 +94,7 @@ class InvitationForm extends React.Component<
       time: parseInt(time),
       moneyAmount: parseInt(moneyAmount),
       imageURL: imageURL,
+      origin: window.location.origin,
     }
     const url = '/users/' + userId + '/invitations'
 

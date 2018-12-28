@@ -10,6 +10,7 @@ export interface InvitationInfo {
   readonly time: number
   readonly moneyAmount: number
   readonly imageURL: string
+  readonly pageURL: string
 }
 
 export function isInvitationInfo(obj: any): obj is InvitationInfo {
@@ -26,4 +27,3 @@ export function isInvitationInfo(obj: any): obj is InvitationInfo {
     && promotion.imageURL !== undefined
   )
 }
-

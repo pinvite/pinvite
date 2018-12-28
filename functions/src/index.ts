@@ -49,14 +49,24 @@ async function extractFirebaseUserIdToken(request: express.Request): Promise<str
   }
 }
 
-async function storeInvitationInfo(
-  firebaseUserId: string,
-  invitationInfo: InvitationInfo
+async function allocateInvitationInfo(
+  firebaseUserId: string
 ): Promise<string> {
   const result = await firestore
     .collection('users').doc(firebaseUserId)
-    .collection('invitations').add(invitationInfo)
+    .collection('invitations').add({})
   return result.id
+}
+
+async function storeInvitationInfo(
+  firebaseUserId: string,
+  invitationId: string,
+  invitationInfo: InvitationInfo
+): Promise<{}> {
+  const result = await firestore
+    .collection('users').doc(firebaseUserId)
+    .collection('invitations').doc(invitationId).set(invitationInfo)
+  return result
 }
 
 async function retrieveInvitationInfo(
@@ -86,8 +96,7 @@ async function retrieveTwitterUserInfo(firebaseUserId: string): Promise<TwitterU
 
 async function tweet(
   twitterUserInfo: TwitterUserInfo,
-  invitationInfo: InvitationInfo,
-  pageURL: string
+  invitationInfo: InvitationInfo
 ): Promise<{}> {
   const tweetData = new Twit({
     consumer_key:        twitterApiKey,
@@ -95,12 +104,18 @@ async function tweet(
     access_token:        twitterUserInfo.oauthToken,
     access_token_secret: twitterUserInfo.oauthTokenSecret,
   })
-  return tweetData.post('statuses/update', { status: invitationInfo.title + " #pinvite\n" + pageURL })  
+  return tweetData.post('statuses/update', { status: invitationInfo.title + " #pinvite\n" + invitationInfo.pageURL })  
+}
+
+function toPageURL(origin: string, firebaseUserId: string, invitationId: string): string {
+  return origin + "/users/" + firebaseUserId + "/invitations/" + invitationId
 }
 
 function toInvitationInfo(
   invitationRequest: InvitationRequest,
-  twitterUserId: string
+  twitterUserId: string,
+  firebaseUserId: string,
+  invitationId: string
 ): InvitationInfo {
   return {
     twitterCard: 'summary_large_image',
@@ -110,7 +125,8 @@ function toInvitationInfo(
     details: invitationRequest.details,
     time: invitationRequest.time,
     moneyAmount: invitationRequest.moneyAmount,
-    imageURL: invitationRequest.imageURL
+    imageURL: invitationRequest.imageURL,
+    pageURL: toPageURL(invitationRequest.origin, firebaseUserId, invitationId)
   }
 }
 
@@ -143,12 +159,12 @@ userApp.post('/users/:userId/invitations', async (request: express.Request, resp
     // get stored user Twitter credentials, store tweet information to Firease, and tweet
     try {
       const twitterUserInfo = await retrieveTwitterUserInfo(firebaseUserId)
-      const invitationInfo = toInvitationInfo(invitationRequest, twitterUserInfo.userId)
-      const invitationId = await storeInvitationInfo(firebaseUserId, invitationInfo)
+      const invitationId = await allocateInvitationInfo(firebaseUserId)
+      const invitationInfo = toInvitationInfo(invitationRequest, twitterUserInfo.userId, firebaseUserId, invitationId)
+      await storeInvitationInfo(firebaseUserId, invitationId, invitationInfo)
       
       // https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
-      const pageURL = request.protocol + '://' + request.get('host') + request.originalUrl + "/" + invitationId;
-      await tweet(twitterUserInfo, invitationInfo, pageURL)
+      await tweet(twitterUserInfo, invitationInfo)
       console.log('successfully tweeted')
       response.send('successfully tweeted')
       return
@@ -170,8 +186,7 @@ const usersHtml = fs.readFileSync(__dirname + '/users/index.html', 'utf8')
 userApp.get('/users/:userId/invitations/:invitationId', async (request, response) => {
   try {
     const invitationInfo = await retrieveInvitationInfo(request.params.userId, request.params.invitationId)
-    const pageURL = request.protocol + '://' + request.get('host') + request.originalUrl;
-    const ogpValues = toOgpValues(invitationInfo, pageURL)
+    const ogpValues = toOgpValues(invitationInfo)
     // Twitter Cards and Open Graph at https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started.html
     const html = usersHtml
       .replace('*|twitter:card|*',    ogpValues.twitterCard)

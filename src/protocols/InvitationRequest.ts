@@ -7,6 +7,7 @@ export interface InvitationRequest {
   readonly time: number
   readonly moneyAmount: number
   readonly imageURL: string
+  readonly origin: string // window.location.origin, eg. https://pinvite.fun http://localhost:5000
 }
 
 export function isInvitationRequest(obj: any): obj is InvitationRequest {
@@ -17,6 +18,7 @@ export function isInvitationRequest(obj: any): obj is InvitationRequest {
     promotion.details !== undefined &&
     promotion.time !== undefined &&
     promotion.moneyAmount !== undefined &&
-    promotion.imageURL !== undefined
+    promotion.imageURL !== undefined &&
+    promotion.origin !== undefined
   )
 }

@@ -33,11 +33,11 @@
     "copyFilesToFunctions": "copyfiles -f public/users/*.html functions/src/users && copyfiles -f src/domain/*.ts functions/src/domain && copyfiles -f src/protocols/*.ts functions/src/protocols",
     "buildFunctions": "cd functions && npm run build",
     "buildHosting": "gatsby build && npm run copyFilesToFunctions",
-    "build": "gatsby build && npm run copyFilesToFunctions",
+    "build": "npm run buildHosting && npm run buildFunctions",
     "develop": "gatsby develop",
     "format": "prettier --write src/**/*.ts src/**/*.tsx",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "tslint --fix src/**/*.{ts,tsx} -p tsconfig.json",
+    "lint": "tslint --fix src/**/*.ts src/**/*.tsx -p tsconfig.json",
     "tsc": "tsc"
   },
   "devDependencies": {
