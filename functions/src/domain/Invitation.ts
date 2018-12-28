@@ -17,13 +17,13 @@ export function isInvitationInfo(obj: any): obj is InvitationInfo {
   // User-defined Type Guards at https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards
   const promotion = obj as InvitationInfo
   return (
-    promotion.twitterCard !== undefined
-    && promotion.twitterSiteOwnerId !== undefined
-    && promotion.twitterUserId !== undefined
-    && promotion.title !== undefined
-    && promotion.details !== undefined
-    && promotion.time !== undefined
-    && promotion.moneyAmount !== undefined
-    && promotion.imageURL !== undefined
+    promotion.twitterCard !== undefined &&
+    promotion.twitterSiteOwnerId !== undefined &&
+    promotion.twitterUserId !== undefined &&
+    promotion.title !== undefined &&
+    promotion.details !== undefined &&
+    promotion.time !== undefined &&
+    promotion.moneyAmount !== undefined &&
+    promotion.imageURL !== undefined
   )
 }

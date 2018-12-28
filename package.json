@@ -33,7 +33,7 @@
     "copyFilesToFunctions": "copyfiles -f public/users/*.html functions/src/users && copyfiles -f src/domain/*.ts functions/src/domain && copyfiles -f src/protocols/*.ts functions/src/protocols",
     "buildFunctions": "cd functions && npm run build",
     "buildHosting": "gatsby build && npm run copyFilesToFunctions",
-    "build": "npm run buildHosting && npm run buildFunctions",
+    "build": "npm run tsc && npm run format && npm run lint && npm run buildHosting && npm run buildFunctions",
     "develop": "gatsby develop",
     "format": "prettier --write src/**/*.ts src/**/*.tsx",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -53,7 +53,7 @@
     "prettierrc": "0.0.0-5",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.17.0",
-    "typescript": "^3.2.1"
+    "typescript": "^3.2.2"
   },
   "repository": {
     "type": "git",
