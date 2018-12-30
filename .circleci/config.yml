@@ -1,6 +1,9 @@
 version: 2
 jobs:
   build:
+    branches:
+      only:
+        - master
     docker:
       # https://circleci.com/docs/2.0/language-javascript/#pre-built-circleci-docker-images
       # > We recommend using a CircleCI pre-built image ...
@@ -18,3 +21,8 @@ jobs:
       - run:
           name: Build
           command: npm run build
+      - run:
+          name: Deploy
+          command: npx firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
+
+      
