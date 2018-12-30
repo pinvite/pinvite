@@ -1,0 +1,8 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+      // This is needed because the parent ../tsconfig.json has noEmit=true due to gatsby
+      // not using transpiled .js files but gatsby can use TypeScript only for type checking
+      "noEmit": false
+  }      
+}
