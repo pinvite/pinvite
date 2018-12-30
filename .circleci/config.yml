@@ -7,8 +7,14 @@ jobs:
       # https://circleci.com/docs/2.0/circleci-images/#best-practices
       # > It is best practice to lock down aspects of your build container by specifying an additional tag to pin down the image in your configuration.
       - image: circleci/node:10.13.0
-      
-    working_directory: ~/pinvite
-
     steps:
       - checkout
+      - run:
+          name: Install
+          command: npm ci
+      - run:
+          name: Install Functions
+          command: cd functions && npm ci
+      - run:
+          name: Build
+          command: npm run build
