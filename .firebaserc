@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "pinvite-app"
+    "_doc": "https://firebase.google.com/docs/cli/#use_project_aliases",
+    "_comment": "In general, you should check your .firebaserc file into source control. This allows your team to share common project aliases. However, for open source projects or starter templates, you should generally not check in the .firebaserc file.",
+    "production": "pinvite-app",
+    "staging": "pinvite-staging"
   }
 }
