@@ -53,7 +53,7 @@ workflows:
       - deploy_staging:
           filters:
             branches:
-              ignore: master
+              only: staging
       - deploy_production:
           filters:
             branches:
