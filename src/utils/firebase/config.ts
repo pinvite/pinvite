@@ -1,4 +1,4 @@
-// Upon CircleCI build, this is replaced by either prod.config.js or staging.config.js
+// Upon CircleCI build, this is replaced by either config.prod.ts or config.staging.ts
 const config = {
   apiKey: 'AIzaSyCoTI_OMjpAo-fqAWSWKWPFqNe2tsJVm1A',
   authDomain: 'pinvite-staging.firebaseapp.com',

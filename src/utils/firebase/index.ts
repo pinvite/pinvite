@@ -5,6 +5,10 @@ import { isTwitterUserInfo, TwitterUserInfo } from '../../domain/Twitter'
 import config from './config'
 
 firebase.initializeApp(config)
+if (typeof console !== 'undefined') {
+  console.log('Initializing Firebase Client as:')
+  console.log(config)
+}
 
 export const providerGoogle = new firebase.auth.GoogleAuthProvider()
 export const providerFacebook = new firebase.auth.FacebookAuthProvider()
