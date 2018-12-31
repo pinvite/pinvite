@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  deploy_staging:
     docker:
       # https://circleci.com/docs/2.0/language-javascript/#pre-built-circleci-docker-images
       # > We recommend using a CircleCI pre-built image ...
@@ -10,19 +10,27 @@ jobs:
       - image: circleci/node:10.13.0
     steps:
       - checkout
+      - restore_cache:
+          key: v1-hosting-npm-deps-{{ checksum "package-lock.json" }}
       - run:
           name: Install
           command: npm ci
+      - save_cache:
+          key: v1-hosting-npm-deps-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
+      - restore_cache:
+          key: v1-functions-npm-deps-{{ checksum "package-lock.json" }}
       - run:
           name: Install Functions
           command: cd functions && npm ci
+      - save_cache:
+          key: v1-functions-npm-deps-{{ checksum "package-lock.json" }}
+          paths:
+            - ./functions/node_modules
       - run:
           name: Build Hosting and Functions
           command: npm run build
-  deploy_staging:
-    docker:
-      - image: circleci/node:10.13.0
-    steps:
       - run:
           name: Swaitch to production Firebase project
           command: npx firebase use production
@@ -33,6 +41,28 @@ jobs:
     docker:
       - image: circleci/node:10.13.0
     steps:
+      - checkout
+      - restore_cache:
+          key: v1-hosting-npm-deps-{{ checksum "package-lock.json" }}
+      - run:
+          name: Install
+          command: npm ci
+      - save_cache:
+          key: v1-hosting-npm-deps-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
+      - restore_cache:
+          key: v1-functions-npm-deps-{{ checksum "package-lock.json" }}
+      - run:
+          name: Install Functions
+          command: cd functions && npm ci
+      - save_cache:
+          key: v1-functions-npm-deps-{{ checksum "package-lock.json" }}
+          paths:
+            - ./functions/node_modules
+      - run:
+          name: Build Hosting and Functions
+          command: npm run build
       - run:
           name: Swaitch to staging Firebase project
           command: npx firebase use staging
@@ -46,14 +76,10 @@ workflows:
     jobs:
       - build
       - deploy_staging:
-          requires:
-            - build
           filters:
             branches:
               ignore: master
       - deploy_production:
-          requires:
-            - build
           filters:
             branches:
               only: master
