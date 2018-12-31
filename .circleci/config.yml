@@ -10,24 +10,12 @@ jobs:
       - image: circleci/node:10.13.0
     steps:
       - checkout
-      - restore_cache:
-          key: v1-hosting-npm-deps-{{ checksum "package-lock.json" }}
       - run:
           name: Install
           command: npm ci
-      - save_cache:
-          key: v1-hosting-npm-deps-{{ checksum "package-lock.json" }}
-          paths:
-            - ./node_modules
-      - restore_cache:
-          key: v1-functions-npm-deps-{{ checksum "package-lock.json" }}
       - run:
           name: Install Functions
           command: cd functions && npm ci
-      - save_cache:
-          key: v1-functions-npm-deps-{{ checksum "package-lock.json" }}
-          paths:
-            - ./functions/node_modules
       - run:
           name: Build Hosting and Functions
           command: npm run build
@@ -42,24 +30,12 @@ jobs:
       - image: circleci/node:10.13.0
     steps:
       - checkout
-      - restore_cache:
-          key: v1-hosting-npm-deps-{{ checksum "package-lock.json" }}
       - run:
           name: Install
           command: npm ci
-      - save_cache:
-          key: v1-hosting-npm-deps-{{ checksum "package-lock.json" }}
-          paths:
-            - ./node_modules
-      - restore_cache:
-          key: v1-functions-npm-deps-{{ checksum "functions/package-lock.json" }}
       - run:
           name: Install Functions
           command: cd functions && npm ci
-      - save_cache:
-          key: v1-functions-npm-deps-{{ checksum "functions/package-lock.json" }}
-          paths:
-            - ./functions/node_modules
       - run:
           name: Build Hosting and Functions
           command: npm run build
