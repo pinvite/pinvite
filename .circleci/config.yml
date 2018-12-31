@@ -17,6 +17,9 @@ jobs:
           name: Install Functions
           command: cd functions && npm ci
       - run:
+          name: Prepare Firebase Client Config
+          command: cp src/utils/firebase/config.staging.ts src/utils/firebase/config.ts
+      - run:
           name: Build Hosting and Functions
           command: npm run build
       - run:
@@ -36,6 +39,9 @@ jobs:
       - run:
           name: Install Functions
           command: cd functions && npm ci
+      - run:
+          name: Prepare Firebase Client Config
+          command: cp src/utils/firebase/config.production.ts src/utils/firebase/config.ts
       - run:
           name: Build Hosting and Functions
           command: npm run build
