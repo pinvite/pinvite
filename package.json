@@ -36,11 +36,12 @@
     "build": "npm run tsc && npm run format && npm run lint && npm run buildHosting && npm run buildFunctions",
     "develop": "gatsby develop",
     "format": "prettier --write src/**/*.ts src/**/*.tsx",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "cypress run",
     "lint": "tslint --fix src/**/*.ts src/**/*.tsx -p tsconfig.json",
     "tsc": "tsc"
   },
   "devDependencies": {
+    "@bahmutov/add-typescript-to-cypress": "^2.0.0",
     "@types/core-js": "^2.5.0",
     "@types/node": "^10.12.11",
     "@types/react": "^16.7.11",
@@ -50,6 +51,7 @@
     "@types/styled-components": "^4.1.2",
     "copyfiles": "^2.1.0",
     "firebase-tools": "^6.2.2",
+    "cypress": "^3.1.4",
     "prettier": "^1.14.2",
     "prettierrc": "0.0.0-5",
     "tslint": "^5.11.0",

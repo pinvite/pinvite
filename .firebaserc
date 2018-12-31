@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "pinvite-app"
+    "production": "pinvite-app",
+    "staging": "pinvite-staging"
   }
 }
