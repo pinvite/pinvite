@@ -32,8 +32,8 @@ jobs:
           name: Build Hosting and Functions
           command: npm run build
       - run:
-          name: Swaitch to production Firebase project
-          command: npx firebase use production
+          name: Switch to staging Firebase project
+          command: npx firebase use staging --token=$FIREBASE_DEPLOY_TOKEN
       - run:
           name: Deploy
           command: npx firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
@@ -52,20 +52,20 @@ jobs:
           paths:
             - ./node_modules
       - restore_cache:
-          key: v1-functions-npm-deps-{{ checksum "package-lock.json" }}
+          key: v1-functions-npm-deps-{{ checksum "functions/package-lock.json" }}
       - run:
           name: Install Functions
           command: cd functions && npm ci
       - save_cache:
-          key: v1-functions-npm-deps-{{ checksum "package-lock.json" }}
+          key: v1-functions-npm-deps-{{ checksum "functions/package-lock.json" }}
           paths:
             - ./functions/node_modules
       - run:
           name: Build Hosting and Functions
           command: npm run build
       - run:
-          name: Swaitch to staging Firebase project
-          command: npx firebase use staging
+          name: Switch to production Firebase project
+          command: npx firebase use production --token=$FIREBASE_DEPLOY_TOKEN
       - run:
           name: Deploy
           command: npx firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
@@ -74,7 +74,6 @@ workflows:
   version: 2  
   build_and_deploy:
     jobs:
-      - build
       - deploy_staging:
           filters:
             branches:
