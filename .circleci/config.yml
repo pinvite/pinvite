@@ -1,14 +1,12 @@
 version: 2
 jobs:
-  build:
-    branches:
-      only:
-        - master
+  deploy_staging:
     docker:
       # https://circleci.com/docs/2.0/language-javascript/#pre-built-circleci-docker-images
       # > We recommend using a CircleCI pre-built image ...
       # https://circleci.com/docs/2.0/circleci-images/#best-practices
       # > It is best practice to lock down aspects of your build container by specifying an additional tag to pin down the image in your configuration.
+      # The first image listed in the file defines the primary container image where all steps will run.
       - image: circleci/node:10.13.0
     steps:
       - checkout
@@ -19,10 +17,45 @@ jobs:
           name: Install Functions
           command: cd functions && npm ci
       - run:
-          name: Build
+          name: Build Hosting and Functions
           command: npm run build
+      - run:
+          name: Switch to staging Firebase project
+          command: npx firebase use staging --token=$FIREBASE_DEPLOY_TOKEN
+      - run:
+          name: Deploy
+          command: npx firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
+  deploy_production:
+    docker:
+      - image: circleci/node:10.13.0
+    steps:
+      - checkout
+      - run:
+          name: Install
+          command: npm ci
+      - run:
+          name: Install Functions
+          command: cd functions && npm ci
+      - run:
+          name: Build Hosting and Functions
+          command: npm run build
+      - run:
+          name: Switch to production Firebase project
+          command: npx firebase use production --token=$FIREBASE_DEPLOY_TOKEN
       - run:
           name: Deploy
           command: npx firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
 
-      
+workflows:
+  version: 2  
+  build_and_deploy:
+    jobs:
+      - deploy_staging:
+          filters:
+            branches:
+              only: staging
+      - deploy_production:
+          filters:
+            branches:
+              only: master
+                       
