@@ -1,0 +1,11 @@
+{
+  "extends": "../tslint.json",
+  "rules": {
+    // Mocha discourages arrow functions, and instead recommend traditional `function`s.
+    //  https://mochajs.org/#arrow-functions
+    //  https://github.com/mochajs/mocha/issues/2018
+    // So, although Cypress official examples use arrow functions, and they are ok as long as
+    // you are not using `this` inside the function bodies, it's still better to use `function`
+    "only-arrow-functions": false
+  }
+}
