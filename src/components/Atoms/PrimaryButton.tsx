@@ -34,6 +34,7 @@ const PrimaryButton: React.SFC<PrimaryButtonProps> = props => (
       color="primary"
       disabled={props.disabled}
       onClick={props.callback}
+      data-cy={'primary-button'}
     >
       {props.text}
     </ButtonStyled>

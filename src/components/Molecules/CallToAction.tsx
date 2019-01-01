@@ -27,7 +27,7 @@ const H4LeftStyled = styled(H4Left as React.SFC<DescriptionProps>)`
 export const CallToActionTop: React.SFC<CallToActionProp> = props => (
   // Important to accept the className prop, to inject CSS margin from outside.</Atom>
   // Only margin, no other CSS property from outside.
-  <div className={props.className}>
+  <div className={props.className} data-cy='call-to-action'>
     <H3CenteredStyled description={props.description} />
     <AuthStatusContext.Consumer>
       {({ handleLogin, loginStatus }) => {
@@ -56,7 +56,7 @@ export const CallToActionTop: React.SFC<CallToActionProp> = props => (
 export const CallToActionBottom: React.SFC<CallToActionProp> = props => (
   // Important to accept the className prop, to inject CSS margin from outside.</Atom>
   // Only margin, no other CSS property from outside.
-  <div className={props.className}>
+  <div className={props.className} data-cy='call-to-action'>
     <H4LeftStyled description={props.description} />
     <AuthStatusContext.Consumer>
       {({ handleLogin, loginStatus }) => {
