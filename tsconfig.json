@@ -61,6 +61,10 @@
     /* Experimental Options */
     // "experimentalDecorators": true,        /* Enables experimental support for ES7 decorators. */
     // "emitDecoratorMetadata": true,         /* Enables experimental support for emitting type metadata for decorators. */
+    
+    // Ad-hoc walkarond for Cypress-Typescript error https://github.com/cypress-io/cypress/issues/3024
+    // This is ok for now, as index.d.ts in libraries must have passed tsc mostly (except Cypress...)
+    "skipLibCheck": true                      /* Skip type checking of all declaration files (*.d.ts). */
   },
   "include": [
     "src/**/*",
