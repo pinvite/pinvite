@@ -58,6 +58,9 @@ workflows:
     jobs:
       - hold:
           type: approval
+          filters:
+            branches:
+              only: staging
       - deploy_staging:
           requires:
             - hold
