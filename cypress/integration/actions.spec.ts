@@ -16,7 +16,7 @@ describe('The main page', function() {
       it('should show the text to encourage logging-in', function() {
         cy.get('[data-cy=primary-button]')
           .should('contain', 'Twitterで登録')
-        })
+      })
     })
   })
 
