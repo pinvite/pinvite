@@ -13,3 +13,4 @@ node_modules
 firebase-adminsdk-secrets.json
 firebase-debug.log
 yarn-error.log
+cypress.env.json
