@@ -1,8 +1,8 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
-import config from '../../config/firebase/config'
-import { isTwitterUserInfo, TwitterUserInfo } from '../../domain/Twitter'
+import config from '../config/firebase/config'
+import { TwitterUserInfo, defaultTwitterPhotoURL } from '../domain/Twitter'
 
 firebase.initializeApp(config)
 if (typeof console !== 'undefined') {
@@ -23,13 +23,14 @@ firestore.settings({
 export interface FirebaseUserInfo {
   userId: string
   idToken: string
+  photoURL: string
 }
 
 /**
  * Firebase JavaScript SDK's types do not know about Twitter specific details,
  * however, still the returned instances of these types have properties holding values
  * like the Twitter access token and the access token credential.
- * 
+ *
  * So we need to check if the properties exist, and here we are using User-defined
  * Type Guards technique.
  */
@@ -95,21 +96,31 @@ interface FirebaseAuthTwitterCredentials {
 
 export async function firebaseLogin(): Promise<FirebaseUserInfo> {
   try {
-    const userCredential = await firebase.auth().signInWithPopup(providerTwitter)
+    const userCredential = await firebase
+      .auth()
+      .signInWithPopup(providerTwitter)
     const firebaseUser = userCredential.user
     const twitterUserInfo = extractTwitterUserInfo(userCredential)
 
     if (firebaseUser == null) {
       return Promise.reject(new Error('Failed to get user info upon login'))
     } else if (twitterUserInfo == null) {
-      return Promise.reject(new Error('Failed to get necessary Twitter info via Sign-In'))
+      return Promise.reject(
+        new Error('Failed to get necessary Twitter info via Sign-In')
+      )
     } else {
       const firebaseIdToken = await firebaseUser.getIdToken()
       await firestore
         .collection('users')
         .doc(firebaseUser.uid)
         .set({ twitter: twitterUserInfo })
-      return Promise.resolve({idToken: firebaseIdToken, userId: firebaseUser.uid})
+      const photoURL = (typeof firebaseUser.photoURL === 'string') ? firebaseUser.photoURL : defaultTwitterPhotoURL
+
+      return Promise.resolve({
+        idToken: firebaseIdToken,
+        userId: firebaseUser.uid,
+        photoURL,
+      })
     }
   } catch (error) {
     return Promise.reject(new Error('Internal server error upon login'))
@@ -127,7 +138,8 @@ export async function firebaseAuthStateChange(): Promise<FirebaseUserInfo> {
         try {
           const idToken = await user.getIdToken()
           const userId = user.uid
-          resolve({idToken, userId})
+          const photoURL = (typeof user.photoURL === 'string') ? user.photoURL : defaultTwitterPhotoURL
+          resolve({ idToken, userId, photoURL })
         } catch (error) {
           reject(new Error('Auto login error. Please login again.'))
         }
