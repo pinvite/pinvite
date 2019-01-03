@@ -28,7 +28,7 @@ describe('The main page', function() {
     describe('The primary button(s)', function() {
       it('should show the text to move to the entry page', function() {
         cy.get('[data-cy=primary-button]')
-          .should('contain', 'Twitterで登録')
+          .should('contain', '募集内容を入力')
         })
     })
   })  
