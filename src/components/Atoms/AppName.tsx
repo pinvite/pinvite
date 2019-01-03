@@ -11,7 +11,7 @@ export interface AppNameProps {
 
 const TypographyStyled = styled(Typography as React.SFC<TypographyProps>)`
   && {
-    font-family: 'Molle', cursive;
+    font-family: 'Fredoka One', cursive;
     cursor: pointer;
     color: ${MuiTheme.palette.common.white};
   }
