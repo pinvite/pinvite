@@ -1,7 +1,8 @@
 // DO NOT edit this directly in functions/src/domain. (i.e. Firebase Functions directory)
 // Edit only this in src/domain (i.e. Firebase hosting directory) then copy it to functions/src/domain by `npm run build`
 
-export const defaultTwitterPhotoURL = 'https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png'
+export const defaultTwitterPhotoURL =
+  'https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png'
 
 export interface TwitterUserInfo {
   readonly userId: string

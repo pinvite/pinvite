@@ -14,7 +14,7 @@ const ProfilePicture: React.SFC<ProfilePictureProps> = props => (
   // Important to accept the className prop, to inject CSS margin from outside.</Atom>
   // Only margin, no other CSS property from outside.
   <Atom className={props.className}>
-    <Avatar src={props.photoURL} data-cy='profile-picture' />
+    <Avatar src={props.photoURL} data-cy="profile-picture" />
   </Atom>
 )
 
