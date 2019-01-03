@@ -29,7 +29,7 @@ const Entry: React.SFC<InviteProps> = props => (
     <Helmet>
       <title>pinvite</title>
       <link
-        href="https://fonts.googleapis.com/css?family=Molle:400i"
+        href="https://fonts.googleapis.com/css?family=Fredoka+One"
         rel="stylesheet"
       />
       <link
