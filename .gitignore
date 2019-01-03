@@ -14,3 +14,5 @@ firebase-adminsdk-secrets.json
 firebase-debug.log
 yarn-error.log
 cypress.env.json
+
+src/config/firebase/config.ts
