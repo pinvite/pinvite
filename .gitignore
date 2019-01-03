@@ -16,3 +16,6 @@ yarn-error.log
 cypress.env.json
 
 src/config/firebase/config.ts
+src/domain
+src/protocols
+src/users/index.html
