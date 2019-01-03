@@ -21,7 +21,7 @@ describe('The main page', function() {
   })
 
   describe('When logged in', function() {
-    beforeEach(function(){
+    before(function(){
       login()
     })
 
@@ -30,6 +30,12 @@ describe('The main page', function() {
         cy.get('[data-cy=primary-button]')
           .should('contain', '募集内容を入力')
         })
+    })
+
+    describe('The App Bar', function() {
+      it('should show the profile picture', function() {
+        cy.get('[data-cy=profile-picture]')
+      })
     })
   })  
 })
