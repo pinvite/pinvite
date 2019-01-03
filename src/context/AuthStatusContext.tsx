@@ -1,14 +1,13 @@
 import React from 'react'
 import firebase, {
+  firebaseAuthStateChange,
   firebaseLogin,
   FirebaseUserInfo,
-  makeSureTwitterUserInfoStored,
 } from '../utils/firebase'
 
 export enum LoginStatus {
   NotLoggedIn,
   LoggedIn,
-  ReadyToTweet,
   LoginFailure,
 }
 
@@ -37,9 +36,9 @@ export class AuthStatusProvider extends React.Component<{}, AuthState> {
   }
 
   componentDidMount() {
-    makeSureTwitterUserInfoStored()
+    firebaseAuthStateChange()
       .then(userInfo => {
-        this.setState({ loginStatus: LoginStatus.ReadyToTweet, userInfo })
+        this.setState({ loginStatus: LoginStatus.LoggedIn, userInfo })
       })
       .catch(error => {
         this.setState({ loginStatus: LoginStatus.LoginFailure })
@@ -48,8 +47,8 @@ export class AuthStatusProvider extends React.Component<{}, AuthState> {
 
   handleLogin = () => {
     firebaseLogin()
-      .then(() => {
-        this.setState({ loginStatus: LoginStatus.LoggedIn })
+      .then(userInfo => {
+        this.setState({ loginStatus: LoginStatus.LoggedIn, userInfo })
       })
       .catch(error => {
         this.setState({ loginStatus: LoginStatus.LoginFailure })

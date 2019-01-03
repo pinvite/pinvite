@@ -25,6 +25,14 @@ export interface FirebaseUserInfo {
   idToken: string
 }
 
+/**
+ * Firebase JavaScript SDK's types do not know about Twitter specific details,
+ * however, still the returned instances of these types have properties holding values
+ * like the Twitter access token and the access token credential.
+ * 
+ * So we need to check if the properties exist, and here we are using User-defined
+ * Type Guards technique.
+ */
 function extractTwitterUserInfo(
   userCredential: firebase.auth.UserCredential
 ): TwitterUserInfo | null {
@@ -55,7 +63,7 @@ function extractTwitterUserInfo(
   } else if (userCredential.credential == null) {
     return null
   } else if (
-    // Trick to get around TypeScript compilation errors.
+    // User-defined Type Guards technique to get around TypeScript compilation errors.
     // 'accessToken' and 'secret' exists in userCredentials.credential according to
     // https://firebase.google.com/docs/auth/web/twitter-login,
     // but Firebase Auth's type UserCredential doesn't express the existence of them
@@ -63,7 +71,7 @@ function extractTwitterUserInfo(
   ) {
     return null
   } else if (
-    // Similar trick to get around TypeScript complation errors.
+    // Similar techniques to get around TypeScript complation errors.
     userCredential.additionalUserInfo == null ||
     userCredential.additionalUserInfo.profile == null ||
     !isTwitterScreenName(userCredential.additionalUserInfo.profile)
@@ -85,74 +93,44 @@ interface FirebaseAuthTwitterCredentials {
   user: firebase.User | null
 }
 
-export async function firebaseLogin(): Promise<{}> {
+export async function firebaseLogin(): Promise<FirebaseUserInfo> {
   try {
-    const userCredential = await firebase
-      .auth()
-      .signInWithPopup(providerTwitter)
+    const userCredential = await firebase.auth().signInWithPopup(providerTwitter)
     const firebaseUser = userCredential.user
     const twitterUserInfo = extractTwitterUserInfo(userCredential)
 
     if (firebaseUser == null) {
       return Promise.reject(new Error('Failed to get user info upon login'))
     } else if (twitterUserInfo == null) {
-      return Promise.reject(
-        new Error('Failed to get necessary Twitter info via Sign-In')
-      )
+      return Promise.reject(new Error('Failed to get necessary Twitter info via Sign-In'))
     } else {
+      const firebaseIdToken = await firebaseUser.getIdToken()
       await firestore
         .collection('users')
         .doc(firebaseUser.uid)
         .set({ twitter: twitterUserInfo })
-      return Promise.resolve({})
+      return Promise.resolve({idToken: firebaseIdToken, userId: firebaseUser.uid})
     }
   } catch (error) {
     return Promise.reject(new Error('Internal server error upon login'))
   }
 }
 
-export async function makeSureTwitterUserInfoStored(): Promise<
-  FirebaseUserInfo
-> {
-  async function handleUser(user: firebase.User): Promise<FirebaseUserInfo> {
-    try {
-      const idToken = await user.getIdToken()
-      const userSnapshot = await firestore
-        .collection('users')
-        .doc(user.uid)
-        .get()
-
-      // data() returns 'undefined' if the document doesn't exist.
-      const data = userSnapshot.data()
-      if (
-        data !== undefined &&
-        data.twitter &&
-        isTwitterUserInfo(data.twitter)
-      ) {
-        const userId = user.uid
-        return Promise.resolve({ ...data.twitter, idToken, userId })
-      } else {
-        // TwitterUserInfo cannot be obtained inside firebase.auth().onAuthStateChanged()
-        // so, flag an error and encourage the user to re-login
-        return Promise.reject(
-          new Error(
-            'Failed to get necessary Twitter info upon auto login. Try logging in again.'
-          )
-        )
-      }
-    } catch (error) {
-      return Promise.reject(new Error('Internal server error upon auto login'))
-    }
-  }
-
+export async function firebaseAuthStateChange(): Promise<FirebaseUserInfo> {
   return new Promise<FirebaseUserInfo>((resolve, reject) => {
     // firebase.auth().onAuthStateChanged doesn't return Promise but it's a traditional callback
     // so convert it into Promise using a common technique
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged(async user => {
       if (user == null) {
         reject(new Error('Failed to get user info upon auto login'))
       } else {
-        handleUser(user).then(resolve)
+        try {
+          const idToken = await user.getIdToken()
+          const userId = user.uid
+          resolve({idToken, userId})
+        } catch (error) {
+          reject(new Error('Auto login error. Please login again.'))
+        }
       }
     })
   })
