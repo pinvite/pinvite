@@ -1,7 +1,7 @@
+import AppBar from '@material-ui/core/AppBar'
 import { navigate } from 'gatsby'
 import React from 'react'
 import styled from 'styled-components'
-import AppBar from '@material-ui/core/AppBar'
 import { AuthStatusContext, LoginStatus } from '../../context/AuthStatusContext'
 import AppName from '../Atoms/AppName'
 import ProfilePicture, { ProfilePictureProps } from '../Atoms/ProfilePicture'
@@ -16,7 +16,9 @@ const FlexContainer = styled.div`
   justify-content: space-between;
 `
 
-const ProfilePictureStyled = styled(ProfilePicture as React.SFC<ProfilePictureProps>)`
+const ProfilePictureStyled = styled(ProfilePicture as React.SFC<
+  ProfilePictureProps
+>)`
   && {
     margin-top: auto;
     margin-bottom: auto;
@@ -29,7 +31,7 @@ const ApplicationBar: React.SFC<ApplicationBarProps> = props => (
   <AppBar className={props.className} color="secondary" position="relative">
     <AuthStatusContext.Consumer>
       {({ loginStatus, userInfo }) => {
-        if (loginStatus === LoginStatus.LoggedIn && userInfo ) {
+        if (loginStatus === LoginStatus.LoggedIn && userInfo) {
           return (
             <FlexContainer>
               <AppName
