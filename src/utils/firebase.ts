@@ -2,7 +2,7 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
 import config from '../config/firebase/config'
-import { TwitterUserInfo, defaultTwitterPhotoURL } from '../domain/Twitter'
+import { defaultTwitterPhotoURL, TwitterUserInfo } from '../domain/Twitter'
 
 firebase.initializeApp(config)
 if (typeof console !== 'undefined') {
@@ -114,7 +114,10 @@ export async function firebaseLogin(): Promise<FirebaseUserInfo> {
         .collection('users')
         .doc(firebaseUser.uid)
         .set({ twitter: twitterUserInfo })
-      const photoURL = (typeof firebaseUser.photoURL === 'string') ? firebaseUser.photoURL : defaultTwitterPhotoURL
+      const photoURL =
+        typeof firebaseUser.photoURL === 'string'
+          ? firebaseUser.photoURL
+          : defaultTwitterPhotoURL
 
       return Promise.resolve({
         idToken: firebaseIdToken,
@@ -138,7 +141,10 @@ export async function firebaseAuthStateChange(): Promise<FirebaseUserInfo> {
         try {
           const idToken = await user.getIdToken()
           const userId = user.uid
-          const photoURL = (typeof user.photoURL === 'string') ? user.photoURL : defaultTwitterPhotoURL
+          const photoURL =
+            typeof user.photoURL === 'string'
+              ? user.photoURL
+              : defaultTwitterPhotoURL
           resolve({ idToken, userId, photoURL })
         } catch (error) {
           reject(new Error('Auto login error. Please login again.'))
