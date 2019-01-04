@@ -87,13 +87,6 @@ function extractTwitterUserInfo(
   }
 }
 
-interface FirebaseAuthTwitterCredentials {
-  additionalUserInfo?: firebase.auth.AdditionalUserInfo | null
-  credential: firebase.auth.AuthCredential | null
-  operationType?: string | null
-  user: firebase.User | null
-}
-
 export async function firebaseLogin(): Promise<FirebaseUserInfo> {
   try {
     const userCredential = await firebase
