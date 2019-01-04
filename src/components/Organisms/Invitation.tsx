@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 import { InvitationInfo, isInvitationInfo } from '../../domain/Invitation'
 import {
   OgpValues,
@@ -8,13 +9,19 @@ import {
 import firebase, { firestore } from '../../utils/firebase'
 import Details from '../Atoms/Details'
 import OgpMetaTags from '../Atoms/OgpMetaTags'
-import ImageLoader from '../Molecules/ImageLoader'
+import ImageLoader, { ImageLoaderProps } from '../Molecules/ImageLoader'
 
 export interface InvitationProps {
   previewImageURL: string
   firebaseUserId: string
   invitationId: string
 }
+
+const ImageLoaderStyled = styled(ImageLoader)`
+  && {
+    margin-top: 80px;
+  }
+`
 
 async function retrieveInvitation(
   firebaseUserId: string,
@@ -45,7 +52,6 @@ class Invitation extends React.Component<InvitationProps, OgpValues> {
     retrieveInvitation(this.props.firebaseUserId, this.props.invitationId)
       .then(invitationInfo => {
         if (window) {
-          const pageURL = window.location.href
           const ogpValues = toOgpValues(invitationInfo)
           this.setState(ogpValues)
         }
@@ -59,7 +65,7 @@ class Invitation extends React.Component<InvitationProps, OgpValues> {
     return (
       <React.Fragment>
         <OgpMetaTags {...this.state} />
-        <ImageLoader
+        <ImageLoaderStyled
           previewImageURL={this.props.previewImageURL}
           imageURL={this.state.ogImage}
         />
