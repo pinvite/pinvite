@@ -8,7 +8,7 @@ import InviteInputs from '../Molecules/InviteInputs'
 import PreviewBottom from '../Molecules/PreviewBottom'
 
 const spinnerImageURL =
-  'https://res.cloudinary.com/pinvite/image/upload/v1543695206/spinner.gif'
+  'https://res.cloudinary.com/pinvite/image/upload/v1546625349/spinner.gif'
 
 export interface InvitationFormProps {
   inputTitleLabel: string
