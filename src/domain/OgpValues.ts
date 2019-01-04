@@ -1,7 +1,6 @@
 // DO NOT edit this directly in functions/src/domain. (i.e. Firebase Functions directory)
 // Edit only this in src/domain (i.e. Firebase hosting directory) then copy it to functions/src/domain by `npm run build`
 
-import xss from 'xss'
 import { InvitationInfo } from './Invitation'
 
 // Twitter Cards and Open Graph at https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started.html
@@ -17,16 +16,33 @@ export interface OgpValues {
   readonly title: string
 }
 
+const REGEXP_AMPERSAND = /\&/g
+const REGEXP_LT = /</g
+const REGEXP_GT = />/g
+const REGEXP_DOUBLE_QUOTE = /"/g
+const REGEXP_SINGLE_QUOTE = /'/g
+const REGEXP_SLASH = /\//g
+
+function sanitize(untrustedAttribute: string): string {
+  return untrustedAttribute
+    .replace(REGEXP_AMPERSAND, '&amp;')
+    .replace(REGEXP_LT, '&lt;')
+    .replace(REGEXP_GT, '&gt;')
+    .replace(REGEXP_DOUBLE_QUOTE, '&quot;')
+    .replace(REGEXP_SINGLE_QUOTE, '&#x27;')
+    .replace(REGEXP_SLASH, '&#x2F;')
+}
+
 export function toOgpValues(invitationInfo: InvitationInfo): OgpValues {
   return {
-    twitterCard: xss(invitationInfo.twitterCard),
-    twitterSite: '@' + xss(invitationInfo.twitterSiteOwnerId),
-    twitterCreator: '@' + xss(invitationInfo.twitterUserId),
-    ogURL: xss(invitationInfo.pageURL),
-    ogTitle: xss(invitationInfo.title),
-    ogDescription: xss(invitationInfo.details),
-    ogImage: xss(invitationInfo.imageURL),
-    title: xss(invitationInfo.title),
+    twitterCard: sanitize(invitationInfo.twitterCard),
+    twitterSite: '@' + sanitize(invitationInfo.twitterSiteOwnerId),
+    twitterCreator: '@' + sanitize(invitationInfo.twitterUserId),
+    ogURL: sanitize(invitationInfo.pageURL),
+    ogTitle: sanitize(invitationInfo.title),
+    ogDescription: sanitize(invitationInfo.details),
+    ogImage: sanitize(invitationInfo.imageURL),
+    title: sanitize(invitationInfo.title),
   }
 }
 
