@@ -2,13 +2,13 @@ import React from 'react'
 import { AuthStatusContext } from '../../context/AuthStatusContext'
 import { InvitationRequest } from '../../protocols/InvitationRequest'
 import { cloudinaryImageUrl } from '../../utils/cloudinary'
+import EntryBottom from '../Molecules/EntryBottom'
 import ImageLoader from '../Molecules/ImageLoader'
-import InviteBottom from '../Molecules/InviteBottom'
 import InviteInputs from '../Molecules/InviteInputs'
 import PreviewBottom from '../Molecules/PreviewBottom'
 
 const spinnerImageURL =
-  'https://res.cloudinary.com/pinvite/image/upload/v1543695206/spinner.gif'
+  'https://res.cloudinary.com/pinvite/image/upload/v1546625349/spinner.gif'
 
 export interface InvitationFormProps {
   inputTitleLabel: string
@@ -180,7 +180,7 @@ class InvitationForm extends React.Component<
             onChange: this.onTimeChange,
           }}
         />
-        <InviteBottom
+        <EntryBottom
           previewButtonText={this.props.previewButtonText}
           previewButtonCallback={this.onPreviewButtonPressed}
           previewDisabled={this.isDisabledInput()}
