@@ -19,7 +19,8 @@
     "firebase-admin": "~6.0.0",
     "firebase-functions": "^2.1.0",
     "fs": "0.0.1-security",
-    "twit": "^2.2.11"
+    "twit": "^2.2.11",
+    "xss": "^1.0.3"
   },
   "devDependencies": {
     "copyfiles": "^2.1.0",

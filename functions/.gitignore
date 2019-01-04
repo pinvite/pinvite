@@ -1,2 +1,6 @@
 lib
 .runtimeconfig.json
+
+src/domain
+src/protocols
+src/users/index.html
