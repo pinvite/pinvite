@@ -42,10 +42,17 @@ async function retrieveInvitation(
   }
 }
 
-class Invitation extends React.Component<InvitationProps, OgpValues> {
+interface InvitationState {
+  invitationInfo?: InvitationInfo
+  ogpValues: OgpValues
+}
+
+class Invitation extends React.Component<InvitationProps, InvitationState> {
   constructor(props: InvitationProps) {
     super(props)
-    this.state = UninitializedOgpValues
+    this.state = {
+      ogpValues: UninitializedOgpValues,
+    }
   }
 
   componentDidMount() {
@@ -53,7 +60,7 @@ class Invitation extends React.Component<InvitationProps, OgpValues> {
       .then(invitationInfo => {
         if (window) {
           const ogpValues = toOgpValues(invitationInfo)
-          this.setState(ogpValues)
+          this.setState({ ogpValues, invitationInfo })
         }
       })
       .catch(error => {
@@ -62,14 +69,19 @@ class Invitation extends React.Component<InvitationProps, OgpValues> {
   }
 
   render() {
+    const details = this.state.invitationInfo ? (
+      <Details text={this.state.invitationInfo.details} />
+    ) : (
+      <React.Fragment />
+    )
     return (
       <React.Fragment>
-        <OgpMetaTags {...this.state} />
+        <OgpMetaTags {...this.state.ogpValues} />
         <ImageLoaderStyled
           previewImageURL={this.props.previewImageURL}
-          imageURL={this.state.ogImage}
+          imageURL={this.state.ogpValues.ogImage}
         />
-        <Details text={this.state.ogDescription} />
+        {details}
       </React.Fragment>
     )
   }
