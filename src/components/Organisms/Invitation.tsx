@@ -7,9 +7,11 @@ import {
   UninitializedOgpValues,
 } from '../../domain/OgpValues'
 import firebase, { firestore } from '../../utils/firebase'
+import ContactInstruction from '../Atoms/ContactInstruction'
 import Details from '../Atoms/Details'
 import OgpMetaTags from '../Atoms/OgpMetaTags'
 import ImageLoader, { ImageLoaderProps } from '../Molecules/ImageLoader'
+import InvitationBottom from '../Molecules/InvitationBottom'
 
 export interface InvitationProps {
   previewImageURL: string
@@ -20,6 +22,11 @@ export interface InvitationProps {
 const ImageLoaderStyled = styled(ImageLoader)`
   && {
     margin-top: 80px;
+  }
+`
+const DetailsStyled = styled(Details)`
+  && {
+    margin-bottom: 16px;
   }
 `
 
@@ -68,12 +75,23 @@ class Invitation extends React.Component<InvitationProps, InvitationState> {
       })
   }
 
+  renderDetails() {
+    if (this.state.invitationInfo) {
+      return (
+        <React.Fragment>
+          <DetailsStyled text={this.state.invitationInfo.details} />
+          <ContactInstruction text={`この勉強会の講師をできる、という方は投稿者 @${this.state.invitationInfo.twitterUserId} さんにTwitterのDMもしくはリプライで連絡しましょう！` } />
+          <InvitationBottom
+            twitterUserId={this.state.invitationInfo.twitterUserId}
+          />
+        </React.Fragment>
+      )
+    } else {
+      return <React.Fragment />
+    }
+  }
+
   render() {
-    const details = this.state.invitationInfo ? (
-      <Details text={this.state.invitationInfo.details} />
-    ) : (
-      <React.Fragment />
-    )
     return (
       <React.Fragment>
         <OgpMetaTags {...this.state.ogpValues} />
@@ -81,7 +99,7 @@ class Invitation extends React.Component<InvitationProps, InvitationState> {
           previewImageURL={this.props.previewImageURL}
           imageURL={this.state.ogpValues.ogImage}
         />
-        {details}
+        {this.renderDetails()}
       </React.Fragment>
     )
   }
