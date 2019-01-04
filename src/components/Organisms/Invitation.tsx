@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 import { InvitationInfo, isInvitationInfo } from '../../domain/Invitation'
 import {
   OgpValues,
@@ -6,15 +7,28 @@ import {
   UninitializedOgpValues,
 } from '../../domain/OgpValues'
 import firebase, { firestore } from '../../utils/firebase'
+import ContactInstruction from '../Atoms/ContactInstruction'
 import Details from '../Atoms/Details'
 import OgpMetaTags from '../Atoms/OgpMetaTags'
-import ImageLoader from '../Molecules/ImageLoader'
+import ImageLoader, { ImageLoaderProps } from '../Molecules/ImageLoader'
+import InvitationBottom from '../Molecules/InvitationBottom'
 
 export interface InvitationProps {
   previewImageURL: string
   firebaseUserId: string
   invitationId: string
 }
+
+const ImageLoaderStyled = styled(ImageLoader)`
+  && {
+    margin-top: 80px;
+  }
+`
+const DetailsStyled = styled(Details)`
+  && {
+    margin-bottom: 16px;
+  }
+`
 
 async function retrieveInvitation(
   firebaseUserId: string,
@@ -35,19 +49,25 @@ async function retrieveInvitation(
   }
 }
 
-class Invitation extends React.Component<InvitationProps, OgpValues> {
+interface InvitationState {
+  invitationInfo?: InvitationInfo
+  ogpValues: OgpValues
+}
+
+class Invitation extends React.Component<InvitationProps, InvitationState> {
   constructor(props: InvitationProps) {
     super(props)
-    this.state = UninitializedOgpValues
+    this.state = {
+      ogpValues: UninitializedOgpValues,
+    }
   }
 
   componentDidMount() {
     retrieveInvitation(this.props.firebaseUserId, this.props.invitationId)
       .then(invitationInfo => {
         if (window) {
-          const pageURL = window.location.href
           const ogpValues = toOgpValues(invitationInfo)
-          this.setState(ogpValues)
+          this.setState({ ogpValues, invitationInfo })
         }
       })
       .catch(error => {
@@ -55,15 +75,31 @@ class Invitation extends React.Component<InvitationProps, OgpValues> {
       })
   }
 
+  renderDetails() {
+    if (this.state.invitationInfo) {
+      return (
+        <React.Fragment>
+          <DetailsStyled text={this.state.invitationInfo.details} />
+          <ContactInstruction text={`この勉強会の講師をできる、という方は投稿者 @${this.state.invitationInfo.twitterUserId} さんにTwitterのDMもしくはリプライで連絡しましょう！` } />
+          <InvitationBottom
+            twitterUserId={this.state.invitationInfo.twitterUserId}
+          />
+        </React.Fragment>
+      )
+    } else {
+      return <React.Fragment />
+    }
+  }
+
   render() {
     return (
       <React.Fragment>
-        <OgpMetaTags {...this.state} />
-        <ImageLoader
+        <OgpMetaTags {...this.state.ogpValues} />
+        <ImageLoaderStyled
           previewImageURL={this.props.previewImageURL}
-          imageURL={this.state.ogImage}
+          imageURL={this.state.ogpValues.ogImage}
         />
-        <Details text={this.state.ogDescription} />
+        {this.renderDetails()}
       </React.Fragment>
     )
   }

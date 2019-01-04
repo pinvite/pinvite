@@ -6,7 +6,8 @@
     "outDir": "lib",
     "sourceMap": true,
     "target": "es6",
-    "types": ["node"]
+    "types": ["node"],
+    "esModuleInterop": true
   },
   "compileOnSave": true,
   "include": [

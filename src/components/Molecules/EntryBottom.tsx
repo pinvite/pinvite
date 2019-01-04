@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import styled from 'styled-components'
 import PrimaryButton from '../Atoms/PrimaryButton'
 
-export interface InviteBottomProps {
+export interface EntryBottomProps {
   previewButtonText: string
   previewButtonCallback: () => void
   previewDisabled: boolean
@@ -16,7 +16,7 @@ const BottomLayout = styled.div`
   }
 `
 
-const InviteBottom: React.SFC<InviteBottomProps> = props => (
+const EntryBottom: React.SFC<EntryBottomProps> = props => (
   // Important to accept the className prop, to inject CSS margin from outside.
   // Only margin, no other CSS property from outside.
   <BottomLayout className={props.className}>
@@ -28,4 +28,4 @@ const InviteBottom: React.SFC<InviteBottomProps> = props => (
   </BottomLayout>
 )
 
-export default InviteBottom
+export default EntryBottom
