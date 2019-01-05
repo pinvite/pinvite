@@ -235,7 +235,6 @@ userApp.post(
         // https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
         const tweetResult = await tweet(twitterUserInfo, invitationInfo)
         console.log('successfully tweeted')
-        console.log(tweetResult)
 
         const responseBody = toInvitationResponse(invitationInfo, '')
         response.json(responseBody)
