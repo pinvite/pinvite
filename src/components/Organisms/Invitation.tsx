@@ -80,7 +80,11 @@ class Invitation extends React.Component<InvitationProps, InvitationState> {
       return (
         <React.Fragment>
           <DetailsStyled text={this.state.invitationInfo.details} />
-          <ContactInstruction text={`この勉強会の講師をできる、という方は投稿者 @${this.state.invitationInfo.twitterUserId} さんにTwitterのDMもしくはリプライで連絡しましょう！` } />
+          <ContactInstruction
+            text={`この勉強会の講師をできる、という方は投稿者 @${
+              this.state.invitationInfo.twitterUserId
+            } さんにTwitterのDMもしくはリプライで連絡しましょう！`}
+          />
           <InvitationBottom
             twitterUserId={this.state.invitationInfo.twitterUserId}
           />
