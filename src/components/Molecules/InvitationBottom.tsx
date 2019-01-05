@@ -19,7 +19,7 @@ const InvitationBottom: React.SFC<InvitationBottomProps> = props => (
   // Only margin, no other CSS property from outside.
   <BottomLayout className={props.className}>
     <LinkButton
-      href="https://google.com"
+      href={`https://twitter.com/${props.twitterUserId}`}
       text={'@' + props.twitterUserId + 'のアカウントへ'}
     />
   </BottomLayout>

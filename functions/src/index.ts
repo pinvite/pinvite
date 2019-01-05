@@ -166,6 +166,8 @@ function toInvitationInfo(
 
 function toInvitationResponse(
   invitationInfo: InvitationInfo,
+  firebaseUserId: string,
+  invitationId: string,
   twitterURL: string
 ): InvitationResponse {
   return {
@@ -179,6 +181,8 @@ function toInvitationResponse(
     imageURL: invitationInfo.imageURL,
     pageURL: invitationInfo.pageURL,
     tweetURL: twitterURL,
+    userId: firebaseUserId,
+    invitationId,
   }
 }
 
@@ -236,7 +240,12 @@ userApp.post(
         const tweetResult = await tweet(twitterUserInfo, invitationInfo)
         console.log('successfully tweeted')
 
-        const responseBody = toInvitationResponse(invitationInfo, '')
+        const responseBody = toInvitationResponse(
+          invitationInfo,
+          firebaseUserId,
+          invitationId,
+          ''
+        )
         response.json(responseBody)
         return
       } catch (error) {
