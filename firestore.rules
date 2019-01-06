@@ -3,8 +3,9 @@ service cloud.firestore {
     match /users/{uid} {
       allow read, write: if request.auth.uid == uid;
 
-      match /invitations/{documnet=**} {
-        allow read, write: if true;
+      match /invitations/{document=**} {
+        allow read: if true
+        allow write: if false;
       }
     }
   }
