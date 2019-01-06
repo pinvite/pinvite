@@ -4,11 +4,11 @@ import { AuthStatusContext } from '../../context/AuthStatusContext'
 import { InvitationRequest } from '../../protocols/InvitationRequest'
 import { isInvitationResponse } from '../../protocols/InvitationResponse'
 import { cloudinaryImageUrl } from '../../utils/cloudinary'
-import ModalWaiting from '../Atoms/ModalWaiting'
 import EntryBottom from '../Molecules/EntryBottom'
 import ImageLoader from '../Molecules/ImageLoader'
 import InviteInputs from '../Molecules/InviteInputs'
 import PreviewBottom from '../Molecules/PreviewBottom'
+import ModalWaiting from './ModalWaiting'
 
 const spinnerImageURL =
   'https://res.cloudinary.com/pinvite/image/upload/v1546625349/spinner.gif'
@@ -93,7 +93,7 @@ class InvitationForm extends React.Component<
     moneyAmount: string,
     imageURL: string
   ) {
-    this.setState({isModalOpen: true})
+    this.setState({ isModalOpen: true })
     const requestBody: InvitationRequest = {
       title,
       details,
@@ -136,13 +136,13 @@ class InvitationForm extends React.Component<
         if (isInvitationResponse(json)) {
           navigate(`/users/${json.userId}/invitations/${json.invitationId}`)
         } else {
-          this.setState({isModalOpen: false})
+          this.setState({ isModalOpen: false })
         }
       })
       .catch(error => {
         alert('エラー: 予期しないエラーが発生しました。')
         // エラーは運営者に報告されたので対応可能な時点で問題を解決します。
-        this.setState({isModalOpen: false})
+        this.setState({ isModalOpen: false })
       })
   }
 
@@ -257,7 +257,7 @@ class InvitationForm extends React.Component<
                 }
               }}
             />
-            <ModalWaiting open={this.state.isModalOpen}/>
+            <ModalWaiting open={this.state.isModalOpen} />
           </React.Fragment>
         )}
       </AuthStatusContext.Consumer>
