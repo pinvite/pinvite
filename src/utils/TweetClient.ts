@@ -83,6 +83,8 @@ export function sendTweet(
       }
     })
     .catch(error => {
-      throw new Error('エラー: 予期しないエラーが発生しました。')
+      console.log('error occurred in sendTweet')
+      console.log(error)
+      throw error
     })
 }
