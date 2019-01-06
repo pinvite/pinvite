@@ -4,6 +4,7 @@ import { AuthStatusContext } from '../../context/AuthStatusContext'
 import { InvitationRequest } from '../../protocols/InvitationRequest'
 import { isInvitationResponse } from '../../protocols/InvitationResponse'
 import { cloudinaryImageUrl } from '../../utils/cloudinary'
+import ModalWaiting from '../Atoms/ModalWaiting'
 import EntryBottom from '../Molecules/EntryBottom'
 import ImageLoader from '../Molecules/ImageLoader'
 import InviteInputs from '../Molecules/InviteInputs'
@@ -32,6 +33,7 @@ interface InvitationFormState {
   time: string
   preview: boolean
   previewImageSrc: string
+  isModalOpen: boolean
 }
 
 class InvitationForm extends React.Component<
@@ -47,6 +49,7 @@ class InvitationForm extends React.Component<
       time: '',
       preview: false,
       previewImageSrc: spinnerImageURL,
+      isModalOpen: false,
     }
     this.onTitleChange = this.onTitleChange.bind(this)
     this.onDetailsChange = this.onDetailsChange.bind(this)
@@ -90,6 +93,7 @@ class InvitationForm extends React.Component<
     moneyAmount: string,
     imageURL: string
   ) {
+    this.setState({isModalOpen: true})
     const requestBody: InvitationRequest = {
       title,
       details,
@@ -112,27 +116,33 @@ class InvitationForm extends React.Component<
         if (response.ok) {
           return response.json()
         } else {
-          if(response.status === 500) {
-            alert('エラー: ツイート失敗、サーバー側でエラーが発生しました。') 
+          if (response.status === 500) {
+            alert('エラー: ツイート失敗、サーバー側でエラーが発生しました。')
             // 編集内容はローカルストレージに保存したので、同じデバイスの同じブラウザから一日ほど時間をおいて試してください。
             // エラーは運営者に報告されたので対応可能な時点で問題を解決します。
           } else if (response.status === 403) {
-            alert('エラー: あなたがツイートを行うための権限をもつユーザであることが確認できませんでした。')
+            alert(
+              'エラー: あなたがツイートを行うための権限をもつユーザであることが確認できませんでした。'
+            )
             // 一旦ログアウトした後、再度トップページからログインをお試しください
             // 編集内容はローカルストレージに保存したので、同じデバイスの同じブラウザから再度同内容の投稿を試みていただくことができます。
           } else {
             alert('エラー: 予期しないエラーが発生しました。')
-            console.log()
-            // 編集内容はローカルストレージに保存したので、同じデバイスの同じブラウザから一日ほど時間をおいて試してください。
             // エラーは運営者に報告されたので対応可能な時点で問題を解決します。
           }
-
         }
       })
       .then(json => {
         if (isInvitationResponse(json)) {
           navigate(`/users/${json.userId}/invitations/${json.invitationId}`)
+        } else {
+          this.setState({isModalOpen: false})
         }
+      })
+      .catch(error => {
+        alert('エラー: 予期しないエラーが発生しました。')
+        // エラーは運営者に報告されたので対応可能な時点で問題を解決します。
+        this.setState({isModalOpen: false})
       })
   }
 
@@ -247,6 +257,7 @@ class InvitationForm extends React.Component<
                 }
               }}
             />
+            <ModalWaiting open={this.state.isModalOpen}/>
           </React.Fragment>
         )}
       </AuthStatusContext.Consumer>
