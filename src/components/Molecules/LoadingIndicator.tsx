@@ -11,6 +11,7 @@ export interface ModalWaitingProps {
 
 const PaperStyled = styled(Paper as React.SFC<PaperProps>)`
   && {
+    background-color: ${MuiTheme.palette.secondary.main};
     text-align: center;
   }
 `
@@ -20,13 +21,12 @@ const LoadingCircleStyled = styled(LoadingCircle as React.SFC<
 >)`
   && {
     margin-top: ${MuiTheme.spacing.unit / 2}px;
-    margin-bottom: ${MuiTheme.spacing.unit * 10}px;
   }
 `
 
 const LoadingIndicator: React.SFC<ModalWaitingProps> = props => (
   <PaperStyled>
-    <LoadingCircle />
+    <LoadingCircleStyled />
     <Subtitle2Centered description="ツイートを送信中" />
   </PaperStyled>
 )

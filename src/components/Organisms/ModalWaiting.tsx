@@ -17,7 +17,7 @@ const ModalStyled = styled(Modal as React.SFC<ModalProps>)`
 `
 
 const ModalLoading: React.SFC<ModalLoadingProps> = props => (
-  <ModalStyled open={props.open}>
+  <ModalStyled open={props.open} disableAutoFocus={true}>
     <LoadingIndicator />
   </ModalStyled>
 )
