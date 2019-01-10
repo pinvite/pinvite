@@ -10,6 +10,7 @@ import {
   InvitationRequest,
   isInvitationRequest,
 } from './protocols/InvitationRequest'
+import { InvitationResponse } from './protocols/InvitationResponse'
 
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
@@ -124,7 +125,7 @@ async function retrieveTwitterUserInfo(
 async function tweet(
   twitterUserInfo: TwitterUserInfo,
   invitationInfo: InvitationInfo
-): Promise<{}> {
+): Promise<Twit.PromiseResponse> {
   const tweetData = new Twit({
     consumer_key: twitterApiKey,
     consumer_secret: twitterApiSecret,
@@ -160,6 +161,28 @@ function toInvitationInfo(
     moneyAmount: invitationRequest.moneyAmount,
     imageURL: invitationRequest.imageURL,
     pageURL: toPageURL(invitationRequest.origin, firebaseUserId, invitationId),
+  }
+}
+
+function toInvitationResponse(
+  invitationInfo: InvitationInfo,
+  firebaseUserId: string,
+  invitationId: string,
+  twitterURL: string
+): InvitationResponse {
+  return {
+    twitterCard: invitationInfo.twitterCard,
+    twitterSiteOwnerId: invitationInfo.twitterSiteOwnerId,
+    twitterUserId: invitationInfo.twitterUserId,
+    title: invitationInfo.title,
+    details: invitationInfo.details,
+    time: invitationInfo.time,
+    moneyAmount: invitationInfo.moneyAmount,
+    imageURL: invitationInfo.imageURL,
+    pageURL: invitationInfo.pageURL,
+    tweetURL: twitterURL,
+    userId: firebaseUserId,
+    invitationId,
   }
 }
 
@@ -207,12 +230,23 @@ userApp.post(
           firebaseUserId,
           invitationId
         )
-        await storeInvitationInfo(firebaseUserId, invitationId, invitationInfo)
+        const storeResult = await storeInvitationInfo(
+          firebaseUserId,
+          invitationId,
+          invitationInfo
+        )
 
         // https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
-        await tweet(twitterUserInfo, invitationInfo)
+        const tweetResult = await tweet(twitterUserInfo, invitationInfo)
         console.log('successfully tweeted')
-        response.send('successfully tweeted')
+
+        const responseBody = toInvitationResponse(
+          invitationInfo,
+          firebaseUserId,
+          invitationId,
+          ''
+        )
+        response.json(responseBody)
         return
       } catch (error) {
         console.log(error)

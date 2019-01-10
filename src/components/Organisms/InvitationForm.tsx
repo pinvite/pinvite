@@ -1,11 +1,13 @@
+import { navigate } from 'gatsby'
 import React from 'react'
 import { AuthStatusContext } from '../../context/AuthStatusContext'
-import { InvitationRequest } from '../../protocols/InvitationRequest'
 import { cloudinaryImageUrl } from '../../utils/cloudinary'
+import { isSendTweetError, sendTweet } from '../../utils/TweetClient'
 import EntryBottom from '../Molecules/EntryBottom'
 import ImageLoader from '../Molecules/ImageLoader'
 import InviteInputs from '../Molecules/InviteInputs'
 import PreviewBottom from '../Molecules/PreviewBottom'
+import ModalWaiting from './ModalWaiting'
 
 const spinnerImageURL =
   'https://res.cloudinary.com/pinvite/image/upload/v1546625349/spinner.gif'
@@ -30,6 +32,7 @@ interface InvitationFormState {
   time: string
   preview: boolean
   previewImageSrc: string
+  isModalOpen: boolean
 }
 
 class InvitationForm extends React.Component<
@@ -45,6 +48,7 @@ class InvitationForm extends React.Component<
       time: '',
       preview: false,
       previewImageSrc: spinnerImageURL,
+      isModalOpen: false,
     }
     this.onTitleChange = this.onTitleChange.bind(this)
     this.onDetailsChange = this.onDetailsChange.bind(this)
@@ -88,26 +92,24 @@ class InvitationForm extends React.Component<
     moneyAmount: string,
     imageURL: string
   ) {
-    const requestBody: InvitationRequest = {
-      title,
-      details,
-      time: parseInt(time, 10),
-      moneyAmount: parseInt(moneyAmount, 10),
-      imageURL,
-      origin: window.location.origin,
-    }
-    const url = '/users/' + userId + '/invitations'
-
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        Authorization: 'Bearer ' + idToken,
-      },
-      body: JSON.stringify(requestBody),
-    }).then(response => {
-      console.log(response)
-    })
+    this.setState({ isModalOpen: true })
+    sendTweet(userId, idToken, title, details, time, moneyAmount, imageURL)
+      .then(invitationResponse => {
+        this.setState({ isModalOpen: false })
+        navigate(
+          `/users/${invitationResponse.userId}/invitations/${
+            invitationResponse.invitationId
+          }`
+        )
+      })
+      .catch(error => {
+        this.setState({ isModalOpen: false })
+        if (isSendTweetError(error)) {
+          alert(error.message)
+        } else {
+          alert('エラー: 予期しないエラーが発生しました。')
+        }
+      })
   }
 
   imageURL(): string {
@@ -221,6 +223,7 @@ class InvitationForm extends React.Component<
                 }
               }}
             />
+            <ModalWaiting open={this.state.isModalOpen} />
           </React.Fragment>
         )}
       </AuthStatusContext.Consumer>
