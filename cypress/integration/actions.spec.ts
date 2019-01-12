@@ -18,11 +18,25 @@ describe('The main page', function() {
           .should('contain', 'Twitterで登録')
       })
     })
+
+    describe('The terms and conditions link', function(){
+      it('should be available', function() {
+        cy.get('[data-cy=app-bar]')
+          .find('button')
+          .should('contain', '注意事項')
+      })
+    })
   })
 
   describe('When logged in', function() {
     before(function(){
       login()
+    })
+
+    describe('The App Bar', function() {
+      it('should show the profile picture', function() {
+        cy.get('[data-cy=profile-picture]')
+      })
     })
 
     describe('The primary button(s)', function() {
@@ -32,9 +46,11 @@ describe('The main page', function() {
         })
     })
 
-    describe('The App Bar', function() {
-      it('should show the profile picture', function() {
-        cy.get('[data-cy=profile-picture]')
+    describe('The terms and conditions link', function(){
+      it('should be available', function() {
+        cy.get('[data-cy=app-bar]')
+          .find('button')
+          .should('contain', '注意事項')
       })
     })
   })  
