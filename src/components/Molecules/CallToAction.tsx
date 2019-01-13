@@ -4,6 +4,9 @@ import styled from 'styled-components'
 import { AuthStatusContext, LoginStatus } from '../../context/AuthStatusContext'
 import { DescriptionProps, H3Centered, H4Left } from '../Atoms/Description'
 import PrimaryButton, { PrimaryButtonProps } from '../Atoms/PrimaryButton'
+import TermsAndConditionsLink, {
+  TermsAndConditionsLinkProps,
+} from '../Atoms/TermsAndConditionsLink'
 
 export interface CallToActionProp {
   description: React.ReactNode
@@ -42,16 +45,28 @@ export const CallToActionTop: React.SFC<CallToActionProp> = props => (
           )
         } else {
           return (
-            <PrimaryButton
-              text={props.registerButtonText}
-              callback={handleLogin}
-            />
+            <React.Fragment>
+              <PrimaryButton
+                text={props.registerButtonText}
+                callback={handleLogin}
+              />
+              <TermsAndConditionsLinkStyled />
+            </React.Fragment>
           )
         }
       }}
     </AuthStatusContext.Consumer>
   </div>
 )
+
+const TermsAndConditionsLinkStyled = styled(TermsAndConditionsLink as React.SFC<
+  TermsAndConditionsLinkProps
+>)`
+  && {
+    display: flex;
+    justify-content: center;
+  }
+`
 
 export const CallToActionBottom: React.SFC<CallToActionProp> = props => (
   // Important to accept the className prop, to inject CSS margin from outside.</Atom>
@@ -71,10 +86,13 @@ export const CallToActionBottom: React.SFC<CallToActionProp> = props => (
           )
         } else {
           return (
-            <PrimaryButton
-              text={props.registerButtonText}
-              callback={handleLogin}
-            />
+            <React.Fragment>
+              <PrimaryButton
+                text={props.registerButtonText}
+                callback={handleLogin}
+              />
+              <TermsAndConditionsLinkStyled />
+            </React.Fragment>
           )
         }
       }}
