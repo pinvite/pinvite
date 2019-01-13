@@ -11,7 +11,7 @@
     "core-js": "^2.5.7",
     "event-stream": "3.3.4",
     "firebase": "^5.5.5",
-    "gatsby": "^2.0.19",
+    "gatsby": "^2.0.91",
     "gatsby-image": "^2.0.26",
     "gatsby-plugin-create-client-paths": "^2.0.2",
     "gatsby-plugin-manifest": "^2.0.5",
@@ -58,7 +58,7 @@
     "firebase-tools": "^6.2.2",
     "prettier": "^1.14.2",
     "prettierrc": "0.0.0-5",
-    "tslint": "^5.11.0",
+    "tslint": "^5.12.1",
     "tslint-config-prettier": "^1.17.0",
     "typescript": "^3.2.2"
   },
