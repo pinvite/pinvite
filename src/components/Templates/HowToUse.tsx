@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { AuthStatusProvider } from '../../context/AuthStatusContext'
 import MuiTheme from '../../theme/MuiTheme'
 import ApplicationBar from '../Molecules/ApplicationBar'
-import HowToStep, { HowToStepProps } from '../Molecules/HowToStep';
+import HowToStep, { HowToStepProps } from '../Molecules/HowToStep'
 
 const Container = styled.div`
   max-width: 600px;
@@ -19,10 +19,11 @@ export interface HowToUseProps {
 }
 
 const HowToStepStyled = styled(HowToStep as React.SFC<HowToStepProps>)`
-&& {
-  margin-top: 40px;
-  margin-bottom: 40px;
-}`
+  && {
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
+`
 
 const HotToUse: React.SFC<HowToUseProps> = props => (
   <Fragment>
@@ -52,15 +53,14 @@ const HotToUse: React.SFC<HowToUseProps> = props => (
     <MuiThemeProvider theme={MuiTheme}>
       <AuthStatusProvider>
         <ApplicationBar />
-        <Container>{
-          props.steps.map (howToStepProps => 
+        <Container>
+          {props.steps.map(howToStepProps => (
             <HowToStepStyled
               title={howToStepProps.title}
               imgFluid={howToStepProps.imgFluid}
               instruction={howToStepProps.instruction}
-            />            
-          )
-        }
+            />
+          ))}
         </Container>
       </AuthStatusProvider>
     </MuiThemeProvider>

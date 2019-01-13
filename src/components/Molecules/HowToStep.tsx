@@ -29,15 +29,16 @@ const ImgContainer = styled.div`
   width: 400px;
 `
 
-const HowToStep: React.SFC<HowToStepProps> = props =>
+const HowToStep: React.SFC<HowToStepProps> = props => (
   <PaperStyled elevation={0} className={props.className}>
     <H6Left description={props.title} />
-      <ImgLayout>
-        <ImgContainer>
-          <Img fluid={props.imgFluid} />
-        </ImgContainer>
-      </ImgLayout>
-    <Body2Left description={props.instruction}  />
+    <ImgLayout>
+      <ImgContainer>
+        <Img fluid={props.imgFluid} />
+      </ImgContainer>
+    </ImgLayout>
+    <Body2Left description={props.instruction} />
   </PaperStyled>
+)
 
 export default HowToStep
