@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { AuthStatusContext, LoginStatus } from '../../context/AuthStatusContext'
 import AlphaRelease from '../Atoms/AlphaRelease'
 import AppName from '../Atoms/AppName'
+import HowToUseLink from '../Atoms/HowToUseLink'
 import ProfilePicture, { ProfilePictureProps } from '../Atoms/ProfilePicture'
 import TermsAndConditionsLink from '../Atoms/TermsAndConditionsLink'
 
@@ -44,6 +45,7 @@ const ApplicationBar: React.SFC<ApplicationBarProps> = props => (
               <AppName />
               <AlphaRelease />
               <TermsAndConditionsLink />
+              <HowToUseLink />
               <SpacingDiv />
               <ProfilePictureStyled photoURL={userInfo.photoURL} />
             </Toolbar>
@@ -54,6 +56,7 @@ const ApplicationBar: React.SFC<ApplicationBarProps> = props => (
               <AppName />
               <AlphaRelease />
               <TermsAndConditionsLink />
+              <HowToUseLink />
             </Toolbar>
           )
         }
