@@ -32,7 +32,6 @@ export class AuthStatusProvider extends React.Component<{}, AuthState> {
   constructor(props: any) {
     super(props)
     this.state = { loginStatus: LoginStatus.NotLoggedIn, errorMessage: '' }
-    this.handleLogin = this.handleLogin.bind(this)
   }
 
   componentDidMount() {
