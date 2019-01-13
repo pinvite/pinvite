@@ -45,7 +45,10 @@ async function retrieveInvitation(
   if (isInvitationInfo(invitation)) {
     return invitation
   } else {
-    throw new Error('Failed to retrieve invitation')
+    console.log(invitation)
+    throw new Error(
+      `Failed to retrieve invitation for user = ${firebaseUserId} invitation = ${invitationId}`
+    )
   }
 }
 

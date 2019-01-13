@@ -1,19 +1,22 @@
 import AppBar from '@material-ui/core/AppBar'
-import { navigate } from 'gatsby'
+import Toolbar from '@material-ui/core/Toolbar'
 import React from 'react'
 import styled from 'styled-components'
 import { AuthStatusContext, LoginStatus } from '../../context/AuthStatusContext'
+import AlphaRelease from '../Atoms/AlphaRelease'
 import AppName from '../Atoms/AppName'
+import HowToUseLink from '../Atoms/HowToUseLink'
 import ProfilePicture, { ProfilePictureProps } from '../Atoms/ProfilePicture'
+import TermsAndConditionsLink from '../Atoms/TermsAndConditionsLink'
 
 export interface ApplicationBarProps {
   className?: string // allow styled-components to inject CSS margin from outside. Only margin, no other CSS property from outside.
 }
 
-const FlexContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+// A CSS technique to constrain the components after this "from the right"
+// The same technique used at: https://material-ui.com/demos/app-bar/#app-bar-with-a-primary-search-field
+const SpacingDiv = styled.div`
+  flex-grow: 1;
 `
 
 const ProfilePictureStyled = styled(ProfilePicture as React.SFC<
@@ -28,27 +31,33 @@ const ProfilePictureStyled = styled(ProfilePicture as React.SFC<
 const ApplicationBar: React.SFC<ApplicationBarProps> = props => (
   // Important to accept the className prop, to inject CSS margin from outside.
   // Only margin, no other CSS property from outside.
-  <AppBar className={props.className} color="secondary" position="relative">
+  <AppBar
+    className={props.className}
+    color="secondary"
+    position="relative"
+    data-cy="app-bar"
+  >
     <AuthStatusContext.Consumer>
       {({ loginStatus, userInfo }) => {
         if (loginStatus === LoginStatus.LoggedIn && userInfo) {
           return (
-            <FlexContainer>
-              <AppName
-                onClick={() => {
-                  navigate('/')
-                }}
-              />
+            <Toolbar>
+              <AppName />
+              <AlphaRelease />
+              <TermsAndConditionsLink />
+              <HowToUseLink />
+              <SpacingDiv />
               <ProfilePictureStyled photoURL={userInfo.photoURL} />
-            </FlexContainer>
+            </Toolbar>
           )
         } else {
           return (
-            <AppName
-              onClick={() => {
-                navigate('/')
-              }}
-            />
+            <Toolbar>
+              <AppName />
+              <AlphaRelease />
+              <TermsAndConditionsLink />
+              <HowToUseLink />
+            </Toolbar>
           )
         }
       }}
