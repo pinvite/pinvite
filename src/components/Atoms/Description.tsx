@@ -186,3 +186,39 @@ export const OverlineLeft: React.SFC<DescriptionProps> = props => (
     <Typography variant="overline">{props.description}</Typography>
   </Atom>
 )
+
+export const Body1Centered: React.SFC<DescriptionProps> = props => (
+  // Important to accept the className prop, to inject CSS margin from outside.
+  // Only margin, no other CSS property from outside.
+  <Atom className={props.className}>
+    <Typography variant="body1" align="center">
+      {props.description}
+    </Typography>
+  </Atom>
+)
+
+export const Body1Left: React.SFC<DescriptionProps> = props => (
+  // Important to accept the className prop, to inject CSS margin from outside.
+  // Only margin, no other CSS property from outside.
+  <Atom className={props.className}>
+    <Typography variant="body1">{props.description}</Typography>
+  </Atom>
+)
+
+export const Body2Centered: React.SFC<DescriptionProps> = props => (
+  // Important to accept the className prop, to inject CSS margin from outside.
+  // Only margin, no other CSS property from outside.
+  <Atom className={props.className}>
+    <Typography variant="body2" align="center">
+      {props.description}
+    </Typography>
+  </Atom>
+)
+
+export const Body2Left: React.SFC<DescriptionProps> = props => (
+  // Important to accept the className prop, to inject CSS margin from outside.
+  // Only margin, no other CSS property from outside.
+  <Atom className={props.className}>
+    <Typography variant="body2">{props.description}</Typography>
+  </Atom>
+)
