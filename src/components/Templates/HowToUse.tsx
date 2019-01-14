@@ -5,8 +5,8 @@ import styled from 'styled-components'
 
 import { AuthStatusProvider } from '../../context/AuthStatusContext'
 import MuiTheme from '../../theme/MuiTheme'
-import ApplicationBar from '../Organisms/ApplicationBar'
 import HowToStep, { HowToStepProps } from '../Molecules/HowToStep'
+import ApplicationBar from '../Organisms/ApplicationBar'
 
 const Container = styled.div`
   max-width: 600px;

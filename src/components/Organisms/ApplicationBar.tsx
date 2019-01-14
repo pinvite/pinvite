@@ -1,15 +1,13 @@
-import { Button, Menu, MenuItem } from '@material-ui/core'
 import AppBar from '@material-ui/core/AppBar'
-import Icon from '@material-ui/core/Icon'
 import React from 'react'
 import styled from 'styled-components'
 import { AuthStatusContext, LoginStatus } from '../../context/AuthStatusContext'
 import MuiTheme from '../../theme/MuiTheme'
 import AlphaRelease from '../Atoms/AlphaRelease'
 import AppName from '../Atoms/AppName'
-import HowToUseLink from '../Atoms/HowToUseLink'
 import ProfilePicture, { ProfilePictureProps } from '../Atoms/ProfilePicture'
-import TermsAndConditionsLink from '../Atoms/TermsAndConditionsLink'
+import AppMenuDesktop from '../Molecules/AppMenuDesktop'
+import AppMenuMobile from '../Molecules/AppMenuMobile'
 
 export interface ApplicationBarProps {
   className?: string // allow styled-components to inject CSS margin from outside. Only margin, no other CSS property from outside.
@@ -37,7 +35,7 @@ const FlexContainer = styled.div`
     padding: ${MuiTheme.spacing.unit / 2}px;
   }
 `
-const DesktopMenu = styled.div`
+const DesktopMenuContainer = styled.div`
   && {
     display: flex;
     @media only screen and (max-width: 600px) {
@@ -46,7 +44,7 @@ const DesktopMenu = styled.div`
   }
 `
 
-const MobileMenu = styled.div`
+const MobileMenuContainer = styled.div`
   && {
     display: none;
     @media only screen and (max-width: 600px) {
@@ -89,28 +87,17 @@ class ApplicationBar extends React.Component<
         <FlexContainer>
           <AppName />
           <AlphaRelease />
-          <DesktopMenu>
-            <TermsAndConditionsLink />
-            <HowToUseLink />
-          </DesktopMenu>
+          <DesktopMenuContainer>
+            <AppMenuDesktop />
+          </DesktopMenuContainer>
           <SpacingDiv />
-          <MobileMenu>
-            <Button onClick={this.handleMenuOpen}>
-              <Icon>menu</Icon>
-            </Button>
-            <Menu
+          <MobileMenuContainer>
+            <AppMenuMobile
               anchorEl={this.state.anchorEl}
-              open={Boolean(this.state.anchorEl)}
-              onClose={this.handleMenuClose}
-            >
-              <MenuItem>
-                <TermsAndConditionsLink />
-              </MenuItem>
-              <MenuItem>
-                <HowToUseLink />
-              </MenuItem>
-            </Menu>
-          </MobileMenu>
+              handleMenuOpen={this.handleMenuOpen}
+              handleMenuClose={this.handleMenuClose}
+            />
+          </MobileMenuContainer>
           <AuthStatusContext.Consumer>
             {({ loginStatus, userInfo }) => {
               if (loginStatus === LoginStatus.LoggedIn && userInfo) {
