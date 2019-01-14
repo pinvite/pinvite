@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 import { AuthStatusProvider } from '../../context/AuthStatusContext'
 import MuiTheme from '../../theme/MuiTheme'
-import ApplicationBar from '../Molecules/ApplicationBar'
+import ApplicationBar from '../Organisms/ApplicationBar'
 import LandingContents from '../Organisms/LandingContents'
 
 export interface IndexProps {

@@ -7,7 +7,7 @@ import { AuthStatusProvider } from '../../context/AuthStatusContext'
 import { UninitializedOgpValues } from '../../domain/OgpValues'
 import MuiTheme from '../../theme/MuiTheme'
 import OgpMetaTags from '../Atoms/OgpMetaTags'
-import ApplicationBar from '../Molecules/ApplicationBar'
+import ApplicationBar from '../Organisms/ApplicationBar'
 import Invitation, { InvitationProps } from '../Organisms/Invitation'
 
 const Container = styled.div`
