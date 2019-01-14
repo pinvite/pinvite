@@ -1,3 +1,4 @@
+import { Button, Menu, MenuItem } from '@material-ui/core'
 import AppBar from '@material-ui/core/AppBar'
 import Icon from '@material-ui/core/Icon'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -11,7 +12,6 @@ import Atom from '../Atoms/Atom'
 import HowToUseLink from '../Atoms/HowToUseLink'
 import ProfilePicture, { ProfilePictureProps } from '../Atoms/ProfilePicture'
 import TermsAndConditionsLink from '../Atoms/TermsAndConditionsLink'
-import { Menu, MenuItem, Button } from '@material-ui/core';
 
 export interface ApplicationBarProps {
   className?: string // allow styled-components to inject CSS margin from outside. Only margin, no other CSS property from outside.
@@ -61,13 +61,16 @@ interface ApplicationBarState {
   anchorEl: any
 }
 
-class ApplicationBar extends React.Component<ApplicationBarProps, ApplicationBarState> {
-  constructor(props: ApplicationBarProps){
+class ApplicationBar extends React.Component<
+  ApplicationBarProps,
+  ApplicationBarState
+> {
+  constructor(props: ApplicationBarProps) {
     super(props)
-    this.state = {anchorEl: null}
+    this.state = { anchorEl: null }
   }
 
-  handleMenuOpen = event => {
+  handleMenuOpen = (event: any) => {
     this.setState({ anchorEl: event.currentTarget })
   }
 
@@ -85,54 +88,41 @@ class ApplicationBar extends React.Component<ApplicationBarProps, ApplicationBar
         position="relative"
         data-cy="app-bar"
       >
-        <AuthStatusContext.Consumer>
-          {({ loginStatus, userInfo }) => {
-            if (loginStatus === LoginStatus.LoggedIn && userInfo) {
-              return (
-                <FlexContainer>
-                  <MobileMenu>
-                    <Atom>
-                      <Icon>menu</Icon>
-                    </Atom>
-                  </MobileMenu>
-                  <AppName />
-                  <AlphaRelease />
-                  <DesktopMenu>
-                    <TermsAndConditionsLink />
-                    <HowToUseLink />
-                  </DesktopMenu>
-                  <SpacingDiv />
-                  <ProfilePictureStyled photoURL={userInfo.photoURL} />
-                </FlexContainer>
-              )
-            } else {
-              return (
-                <FlexContainer>
-                  <AppName />
-                  <AlphaRelease />
-                  <DesktopMenu>
-                    <TermsAndConditionsLink />
-                    <HowToUseLink />
-                  </DesktopMenu>
-                  <SpacingDiv />
-                  <MobileMenu>
-                    <Button onClick={this.handleMenuOpen}>
-                      <Icon>menu</Icon>
-                    </Button>
-                    <Menu
-                      anchorEl={this.state.anchorEl}
-                      open={Boolean(this.state.anchorEl)}
-                      onClose={this.handleMenuClose}
-                    >
-                      <MenuItem><TermsAndConditionsLink /></MenuItem>
-                      <MenuItem><HowToUseLink /></MenuItem>
-                    </Menu>
-                  </MobileMenu>
-                </FlexContainer>
-              )
-            }
-          }}
-        </AuthStatusContext.Consumer>
+        <FlexContainer>
+          <AppName />
+          <AlphaRelease />
+          <DesktopMenu>
+            <TermsAndConditionsLink />
+            <HowToUseLink />
+          </DesktopMenu>
+          <SpacingDiv />
+          <MobileMenu>
+            <Button onClick={this.handleMenuOpen}>
+              <Icon>menu</Icon>
+            </Button>
+            <Menu
+              anchorEl={this.state.anchorEl}
+              open={Boolean(this.state.anchorEl)}
+              onClose={this.handleMenuClose}
+            >
+              <MenuItem>
+                <TermsAndConditionsLink />
+              </MenuItem>
+              <MenuItem>
+                <HowToUseLink />
+              </MenuItem>
+            </Menu>
+          </MobileMenu>
+          <AuthStatusContext.Consumer>
+            {({ loginStatus, userInfo }) => {
+              if (loginStatus === LoginStatus.LoggedIn && userInfo) {
+                return <ProfilePictureStyled photoURL={userInfo.photoURL} />
+              } else {
+                return <React.Fragment />
+              }
+            }}
+          </AuthStatusContext.Consumer>
+        </FlexContainer>
       </AppBar>
     )
   }

@@ -12,7 +12,7 @@ const AlphaRelease: React.SFC<AlphaReleaseProps> = props => (
   // Only margin, no other CSS property from outside.
   <Atom className={props.className}>
     <Typography variant="body2" color="textSecondary">
-      (alpha release)
+      alpha release
     </Typography>
   </Atom>
 )
