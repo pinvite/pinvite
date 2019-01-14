@@ -4,7 +4,7 @@ import Helmet from 'react-helmet'
 import styled from 'styled-components'
 import { AuthStatusProvider } from '../../context/AuthStatusContext'
 import MuiTheme from '../../theme/MuiTheme'
-import ApplicationBar from '../Molecules/ApplicationBar'
+import ApplicationBar from '../Organisms/ApplicationBar'
 import InvitationForm from '../Organisms/InvitationForm'
 
 export interface InviteProps {
