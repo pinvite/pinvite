@@ -11,7 +11,7 @@ const AlphaRelease: React.SFC<AlphaReleaseProps> = props => (
   // Important to accept the className prop, to inject CSS margin from outside.
   // Only margin, no other CSS property from outside.
   <Atom className={props.className}>
-    <Typography variant="h6" color="textSecondary">
+    <Typography variant="body2" color="textSecondary">
       (alpha release)
     </Typography>
   </Atom>
