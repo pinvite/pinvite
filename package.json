@@ -30,6 +30,7 @@
     "react-router-dom": "^4.3.1",
     "save": "^2.3.2",
     "styled-components": "^4.0.2",
+    "tar": ">=4.4.2",
     "whatwg-fetch": "^2.0.4"
   },
   "keywords": [],
@@ -58,6 +59,7 @@
     "firebase-tools": "^6.2.2",
     "prettier": "^1.14.2",
     "prettierrc": "0.0.0-5",
+    "tar": ">=4.4.2",
     "tslint": "^5.12.1",
     "tslint-config-prettier": "^1.17.0",
     "typescript": "^3.2.2"
